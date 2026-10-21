@@ -73,9 +73,17 @@ export const metadata = {
     images: ['/assets/img1.webp']
   },
   icons: {
-    icon: '/favicon.svg',
-    shortcut: '/favicon.svg'
-  }
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon-96x96.png', sizes: '96x96', type: 'image/png' }
+    ],
+    apple: [
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }
+    ],
+    shortcut: '/favicon.ico'
+  },
+  manifest: '/site.webmanifest'
 };
 
 const clinicJsonLd = {
@@ -87,7 +95,7 @@ const clinicJsonLd = {
       'name': 'Nirvaya Eyecare Centre',
       'alternateName': 'M/s Nirvaya Health',
       'url': 'https://nirvayaeyecare.com',
-      'logo': 'https://nirvayaeyecare.com/favicon.svg',
+      'logo': 'https://nirvayaeyecare.com/images/nirvaya-logo.png',
       'image': 'https://nirvayaeyecare.com/assets/img1.webp',
       'telephone': '+91-755-4928200',
       'email': 'care@nirvayahealth.com',
