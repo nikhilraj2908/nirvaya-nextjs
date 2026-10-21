@@ -1,0 +1,22 @@
+[
+  {
+    "id": "rec_587c1c29-32fb-4ba3-9f43-719a4591e11f",
+    "slots": [
+      "Morning (10:00 AM – 1:00 PM)",
+      "Evening (5:00 PM – 8:00 PM)"
+    ],
+    "capacityPerSlot": 10,
+    "createdAt": "2026-10-13T12:22:20.436Z",
+    "updatedAt": "2026-10-13T12:22:20.436Z"
+  },
+  {
+    "id": "rec_587c1c29-32fb-4ba3-9f43-719a4591e11f",
+    "createdAt": "2026-10-13T12:22:20.436Z",
+    "updatedAt": "2026-10-13T12:22:20.436Z",
+    "slots": [
+      "Morning (10:00 AM – 1:00 PM)",
+      "Evening (5:00 PM – 8:00 PM)"
+    ],
+    "capacityPerSlot": 10
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "id": "060dbf01-d6f8-4c25-be12-97c2db6b438f",
+    "bookingRef": "NIRV-202610-6536",
+    "patientName": "nikhil raj",
+    "phone": "8821051303",
+    "age": null,
+    "city": "Bhopal",
+    "specialty": "Retina & Vitreoretinal Surgery",
+    "preferredDate": "2026-10-29",
+    "preferredSlot": "02:30 PM",
+    "doctorId": "doc-sandhya-01",
+    "slotId": "slot_1430",
+    "startTimeUtc": "2026-10-29T09:00:00.000Z",
+    "endTimeUtc": "2026-10-29T09:30:00.000Z",
+    "email": "nikhiltesting@gmail.com",
+    "reason": "testing config",
+    "status": "confirmed",
+    "internalNotes": "",
+    "assignedDoctor": "Dr. Sandhya Gaur",
+    "source": "website_calendar_flow",
+    "sessionId": "v_1791895439946_9nju7ga",
+    "createdAt": "2026-10-14T09:50:49.862Z",
+    "updatedAt": "2026-10-14T09:50:49.862Z"
+  }
+]

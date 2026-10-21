@@ -1,0 +1,92 @@
+[
+  {
+    "id": "usr-admin-01",
+    "avatar": null,
+    "createdAt": "2026-10-13T12:22:20.289Z",
+    "email": "admin@nirvaya.com",
+    "isActive": true,
+    "lastLoginAt": "2026-10-13T12:27:54.611Z",
+    "name": "Super Administrator",
+    "passwordHash": "$2a$10$0Skh.XCbsGONO4CKdggo8O9N3uzmfYP.0MTo2telWHIwJHpLmrEHy",
+    "phone": "9826012345",
+    "roleId": "role-admin",
+    "updatedAt": "2026-10-13T12:27:54.611Z"
+  },
+  {
+    "id": "usr-manager-01",
+    "avatar": null,
+    "createdAt": "2026-10-13T12:22:20.289Z",
+    "email": "manager@nirvaya.com",
+    "isActive": true,
+    "lastLoginAt": null,
+    "name": "Ramesh Sharma",
+    "passwordHash": "$2a$10$0xAJAvxjAONRSor30XE5GeJ4y8pd5b1GV2wD.NOAFZ3LrV04KOCGq",
+    "phone": "9826023456",
+    "roleId": "role-manager",
+    "updatedAt": "2026-10-13T12:22:20.289Z"
+  },
+  {
+    "id": "usr-nurse-01",
+    "avatar": null,
+    "createdAt": "2026-10-13T12:22:20.289Z",
+    "email": "nurse@nirvaya.com",
+    "isActive": true,
+    "lastLoginAt": null,
+    "name": "Sunita Verma",
+    "passwordHash": "$2a$10$0xAJAvxjAONRSor30XE5GeJ4y8pd5b1GV2wD.NOAFZ3LrV04KOCGq",
+    "phone": "9826034567",
+    "roleId": "role-nurse",
+    "updatedAt": "2026-10-13T12:22:20.289Z"
+  },
+  {
+    "id": "usr-reception-01",
+    "avatar": null,
+    "createdAt": "2026-10-13T12:22:20.289Z",
+    "email": "reception@nirvaya.com",
+    "isActive": true,
+    "lastLoginAt": null,
+    "name": "Pooja Tiwari",
+    "passwordHash": "$2a$10$0xAJAvxjAONRSor30XE5GeJ4y8pd5b1GV2wD.NOAFZ3LrV04KOCGq",
+    "phone": "9826045678",
+    "roleId": "role-receptionist",
+    "updatedAt": "2026-10-13T12:22:20.289Z"
+  },
+  {
+    "id": "usr-doctor-01",
+    "avatar": null,
+    "createdAt": "2026-10-13T12:22:20.289Z",
+    "email": "doctor.sandhya@nirvaya.com",
+    "isActive": true,
+    "lastLoginAt": null,
+    "name": "Dr Sandhya Gaur",
+    "passwordHash": "$2a$10$0xAJAvxjAONRSor30XE5GeJ4y8pd5b1GV2wD.NOAFZ3LrV04KOCGq",
+    "phone": "9826056789",
+    "roleId": "role-doctor",
+    "updatedAt": "2026-10-13T12:22:20.289Z"
+  },
+  {
+    "id": "rec_08bf94be-2bd4-4ea8-a3fd-bf647412aa71",
+    "name": "Nurse Priya Sharma",
+    "email": "nurse.test.1791894474926@nirvaya.com",
+    "phone": "9826998877",
+    "passwordHash": "$2a$10$hlkXvsVp0lgpUZIPAHXJQePBa7..ouFjOvRK4420G68Env7WUtdyy",
+    "roleId": "rec_4decce82-aa84-4772-bdb3-accbfbcfbb27",
+    "isActive": true,
+    "avatar": null,
+    "lastLoginAt": null,
+    "createdAt": "2026-10-13T12:27:55.119Z",
+    "updatedAt": "2026-10-13T12:27:55.119Z"
+  },
+  {
+    "id": "rec_08bf94be-2bd4-4ea8-a3fd-bf647412aa71",
+    "createdAt": "2026-10-13T12:27:55.119Z",
+    "updatedAt": "2026-10-13T12:27:55.119Z",
+    "name": "Nurse Priya Sharma",
+    "email": "nurse.test.1791894474926@nirvaya.com",
+    "phone": "9826998877",
+    "passwordHash": "$2a$10$hlkXvsVp0lgpUZIPAHXJQePBa7..ouFjOvRK4420G68Env7WUtdyy",
+    "roleId": "rec_4decce82-aa84-4772-bdb3-accbfbcfbb27",
+    "isActive": true,
+    "lastLoginAt": null
+  }
+]

@@ -1,0 +1,117 @@
+[
+  {
+    "id": "doc-sandhya-01",
+    "createdAt": "2026-10-13T12:22:20.359Z",
+    "updatedAt": "2026-10-13T12:22:20.359Z",
+    "name": "Dr. Sandhya Gaur",
+    "slug": "dr-sandhya-gaur",
+    "qualification": "MD (AIIMS), DNB, FVRS, FAICO",
+    "designation": "Medical Director & Chief Vitreoretinal Surgeon",
+    "specialties": [
+      "Vitreoretinal Surgery (Vitrectomy)",
+      "Diabetic Retinopathy Management",
+      "Retinal Detachment & Macular Holes",
+      "Retinopathy of Prematurity (ROP)",
+      "Uveitis & Ocular Inflammation"
+    ],
+    "experienceYears": 15,
+    "biography": "AIIMS New Delhi-trained vitreoretinal surgeon and FAICO Gold Medalist with over 15 years of surgical excellence in complex vitreoretinal disorders, diabetic eye diseases, and micro-incision sutureless vitrectomy.",
+    "image": "/assets/dr-sandhya-gaur.webp",
+    "education": [
+      "All India Institute of Medical Sciences (AIIMS), New Delhi — MD Ophthalmology",
+      "Sadguru Netra Chikitsalaya, Chitrakoot — Vitreoretinal Fellowship (FVRS)"
+    ],
+    "awards": [
+      "FAICO Vitreoretina Gold Medalist",
+      "Associate Editor, Haryana Journal of Ophthalmology",
+      "Author of 18+ Peer-Reviewed Publications in Indexed International Journals"
+    ],
+    "availableDays": [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday"
+    ],
+    "availableSlots": [
+      "Morning (10:00 AM – 1:00 PM)",
+      "Evening (5:00 PM – 8:00 PM)"
+    ],
+    "consultationFee": 800,
+    "isActive": true,
+    "displayOrder": 1
+  },
+  {
+    "id": "doc-neha-02",
+    "createdAt": "2026-10-13T12:22:20.359Z",
+    "updatedAt": "2026-10-13T12:22:20.359Z",
+    "name": "Dr. Neha Saxena",
+    "slug": "dr-neha-saxena",
+    "qualification": "MS (Ophth), FICO (UK), Cornea Fellow",
+    "designation": "Senior Consultant — Cornea & Refractive Services",
+    "specialties": [
+      "Cornea & Ocular Surface Reconstruction",
+      "Refractive Laser Surgery (LASIK / PRK)",
+      "Micro-incision Cataract Surgery (Phaco)",
+      "Keratoconus & Corneal Cross-Linking (CXL)"
+    ],
+    "experienceYears": 11,
+    "biography": "Specialist in anterior segment reconstructions, lamellar keratoplasty, and customized corneal refractive surgery with extensive fellowship training in the UK.",
+    "image": "/assets/doctor-cornea.webp",
+    "education": [
+      "King George Medical University — MS Ophthalmology",
+      "Fellow of the International Council of Ophthalmology (FICO), London"
+    ],
+    "awards": [
+      "Best Video Presentation Award, AIOS 2023"
+    ],
+    "availableDays": [
+      "Monday",
+      "Wednesday",
+      "Friday"
+    ],
+    "availableSlots": [
+      "Morning (10:00 AM – 1:00 PM)"
+    ],
+    "consultationFee": 700,
+    "isActive": true,
+    "displayOrder": 2
+  },
+  {
+    "id": "doc-vikram-03",
+    "createdAt": "2026-10-13T12:22:20.359Z",
+    "updatedAt": "2026-10-13T12:22:20.359Z",
+    "name": "Dr. Vikram Agrawal",
+    "slug": "dr-vikram-agrawal",
+    "qualification": "MD (Ophth), Glaucoma Fellowship (LVPEI)",
+    "designation": "Consultant — Glaucoma & Comprehensive Ophthalmology",
+    "specialties": [
+      "Early Glaucoma Detection & Visual Fields",
+      "Glaucoma Filtration Surgery & Valves",
+      "Selective Laser Trabeculoplasty (SLT)",
+      "Complex Cataract Surgery"
+    ],
+    "experienceYears": 9,
+    "biography": "Fellowship-trained glaucoma expert specializing in medical and laser therapies for ocular hypertension, angle-closure glaucoma, and pediatric glaucoma.",
+    "image": "/assets/doctor-glaucoma.webp",
+    "education": [
+      "L V Prasad Eye Institute (LVPEI) — Fellowship in Glaucoma",
+      "SMS Medical College Jaipur — MD Ophthalmology"
+    ],
+    "awards": [
+      "Young Ophthalmologist Investigator Award"
+    ],
+    "availableDays": [
+      "Tuesday",
+      "Thursday",
+      "Saturday"
+    ],
+    "availableSlots": [
+      "Evening (5:00 PM – 8:00 PM)"
+    ],
+    "consultationFee": 700,
+    "isActive": true,
+    "displayOrder": 3
+  }
+]

@@ -1,0 +1,63 @@
+[
+  {
+    "key": "439ea70b-262c-432f-b6bb-74b65f56dd66",
+    "requestHash": "565aa950e72bcc3b02b8015b19218b192979dff3bcf0b53228b1afd13cba36d2",
+    "responseStatus": 201,
+    "responseBody": {
+      "success": true,
+      "message": "Your appointment has been successfully scheduled.",
+      "booking": {
+        "id": "060dbf01-d6f8-4c25-be12-97c2db6b438f",
+        "bookingRef": "NIRV-202610-6536",
+        "patientName": "nikhil raj",
+        "phone": "8821051303",
+        "email": "nikhiltesting@gmail.com",
+        "doctorId": "doc-sandhya-01",
+        "doctorName": "Dr. Sandhya Gaur",
+        "specialty": "Retina & Vitreoretinal Surgery",
+        "preferredDate": "2026-10-29",
+        "preferredSlot": "02:30 PM",
+        "slotId": "slot_1430",
+        "startTimeUtc": "2026-10-29T09:00:00.000Z",
+        "endTimeUtc": "2026-10-29T09:30:00.000Z",
+        "timeZone": "Asia/Kolkata",
+        "timeZoneLabel": "All times are in IST (Indian Standard Time)",
+        "status": "confirmed",
+        "createdAt": "2026-10-14T09:50:49.862Z"
+      }
+    },
+    "createdAt": "2026-10-14T09:50:49.968Z",
+    "updatedAt": "2026-10-14T09:50:49.968Z"
+  },
+  {
+    "id": "rec_a99906d8-6f8f-47ea-ba54-f5a2ea0337b4",
+    "createdAt": "2026-10-14T09:50:49.968Z",
+    "updatedAt": "2026-10-14T09:50:49.968Z",
+    "key": "439ea70b-262c-432f-b6bb-74b65f56dd66",
+    "requestHash": "565aa950e72bcc3b02b8015b19218b192979dff3bcf0b53228b1afd13cba36d2",
+    "responseStatus": 201,
+    "responseBody": {
+      "success": true,
+      "message": "Your appointment has been successfully scheduled.",
+      "booking": {
+        "id": "060dbf01-d6f8-4c25-be12-97c2db6b438f",
+        "bookingRef": "NIRV-202610-6536",
+        "patientName": "nikhil raj",
+        "phone": "8821051303",
+        "email": "nikhiltesting@gmail.com",
+        "doctorId": "doc-sandhya-01",
+        "doctorName": "Dr. Sandhya Gaur",
+        "specialty": "Retina & Vitreoretinal Surgery",
+        "preferredDate": "2026-10-29",
+        "preferredSlot": "02:30 PM",
+        "slotId": "slot_1430",
+        "startTimeUtc": "2026-10-29T09:00:00.000Z",
+        "endTimeUtc": "2026-10-29T09:30:00.000Z",
+        "timeZone": "Asia/Kolkata",
+        "timeZoneLabel": "All times are in IST (Indian Standard Time)",
+        "status": "confirmed",
+        "createdAt": "2026-10-14T09:50:49.862Z"
+      }
+    }
+  }
+]

@@ -1,0 +1,107 @@
+[
+  {
+    "id": "role-admin",
+    "createdAt": "2026-10-13T12:22:19.739Z",
+    "description": "Full uninhibited access to all clinical, staff, financial, analytics and access management controls.",
+    "isSystemRole": true,
+    "name": "Super Admin",
+    "permissions": [
+      "*"
+    ],
+    "slug": "admin",
+    "updatedAt": "2026-10-13T12:22:19.739Z"
+  },
+  {
+    "id": "role-manager",
+    "createdAt": "2026-10-13T12:22:19.739Z",
+    "description": "Oversees daily clinic operations, patient flow, appointment conversions, and staff scheduling. No access to role creation or root system settings.",
+    "isSystemRole": false,
+    "name": "Clinic Manager",
+    "permissions": [
+      "analytics:view",
+      "analytics:export",
+      "appointments:view",
+      "appointments:create",
+      "appointments:update",
+      "patients:view",
+      "patients:notes",
+      "staff:view"
+    ],
+    "slug": "manager",
+    "updatedAt": "2026-10-13T12:22:19.739Z"
+  },
+  {
+    "id": "role-nurse",
+    "createdAt": "2026-10-13T12:22:19.739Z",
+    "description": "Pre-op and clinical support staff. Can view patient appointments, update consultation status, and append clinical observations.",
+    "isSystemRole": false,
+    "name": "Staff Nurse",
+    "permissions": [
+      "appointments:view",
+      "appointments:update",
+      "patients:view",
+      "patients:notes"
+    ],
+    "slug": "nurse",
+    "updatedAt": "2026-10-13T12:22:19.739Z"
+  },
+  {
+    "id": "role-receptionist",
+    "createdAt": "2026-10-13T12:22:19.739Z",
+    "description": "Frontdesk registration and phone support. Manages appointment bookings, walk-ins, and schedule confirmations.",
+    "isSystemRole": false,
+    "name": "Frontdesk Receptionist",
+    "permissions": [
+      "appointments:view",
+      "appointments:create",
+      "appointments:update",
+      "patients:view"
+    ],
+    "slug": "receptionist",
+    "updatedAt": "2026-10-13T12:22:19.739Z"
+  },
+  {
+    "id": "role-doctor",
+    "createdAt": "2026-10-13T12:22:19.739Z",
+    "description": "Medical specialists (e.g. Dr Sandhya Gaur). Can review assigned patient consultations and record diagnostic findings.",
+    "isSystemRole": false,
+    "name": "Consultant Ophthalmologist",
+    "permissions": [
+      "appointments:view",
+      "patients:view",
+      "patients:notes"
+    ],
+    "slug": "doctor",
+    "updatedAt": "2026-10-13T12:22:19.739Z"
+  },
+  {
+    "id": "rec_4decce82-aa84-4772-bdb3-accbfbcfbb27",
+    "name": "Senior Retina Nurse 375",
+    "slug": "senior-retina-nurse-375",
+    "description": "Vitreoretinal injection and pre-op preparation nurse",
+    "isSystemRole": false,
+    "permissions": [
+      "appointments:view",
+      "appointments:update",
+      "patients:view",
+      "patients:notes"
+    ],
+    "createdAt": "2026-10-13T12:27:54.847Z",
+    "updatedAt": "2026-10-13T12:27:54.847Z"
+  },
+  {
+    "id": "rec_4decce82-aa84-4772-bdb3-accbfbcfbb27",
+    "createdAt": "2026-10-13T12:27:54.847Z",
+    "updatedAt": "2026-10-13T12:27:54.847Z",
+    "name": "Senior Retina Nurse 375",
+    "slug": "senior-retina-nurse-375",
+    "description": "Vitreoretinal injection and pre-op preparation nurse",
+    "isSystemRole": false,
+    "permissions": [
+      "appointments:view",
+      "appointments:update",
+      "patients:view",
+      "patients:notes"
+    ]
+  }
+]
