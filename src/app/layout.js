@@ -148,6 +148,7 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${plusJakartaSans.variable} ${notoSans.variable} ${notoDevanagari.variable} font-scale-md h-full antialiased`}
     >
       <head>
@@ -156,7 +157,7 @@ export default function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(clinicJsonLd) }}
         />
       </head>
-      <body className="min-h-full flex flex-col font-sans">
+      <body className="min-h-full flex flex-col font-sans" suppressHydrationWarning>
         <AppLayoutClient>{children}</AppLayoutClient>
       </body>
     </html>

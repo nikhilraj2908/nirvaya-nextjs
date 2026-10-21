@@ -35,7 +35,8 @@ export async function POST(req) {
 
     return NextResponse.json({ success: true, recorded: true });
   } catch (err) {
-    // Non-fatal telemetry catch
-    return NextResponse.json({ success: false, message: err.message }, { status: 500 });
+    // Non-fatal telemetry catch - log error on server but do not break client page flow
+    console.warn('[Analytics Telemetry Warning]:', err.message);
+    return NextResponse.json({ success: false, recorded: false, message: err.message }, { status: 200 });
   }
 }

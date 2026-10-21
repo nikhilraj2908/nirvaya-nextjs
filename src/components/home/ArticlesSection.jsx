@@ -73,9 +73,9 @@ export default function ArticlesSection() {
           <p>
             Retinopathy of Prematurity (ROP) is a vasoproliferative vitreoretinal disorder affecting premature, low-birth-weight neonates. When a baby is born early, the normal blood vessel growth of the retina is abruptly halted.
           </p>
-          <h4 className="font-bold text-[#0A1E3F] text-base pt-2">The 'Golden 30 Days' Screening Window</h4>
+          <h4 className="font-bold text-[#0A1E3F] text-base pt-2">The &apos;Golden 30 Days&apos; Screening Window</h4>
           <p>
-            Indian national guidelines dictate that every baby born with a birth weight under 1,750 grams or gestational age less than 34 weeks must undergo an indirect ophthalmoscopic ROP screening by an experienced vitreo-retinal specialist within 20 to 30 days of birth ("Tees Din, Roshni Ke Naam").
+            Indian national guidelines dictate that every baby born with a birth weight under 1,750 grams or gestational age less than 34 weeks must undergo an indirect ophthalmoscopic ROP screening by an experienced vitreo-retinal specialist within 20 to 30 days of birth (&quot;Tees Din, Roshni Ke Naam&quot;).
           </p>
           <div className="bg-amber-50 border-l-4 border-amber-600 p-4 rounded-r-lg my-3">
             <p className="font-medium text-amber-950 text-xs">

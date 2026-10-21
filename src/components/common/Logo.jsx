@@ -90,7 +90,7 @@ export default function Logo({
           </span>
         </div>
         <span
-          className={`text-[9.5px] sm:text-[10.5px] tracking-wider uppercase font-medium mt-0.5 sm:mt-1 leading-tight ${
+          className={`hidden xs:inline text-[9.5px] sm:text-[10.5px] tracking-wider uppercase font-medium mt-0.5 sm:mt-1 leading-tight ${
             isLight ? 'text-slate-300' : 'text-slate-500'
           }`}
         >

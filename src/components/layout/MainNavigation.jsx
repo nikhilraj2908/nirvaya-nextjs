@@ -122,23 +122,25 @@ export default function MainNavigation({
         </nav>
 
         <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0 ml-auto lg:ml-0">
-          {/* Pre-book Page Redirect Button with Interactive Eye Tracking */}
+          {/* Pre-book Page Redirect Button with Interactive Eye Tracking (Always visible on mobile & desktop!) */}
           <EyeTrackingButton
             href="/pre-book"
             to="/pre-book"
             label="Pre-book a Slot"
             variant="navy"
             size="md"
+            showMobileShortText={true}
             ariaLabel="Pre-book an appointment slot"
           />
 
+          {/* Prominent High-Contrast Mobile Hamburger Menu Button */}
           <button
             type="button"
             onClick={onOpenMobileMenu}
             aria-label="Open mobile navigation menu"
-            className="lg:hidden p-2 rounded-lg text-[#0A1E3F] hover:bg-slate-100 active:bg-slate-200 transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center cursor-pointer shrink-0"
+            className="lg:hidden flex items-center justify-center w-9 h-9 sm:w-11 sm:h-11 rounded-lg sm:rounded-xl bg-slate-50 hover:bg-[#FDF9EE] active:bg-slate-200 border border-slate-200/90 hover:border-[#C59B27]/50 text-[#0A1E3F] hover:text-[#C59B27] transition-all shadow-xs active:scale-95 cursor-pointer shrink-0"
           >
-            <Menu className="w-6 h-6" />
+            <Menu className="w-5 h-5 sm:w-6 sm:h-6" strokeWidth={2.2} />
           </button>
         </div>
       </div>

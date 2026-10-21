@@ -545,7 +545,7 @@ export default function FAQSection({ currentLang = 'en' }) {
 
                   <div className="text-center mt-2 px-2">
                     <p className="font-journal text-2xl text-[#0A1E3F] font-bold">
-                      "{activeFaq.scriptQuestion[lang]}"
+                      &ldquo;{activeFaq.scriptQuestion[lang]}&rdquo;
                     </p>
                   </div>
                 </div>
@@ -629,7 +629,7 @@ export default function FAQSection({ currentLang = 'en' }) {
 
                   <div className="mt-2 mb-6">
                     <p className="font-journal text-2xl sm:text-3xl lg:text-[32px] text-slate-700 tracking-wide">
-                      "{activeFaq.subtitle[lang]}"
+                      &ldquo;{activeFaq.subtitle[lang]}&rdquo;
                     </p>
                   </div>
 
@@ -736,7 +736,7 @@ export default function FAQSection({ currentLang = 'en' }) {
                             {faq.fullQuestion[lang]}
                           </span>
                           <span className="font-journal text-xl text-slate-500 block -mt-0.5">
-                            "{faq.scriptQuestion[lang]}"
+                            &ldquo;{faq.scriptQuestion[lang]}&rdquo;
                           </span>
                         </div>
                       </div>

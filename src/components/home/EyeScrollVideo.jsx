@@ -279,12 +279,7 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
             {/* STAGE 0: Initial Hero Entry */}
             {activeStage === 0 && (
               <div className="space-y-4 sm:space-y-6">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase bg-[#C59B27]/20 text-[#DFBF64] border border-[#C59B27]/40 shadow-xs animate-fade-in-up stagger-1">
-                  <Sparkles className="w-3.5 h-3.5" />
-                  <span>{currentLang === 'hi' ? 'भोपाल में विशेषज्ञ नेत्र चिकित्सा' : 'SPECIALIST EYE CARE IN BHOPAL'}</span>
-                </div>
-
-                <h1 className="font-heading text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-extrabold text-white tracking-tight leading-[1.12] animate-fade-in-up stagger-2">
+                <h1 className="font-heading text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-extrabold text-white tracking-tight leading-[1.12] animate-fade-in-up stagger-1">
                   {currentLang === 'hi' ? (
                     <span className="font-hindi">
                       विशेषज्ञ-नेतृत्व <span className="text-[#DFBF64]">रेटिना और मोतियाबिंद</span> नेत्र देखभाल
