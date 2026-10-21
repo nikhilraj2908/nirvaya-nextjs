@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import StickyMobileActionBar from '@/components/home/StickyMobileActionBar';
+import FloatingWhatsApp from '@/components/common/FloatingWhatsApp';
 import { usePageTracking } from '@/hooks/usePageTracking';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 
@@ -61,9 +61,9 @@ export default function AppLayoutClient({ children }) {
         {children}
       </main>
 
-      {/* Show Public Footer and Sticky Bar only on client-facing routes */}
+      {/* Show Public Footer and Floating WhatsApp only on client-facing routes */}
       {!isAdminRoute && <Footer />}
-      {!isAdminRoute && <StickyMobileActionBar />}
+      {!isAdminRoute && <FloatingWhatsApp />}
     </div>
   );
 }

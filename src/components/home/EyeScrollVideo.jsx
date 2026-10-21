@@ -6,14 +6,13 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
   Calendar,
-  MessageSquare,
   ShieldCheck,
   ChevronDown,
-  Activity,
   Layers,
   Sparkles,
   Eye,
-  CheckCircle2
+  CheckCircle2,
+  ArrowRight
 } from 'lucide-react';
 import { CLINIC_INFO, HERO_STAGES } from '@/data/siteData';
 import Button from '@/components/common/Button';
@@ -28,7 +27,6 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
   const stickyRef = useRef(null);
   const videoRef = useRef(null);
   const triggerRef = useRef(null);
-  const progressBarRef = useRef(null);
 
   const [activeStage, setActiveStage] = useState(0);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
@@ -103,10 +101,6 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
             else nextStage = 5;
 
             setActiveStage((prev) => (prev !== nextStage ? nextStage : prev));
-
-            if (progressBarRef.current) {
-              progressBarRef.current.style.width = `${Math.round(prog * 100)}%`;
-            }
 
             const targetTime = prog * duration;
             if (
@@ -232,47 +226,8 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
 
         {/* Foreground Content Container */}
         <div className="relative z-10 w-full h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-between py-6 sm:py-8 lg:py-12 pointer-events-none">
-          {/* Top Bar inside Hero */}
-          <div className="flex items-center justify-between pointer-events-auto">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900/80 backdrop-blur-md border border-slate-700/80 text-white text-xs shadow-md">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-              <span className="font-semibold text-slate-200">
-                Dr Sandhya Gaur
-              </span>
-              <span className="text-slate-400 hidden sm:inline">•</span>
-              <span className="text-[#DFBF64] hidden sm:inline font-medium">
-                MD AIIMS • FVRS • Gold Medalist
-              </span>
-            </div>
-
-            {/* Scroll Anatomy Progression Indicator */}
-            {!isReducedMotion && (
-              <div className="hidden md:flex items-center gap-2 bg-slate-900/80 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-slate-700/80 text-xs text-slate-300 shadow-md">
-                <Activity className="w-3.5 h-3.5 text-[#DFBF64]" />
-                <span className="text-slate-400">Anatomical Stage:</span>
-                <span className="font-bold text-white uppercase tracking-wider">
-                  {activeStage === 0
-                    ? '1 / 6 • Full Eye'
-                    : activeStage === 1
-                      ? '2 / 6 • Cornea'
-                      : activeStage === 2
-                        ? '3 / 6 • Crystalline Lens'
-                        : activeStage === 3
-                          ? '4 / 6 • Vitreous Cavity'
-                          : activeStage === 4
-                            ? '5 / 6 • Retina & Macula'
-                            : '6 / 6 • Posterior Axis'}
-                </span>
-                <div className="w-16 h-1.5 bg-slate-800 rounded-full overflow-hidden ml-1 border border-slate-700">
-                  <div
-                    ref={progressBarRef}
-                    className="h-full bg-gradient-to-r from-[#DFBF64] to-[#C59B27] transition-all duration-150"
-                    style={{ width: `${Math.round(((activeStage + 1) / 6) * 100)}%` }}
-                  />
-                </div>
-              </div>
-            )}
-          </div>
+          {/* Subtle top breathing space */}
+          <div className="h-2 sm:h-6 pointer-events-none" />
 
           {/* Main Hero Copy & Overlay Choreography */}
           <div className="my-auto max-w-xl lg:max-w-lg xl:max-w-xl pointer-events-auto transition-all duration-300">
@@ -316,22 +271,14 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
                   <Button
                     variant="secondary"
                     size="lg"
-                    href={`https://wa.me/${CLINIC_INFO.whatsappRaw}?text=${encodeURIComponent(
-                      CLINIC_INFO.whatsappDefaultMessage
-                    )}`}
-                    target="_blank"
-                    icon={MessageSquare}
-                    className="bg-white/10 hover:bg-white text-white hover:text-[#0A1E3F] border-white/30 backdrop-blur-xs font-semibold"
-                  >
-                    {currentLang === 'hi' ? 'व्हाट्सएप करें' : 'WhatsApp Us'}
-                  </Button>
-
-                  <Link
                     href="/services"
-                    className="inline-flex items-center text-xs sm:text-sm text-slate-300 hover:text-[#DFBF64] transition-colors underline decoration-slate-500 hover:decoration-[#DFBF64] underline-offset-4 py-2 font-medium"
+                    to="/services"
+                    icon={ArrowRight}
+                    iconPosition="right"
+                    className="bg-white/10 hover:bg-white text-white hover:text-[#0A1E3F] border-white/30 backdrop-blur-xs font-semibold shadow-md transition-all duration-200"
                   >
-                    {currentLang === 'hi' ? 'हमारी सेवाएं देखें →' : 'Explore Our Services →'}
-                  </Link>
+                    {currentLang === 'hi' ? 'हमारी सेवाएं देखें' : 'Explore Our Services'}
+                  </Button>
                 </div>
 
                 <div className="pt-2 sm:pt-4 border-t border-slate-700/60 grid grid-cols-2 sm:flex sm:flex-wrap gap-2.5 sm:gap-4 text-xs text-slate-300 font-medium animate-fade-in-up stagger-5">

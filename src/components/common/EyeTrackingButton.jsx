@@ -46,21 +46,26 @@ export default function EyeTrackingButton({
 
   // 1. Mouse / Pointer Tracking RAF Loop
   useEffect(() => {
-    // Disable tracking for touch-only devices or reduced motion preference
-    const prefersReducedMotion =
-      typeof window !== 'undefined' &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const isTouchOnly =
-      typeof window !== 'undefined' &&
-      window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+    if (typeof window === 'undefined') return;
 
-    if (prefersReducedMotion || isTouchOnly) return;
+    // Initialize to center of screen so eyes are active from mount
+    if (mouseCoords.current.x === -9999) {
+      mouseCoords.current = {
+        x: window.innerWidth / 2,
+        y: window.innerHeight / 2
+      };
+    }
 
     const handlePointerMove = (e) => {
-      mouseCoords.current = { x: e.clientX, y: e.clientY };
+      if (typeof e.clientX === 'number' && typeof e.clientY === 'number') {
+        mouseCoords.current = { x: e.clientX, y: e.clientY };
+      }
     };
 
+    // Listen to both mousemove and pointermove across window and document
+    window.addEventListener('mousemove', handlePointerMove, { passive: true });
     window.addEventListener('pointermove', handlePointerMove, { passive: true });
+    document.addEventListener('mousemove', handlePointerMove, { passive: true });
 
     const updatePupilPositions = () => {
       if (mouseCoords.current.x !== -9999 && mouseCoords.current.y !== -9999) {
@@ -75,9 +80,9 @@ export default function EyeTrackingButton({
           const angle = Math.atan2(dy, dx);
           const distance = Math.hypot(dx, dy);
 
-          // Max pupil travel: 30% of eye radius to avoid clipping white sclera
-          const maxTravel = (rect.width / 2) * 0.3;
-          const travel = Math.min(maxTravel, distance * 0.05);
+          // Dynamic travel: allows prominent, delightful movement while staying safely inside sclera
+          const maxTravel = Math.max(3.6, Math.min(5.2, (rect.width / 2) * 0.52));
+          const travel = distance === 0 ? 0 : Math.min(maxTravel, Math.max(1.2, distance * 0.14));
 
           targetPupilLeft.current.x = Math.cos(angle) * travel;
           targetPupilLeft.current.y = Math.sin(angle) * travel;
@@ -94,23 +99,23 @@ export default function EyeTrackingButton({
           const angle = Math.atan2(dy, dx);
           const distance = Math.hypot(dx, dy);
 
-          const maxTravel = (rect.width / 2) * 0.3;
-          const travel = Math.min(maxTravel, distance * 0.05);
+          const maxTravel = Math.max(3.6, Math.min(5.2, (rect.width / 2) * 0.52));
+          const travel = distance === 0 ? 0 : Math.min(maxTravel, Math.max(1.2, distance * 0.14));
 
           targetPupilRight.current.x = Math.cos(angle) * travel;
           targetPupilRight.current.y = Math.sin(angle) * travel;
         }
 
-        // Smooth Interpolation (Lerp factor = 0.18 for fluid, natural glide)
+        // Smooth Interpolation (Lerp factor = 0.22 for fluid, responsive follow)
         currentPupilLeft.current.x +=
-          (targetPupilLeft.current.x - currentPupilLeft.current.x) * 0.18;
+          (targetPupilLeft.current.x - currentPupilLeft.current.x) * 0.22;
         currentPupilLeft.current.y +=
-          (targetPupilLeft.current.y - currentPupilLeft.current.y) * 0.18;
+          (targetPupilLeft.current.y - currentPupilLeft.current.y) * 0.22;
 
         currentPupilRight.current.x +=
-          (targetPupilRight.current.x - currentPupilRight.current.x) * 0.18;
+          (targetPupilRight.current.x - currentPupilRight.current.x) * 0.22;
         currentPupilRight.current.y +=
-          (targetPupilRight.current.y - currentPupilRight.current.y) * 0.18;
+          (targetPupilRight.current.y - currentPupilRight.current.y) * 0.22;
 
         // Directly apply transform to pupil elements (zero React re-renders!)
         if (leftPupilRef.current) {
@@ -131,7 +136,9 @@ export default function EyeTrackingButton({
     rafId.current = requestAnimationFrame(updatePupilPositions);
 
     return () => {
+      window.removeEventListener('mousemove', handlePointerMove);
       window.removeEventListener('pointermove', handlePointerMove);
+      document.removeEventListener('mousemove', handlePointerMove);
       if (rafId.current) cancelAnimationFrame(rafId.current);
     };
   }, []);
