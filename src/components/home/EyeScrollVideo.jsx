@@ -322,8 +322,8 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
         {/* Desktop Left-to-Right Feathered Gradient for Strong Text Contrast & Deep Canvas */}
         <div className="hidden lg:block absolute inset-0 w-full h-full pointer-events-none z-2 bg-gradient-to-r from-[#061226] via-[#061226] via-[28%] via-[#061226]/95 via-[35%] via-[#061226]/20 via-[40%] via-[#061226]/25 via-[8%] to-transparent to-[62%]" />
 
-        {/* Mobile / Tablet Full Smooth Overlay */}
-        <div className="lg:hidden absolute inset-0 pointer-events-none z-2 bg-gradient-to-t from-[#061226] via-[#061226]/85 via-[52%] to-[#061226]/40" />
+        {/* Mobile / Tablet Full Smooth Overlay - reduced opacity for vibrant video visibility */}
+        <div className="lg:hidden absolute inset-0 pointer-events-none z-2 bg-gradient-to-t from-[#061226]/85 via-[#061226]/30 via-[50%] to-transparent" />
 
         {/* Bottom Vignette for Smooth Transition to Trust Strip */}
         <div className="absolute inset-x-0 bottom-0 h-24 pointer-events-none z-2 bg-gradient-to-t from-[#061226] via-[#061226]/60 to-transparent" />
@@ -343,17 +343,18 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
           >
-            <div className="relative bg-[#061226]/90 backdrop-blur-md rounded-2xl border border-slate-700/80 p-5 sm:p-6 shadow-2xl overflow-hidden transition-all duration-300">
+            {/* Glassmorphic Carousel Card with Elegant Transparency */}
+            <div className="relative bg-[#061226]/40 sm:bg-[#061226]/45 backdrop-blur-xl rounded-2xl border border-white/20 p-5 sm:p-6 shadow-[0_8px_32px_0_rgba(0,0,0,0.45)] overflow-hidden transition-all duration-300">
               {/* Subtle top golden accent line */}
-              <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-transparent via-[#DFBF64] to-transparent opacity-85" />
+              <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-transparent via-[#DFBF64] to-transparent opacity-90" />
 
               {/* Header Row: Eyebrow + Slide Counter */}
               <div className="flex items-center justify-between gap-2 mb-3">
-                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] sm:text-xs font-bold tracking-wider uppercase bg-[#C59B27]/20 text-[#DFBF64] border border-[#C59B27]/40">
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] sm:text-xs font-bold tracking-wider uppercase bg-[#C59B27]/25 backdrop-blur-md text-[#DFBF64] border border-[#DFBF64]/40 shadow-xs">
                   <Layers className="w-3.5 h-3.5 text-[#DFBF64] shrink-0" />
                   <span className="truncate max-w-[210px]">{currentMobileSlide.eyebrow}</span>
                 </div>
-                <span className="text-[11px] font-mono font-medium text-slate-300 bg-slate-900/90 px-2.5 py-0.5 rounded-full border border-slate-700/60 shrink-0">
+                <span className="text-[11px] font-mono font-medium text-slate-200 bg-white/10 backdrop-blur-md px-2.5 py-0.5 rounded-full border border-white/15 shrink-0">
                   0{mobileSlide + 1} / 0{mobileSlides.length}
                 </span>
               </div>
@@ -361,17 +362,17 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
               {/* Slide Body */}
               <div className="min-h-[220px] sm:min-h-[200px] flex flex-col justify-between">
                 <div>
-                  <h2 className="font-heading text-xl sm:text-2xl font-extrabold text-white tracking-tight leading-snug">
+                  <h2 className="font-heading text-xl sm:text-2xl font-extrabold text-white tracking-tight leading-snug drop-shadow-md">
                     {currentMobileSlide.headline}
                   </h2>
 
-                  <p className="text-xs sm:text-sm text-slate-200 leading-relaxed mt-2.5">
+                  <p className="text-xs sm:text-sm text-slate-100 leading-relaxed mt-2.5 drop-shadow-xs">
                     {currentMobileSlide.description}
                   </p>
 
                   {/* Stage Details */}
                   {currentMobileSlide.isHero ? (
-                    <div className="mt-3.5 pt-3 border-t border-slate-700/60 grid grid-cols-2 gap-2 text-[11px] text-slate-300 font-medium">
+                    <div className="mt-3.5 pt-3 border-t border-white/15 grid grid-cols-2 gap-2 text-[11px] text-slate-200 font-medium drop-shadow-xs">
                       {currentMobileSlide.features.map((feat, i) => (
                         <div key={i} className="flex items-center gap-1.5">
                           <CheckCircle2 className="w-3.5 h-3.5 text-[#DFBF64] shrink-0" />
@@ -380,7 +381,7 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
                       ))}
                     </div>
                   ) : (
-                    <div className="mt-3.5 p-2.5 rounded-lg bg-slate-900/70 border border-slate-700/60 text-xs text-[#DFBF64] font-medium flex items-center gap-2">
+                    <div className="mt-3.5 p-2.5 rounded-lg bg-white/10 backdrop-blur-md border border-white/15 text-xs text-[#DFBF64] font-medium flex items-center gap-2">
                       <ShieldCheck className="w-4 h-4 shrink-0 text-[#DFBF64]" />
                       <span className="leading-tight">{currentMobileSlide.subDetail}</span>
                     </div>
@@ -388,7 +389,7 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
                 </div>
 
                 {/* Action Buttons */}
-                <div className="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between gap-3">
+                <div className="mt-4 pt-3 border-t border-white/15 flex items-center justify-between gap-3">
                   <div className="flex items-center gap-2.5">
                     <Button
                       variant="gold"
@@ -409,14 +410,14 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
                         to={currentMobileSlide.secondaryCta.href}
                         icon={ArrowRight}
                         iconPosition="right"
-                        className="bg-white/10 hover:bg-white text-white hover:text-[#0A1E3F] border-white/30 text-xs font-semibold"
+                        className="bg-white/15 hover:bg-white text-white hover:text-[#0A1E3F] border-white/30 backdrop-blur-md text-xs font-semibold shadow-xs"
                       >
                         {currentMobileSlide.secondaryCta.text}
                       </Button>
                     ) : (
                       <Link
                         href={currentMobileSlide.secondaryCta.href}
-                        className="text-xs text-slate-300 hover:text-white underline decoration-slate-500 underline-offset-4 font-medium"
+                        className="text-xs text-slate-200 hover:text-white underline decoration-slate-400 underline-offset-4 font-medium drop-shadow-xs"
                       >
                         {currentMobileSlide.secondaryCta.text}
                       </Link>
@@ -426,15 +427,15 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
               </div>
 
               {/* Carousel Navigation (Arrows + Dots) */}
-              <div className="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between">
+              <div className="mt-4 pt-3 border-t border-white/15 flex items-center justify-between">
                 {/* Previous Button */}
                 <button
                   type="button"
                   onClick={() => setMobileSlide((prev) => (prev - 1 + mobileSlides.length) % mobileSlides.length)}
                   aria-label="Previous slide"
-                  className="w-8 h-8 rounded-full bg-slate-900/80 hover:bg-slate-800 border border-slate-700 hover:border-[#DFBF64] text-white flex items-center justify-center transition-colors active:scale-95"
+                  className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 hover:border-[#DFBF64] text-white flex items-center justify-center transition-all active:scale-95"
                 >
-                  <ChevronLeft className="w-4 h-4 text-slate-300" />
+                  <ChevronLeft className="w-4 h-4 text-white" />
                 </button>
 
                 {/* Dot Indicators */}
@@ -449,8 +450,8 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
                       onClick={() => setMobileSlide(idx)}
                       className={`h-2 rounded-full transition-all duration-300 ${
                         mobileSlide === idx
-                          ? 'w-6 bg-[#DFBF64] shadow-[0_0_8px_rgba(223,191,100,0.6)]'
-                          : 'w-2 bg-slate-600/70 hover:bg-slate-400'
+                          ? 'w-6 bg-[#DFBF64] shadow-[0_0_10px_rgba(223,191,100,0.8)]'
+                          : 'w-2 bg-white/30 hover:bg-white/50'
                       }`}
                     />
                   ))}
@@ -461,16 +462,16 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
                   type="button"
                   onClick={() => setMobileSlide((prev) => (prev + 1) % mobileSlides.length)}
                   aria-label="Next slide"
-                  className="w-8 h-8 rounded-full bg-slate-900/80 hover:bg-slate-800 border border-slate-700 hover:border-[#DFBF64] text-white flex items-center justify-center transition-colors active:scale-95"
+                  className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 hover:border-[#DFBF64] text-white flex items-center justify-center transition-all active:scale-95"
                 >
-                  <ChevronRight className="w-4 h-4 text-slate-300" />
+                  <ChevronRight className="w-4 h-4 text-white" />
                 </button>
               </div>
             </div>
 
             {/* Mobile Smooth Scroll Cue */}
-            <div className="mt-3 flex items-center justify-center text-[11px] text-slate-400">
-              <div className="inline-flex items-center gap-1.5 bg-slate-950/60 backdrop-blur-xs px-3 py-1 rounded-full border border-slate-800/80">
+            <div className="mt-3 flex items-center justify-center text-[11px] text-slate-300">
+              <div className="inline-flex items-center gap-1.5 bg-black/30 backdrop-blur-md px-3.5 py-1 rounded-full border border-white/15 shadow-xs">
                 <span>Swipe card or scroll down</span>
                 <ChevronDown className="w-3.5 h-3.5 text-[#DFBF64] animate-bounce" />
               </div>
@@ -554,21 +555,21 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
 
             {/* STAGES 1 TO 5 */}
             {activeStage > 0 && (
-              <div className="bg-[#061226]/85 backdrop-blur-md p-8 rounded-2xl border border-slate-700/80 shadow-2xl max-w-lg space-y-4 animate-fade-in-up">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase bg-[#C59B27]/20 text-[#DFBF64] border border-[#C59B27]/40">
+              <div className="bg-[#061226]/50 backdrop-blur-xl p-8 rounded-2xl border border-white/20 shadow-[0_8px_32px_0_rgba(0,0,0,0.45)] max-w-lg space-y-4 animate-fade-in-up">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase bg-[#C59B27]/25 backdrop-blur-md text-[#DFBF64] border border-[#DFBF64]/40">
                   <Layers className="w-3.5 h-3.5" />
                   <span>{currentDesktopContent.eyebrow}</span>
                 </div>
 
-                <h2 className="font-heading text-2xl sm:text-3xl font-bold text-white tracking-tight leading-snug">
+                <h2 className="font-heading text-2xl sm:text-3xl font-bold text-white tracking-tight leading-snug drop-shadow-md">
                   {currentDesktopContent.headline}
                 </h2>
 
-                <p className="text-sm sm:text-base text-slate-200 leading-relaxed">
+                <p className="text-sm sm:text-base text-slate-100 leading-relaxed drop-shadow-xs">
                   {currentDesktopContent.description}
                 </p>
 
-                <div className="p-3 rounded-lg bg-slate-900/60 border border-slate-700/60 text-xs text-[#DFBF64] font-medium flex items-center gap-2">
+                <div className="p-3 rounded-lg bg-white/10 backdrop-blur-md border border-white/15 text-xs text-[#DFBF64] font-medium flex items-center gap-2">
                   <ShieldCheck className="w-4 h-4 shrink-0 text-[#DFBF64]" />
                   <span>{currentDesktopContent.subDetail}</span>
                 </div>
