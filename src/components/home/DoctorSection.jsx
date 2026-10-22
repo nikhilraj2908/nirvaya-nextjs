@@ -1,4 +1,6 @@
-import React from 'react';
+'use client';
+
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { DOCTOR_PROFILE } from '@/data/siteData';
 import Container from '@/components/common/Container';
@@ -11,6 +13,66 @@ import {
 } from 'lucide-react';
 
 export default function DoctorSection() {
+  const metricsRef = useRef(null);
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const [papersCount, setPapersCount] = useState(0);
+  const [surgeriesCount, setSurgeriesCount] = useState(0);
+
+  // Count-up animation triggered when user scrolls into view of this section
+  useEffect(() => {
+    const node = metricsRef.current;
+    if (!node) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        if (entry.isIntersecting && !hasAnimated) {
+          setHasAnimated(true);
+
+          const duration = 1800; // 1.8 seconds duration
+          const startTime = performance.now();
+
+          // Smooth cubic ease-out
+          const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
+
+          const animate = (currentTime) => {
+            const elapsed = currentTime - startTime;
+            const progress = Math.min(1, elapsed / duration);
+            const eased = easeOutCubic(progress);
+
+            // 1. Papers: 0 to 18 increments (0, 1, 2, ..., 18)
+            const currentPapers = Math.min(18, Math.round(eased * 18));
+            setPapersCount(currentPapers);
+
+            // 2. Surgeries: 0 to 10,000 increments with differences of 100 (0, 100, 200, ..., 10000)
+            const rawSurgeries = eased * 10000;
+            const currentSurgeries = Math.min(10000, Math.floor(rawSurgeries / 100) * 100);
+            setSurgeriesCount(currentSurgeries);
+
+            if (progress < 1) {
+              requestAnimationFrame(animate);
+            } else {
+              setPapersCount(18);
+              setSurgeriesCount(10000);
+            }
+          };
+
+          requestAnimationFrame(animate);
+        }
+      },
+      {
+        threshold: 0.25,
+        rootMargin: '0px 0px -50px 0px'
+      }
+    );
+
+    observer.observe(node);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [hasAnimated]);
+
   return (
     <section id="doctor" className="py-16 lg:py-24 bg-white border-t border-slate-200/80 scroll-mt-24">
       <Container>
@@ -107,31 +169,69 @@ export default function DoctorSection() {
               </p>
             </div>
 
-            {/* 3 Metric Pills */}
-            <div className="grid grid-cols-3 gap-3 pt-1">
-              <div className="p-3.5 rounded-2xl bg-[#F8FAFC] border border-slate-200/80 text-center">
-                <span className="text-lg sm:text-xl font-extrabold text-[#0A1E3F] block font-heading">
-                  18+
-                </span>
-                <span className="text-[11px] text-slate-500 font-medium">
-                  Scientific Papers
-                </span>
+            {/* 3 Identical Elevated Metric Boxes with Count-Up Animation */}
+            <div ref={metricsRef} className="grid grid-cols-3 gap-2.5 sm:gap-4 pt-1">
+              {/* Box 1: 18+ Scientific Papers */}
+              <div className="group relative h-full min-h-[135px] sm:min-h-[145px] p-3 sm:p-4 rounded-2xl sm:rounded-3xl bg-gradient-to-b from-white to-[#F8FAFC] border border-slate-200/90 shadow-[0_4px_18px_-4px_rgba(10,30,63,0.06)] hover:shadow-md hover:border-[#C59B27]/40 transition-all duration-300 flex flex-col justify-between items-center text-center">
+                {/* Top Metric Slot */}
+                <div className="h-12 sm:h-14 flex items-center justify-center w-full">
+                  <span className="text-2xl sm:text-3xl font-extrabold text-[#0A1E3F] font-heading tracking-tight leading-none">
+                    {papersCount}+
+                  </span>
+                </div>
+
+                {/* Center Golden Accent Line */}
+                <div className="w-8 h-[2px] bg-gradient-to-r from-transparent via-[#C59B27] to-transparent rounded-full my-1 opacity-70" />
+
+                {/* Bottom Subtitle Slot */}
+                <div className="h-9 sm:h-10 flex items-center justify-center w-full">
+                  <span className="text-[11px] sm:text-xs text-slate-600 font-semibold leading-tight line-clamp-2">
+                    Scientific Papers
+                  </span>
+                </div>
               </div>
-              <div className="p-3.5 rounded-2xl bg-[#F8FAFC] border border-slate-200/80 text-center">
-                <span className="text-lg sm:text-xl font-extrabold text-[#0A1E3F] block font-heading">
-                  Gold Medal
-                </span>
-                <span className="text-[11px] text-slate-500 font-medium">
-                  FAICO Vitreo-Retina
-                </span>
+
+              {/* Box 2: Gold Medal FAICO Vitreo-Retina */}
+              <div className="group relative h-full min-h-[135px] sm:min-h-[145px] p-3 sm:p-4 rounded-2xl sm:rounded-3xl bg-gradient-to-b from-white to-[#F8FAFC] border border-slate-200/90 shadow-[0_4px_18px_-4px_rgba(10,30,63,0.06)] hover:shadow-md hover:border-[#C59B27]/40 transition-all duration-300 flex flex-col justify-between items-center text-center">
+                {/* Top Metric Slot */}
+                <div className="h-12 sm:h-14 flex items-center justify-center w-full">
+                  <div className="flex items-center justify-center gap-1 sm:gap-1.5">
+                    <Award className="w-4 h-4 sm:w-5 sm:h-5 text-[#C59B27] shrink-0" />
+                    <span className="text-base sm:text-lg lg:text-xl font-extrabold text-[#0A1E3F] font-heading tracking-tight leading-tight">
+                      Gold Medal
+                    </span>
+                  </div>
+                </div>
+
+                {/* Center Golden Accent Line */}
+                <div className="w-8 h-[2px] bg-gradient-to-r from-transparent via-[#C59B27] to-transparent rounded-full my-1 opacity-70" />
+
+                {/* Bottom Subtitle Slot */}
+                <div className="h-9 sm:h-10 flex items-center justify-center w-full">
+                  <span className="text-[11px] sm:text-xs text-slate-600 font-semibold leading-tight line-clamp-2">
+                    FAICO Vitreo-Retina
+                  </span>
+                </div>
               </div>
-              <div className="p-3.5 rounded-2xl bg-[#F8FAFC] border border-slate-200/80 text-center">
-                <span className="text-lg sm:text-xl font-extrabold text-[#0A1E3F] block font-heading">
-                  10,000+
-                </span>
-                <span className="text-[11px] text-slate-500 font-medium">
-                  Evaluations & Surgeries
-                </span>
+
+              {/* Box 3: 10,000+ Evaluations & Surgeries */}
+              <div className="group relative h-full min-h-[135px] sm:min-h-[145px] p-3 sm:p-4 rounded-2xl sm:rounded-3xl bg-gradient-to-b from-white to-[#F8FAFC] border border-slate-200/90 shadow-[0_4px_18px_-4px_rgba(10,30,63,0.06)] hover:shadow-md hover:border-[#C59B27]/40 transition-all duration-300 flex flex-col justify-between items-center text-center">
+                {/* Top Metric Slot */}
+                <div className="h-12 sm:h-14 flex items-center justify-center w-full">
+                  <span className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-[#0A1E3F] font-heading tracking-tight leading-none">
+                    {surgeriesCount.toLocaleString()}+
+                  </span>
+                </div>
+
+                {/* Center Golden Accent Line */}
+                <div className="w-8 h-[2px] bg-gradient-to-r from-transparent via-[#C59B27] to-transparent rounded-full my-1 opacity-70" />
+
+                {/* Bottom Subtitle Slot */}
+                <div className="h-9 sm:h-10 flex items-center justify-center w-full">
+                  <span className="text-[11px] sm:text-xs text-slate-600 font-semibold leading-tight line-clamp-2">
+                    Evaluations & Surgeries
+                  </span>
+                </div>
               </div>
             </div>
 

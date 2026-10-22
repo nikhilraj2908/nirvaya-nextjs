@@ -157,6 +157,17 @@ export default function ServicesContent() {
 
                   {/* Right Column: Diagnostic Approach & Booking Action */}
                   <div className="lg:col-span-5 bg-slate-50 rounded-xl p-6 border border-slate-200/80 space-y-4">
+                    {spec.image && (
+                      <div className="relative h-44 w-full overflow-hidden rounded-lg bg-slate-200 shadow-xs">
+                        <img
+                          src={spec.image}
+                          alt={spec.title}
+                          className="w-full h-full object-cover object-center"
+                          loading="lazy"
+                        />
+                      </div>
+                    )}
+
                     <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#0A1E3F]">
                       <Activity className="w-4 h-4 text-[#C59B27]" />
                       <span>Diagnostic & Clinical Protocols</span>

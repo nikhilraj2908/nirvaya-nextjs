@@ -1,4 +1,4 @@
-import { Plus_Jakarta_Sans, Noto_Sans, Noto_Sans_Devanagari } from 'next/font/google';
+import { Plus_Jakarta_Sans, Noto_Sans, Noto_Sans_Devanagari, Playfair_Display } from 'next/font/google';
 import './globals.css';
 import AppLayoutClient from '@/components/layout/AppLayoutClient';
 
@@ -20,6 +20,13 @@ const notoDevanagari = Noto_Sans_Devanagari({
   subsets: ['devanagari'],
   weight: ['400', '500', '600', '700'],
   variable: '--font-hindi',
+  display: 'swap',
+});
+
+const playfairDisplay = Playfair_Display({
+  subsets: ['latin'],
+  weight: ['400', '600', '700', '800'],
+  variable: '--font-serif-luxury',
   display: 'swap',
 });
 
@@ -157,7 +164,7 @@ export default function RootLayout({ children }) {
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${plusJakartaSans.variable} ${notoSans.variable} ${notoDevanagari.variable} font-scale-md h-full antialiased`}
+      className={`${plusJakartaSans.variable} ${notoSans.variable} ${notoDevanagari.variable} ${playfairDisplay.variable} font-scale-md h-full antialiased`}
     >
       <head>
         <script

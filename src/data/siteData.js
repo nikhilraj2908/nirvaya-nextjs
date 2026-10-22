@@ -135,6 +135,7 @@ export const SPECIALTIES = [
     title: "Retina & Vitreoretinal Surgery",
     category: "Surgical Retina",
     badge: "Core Specialty",
+    image: "/images/specialties/retina-vitre.jpg",
     shortDescription: "Specialist management of retinal detachments, macular holes, vitreous hemorrhage and epiretinal membranes using sutureless micro-incision vitrectomy.",
     symptoms: ["Sudden flashes or shower of floaters", "Curtain falling over visual field", "Distorted or wavy central vision"],
     badgeColor: "gold"
@@ -144,6 +145,7 @@ export const SPECIALTIES = [
     title: "Intravitreal Injections (Anti-VEGF)",
     category: "Medical Retina",
     badge: "Outpatient Day-Care",
+    image: "/images/specialties/anti-vegf.jpg",
     shortDescription: "Painless, precise intravitreal injections for Age-related Macular Degeneration (AMD), Diabetic Macular Edema, and Retinal Vein Occlusion (RVO).",
     symptoms: ["Blurry central reading vision", "Dark spot in center of vision", "Sudden painless drop in vision in one eye"],
     badgeColor: "blue"
@@ -153,6 +155,7 @@ export const SPECIALTIES = [
     title: "Diabetic Eye Care & Retinopathy",
     category: "Systemic Retina",
     badge: "Preventive & Laser",
+    image: "/images/specialties/diabetic-eyecare.jpg",
     shortDescription: "Comprehensive screening, high-definition fundus photography, green laser photocoagulation and anti-VEGF protocols to safeguard vision against diabetes.",
     symptoms: ["Fluctuating vision with blood sugar", "Spots or dark strings (floaters)", "Empty or dark areas in field"],
     badgeColor: "navy"
@@ -162,6 +165,7 @@ export const SPECIALTIES = [
     title: "ROP Screening & Treatment",
     category: "Pediatric Retina",
     badge: "Neonatal Care",
+    image: "/images/specialties/rop-screening.jpg",
     shortDescription: "Timely bedside screening for premature and low-birth-weight neonates to detect and treat Retinopathy of Prematurity before irreversible vision loss.",
     symptoms: ["Infants born <34 weeks or <1750g", "Requirement of prolonged oxygen support", "Pediatrician / Neonatologist referral"],
     badgeColor: "gold"

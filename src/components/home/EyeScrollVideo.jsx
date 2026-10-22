@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { CLINIC_INFO, HERO_STAGES } from '@/data/siteData';
 import Button from '@/components/common/Button';
+import MobileHero from './MobileHero';
 
 // Register GSAP ScrollTrigger plugin safely
 if (typeof window !== 'undefined') {
@@ -259,27 +260,28 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
   const currentMobileSlide = mobileSlides[mobileSlide] || mobileSlides[0];
 
   return (
-    <section
-      ref={containerRef}
-      id="hero"
-      aria-label="Interactive Eye Hero Experience"
-      className={`relative w-full overflow-x-clip ${
-        isMobile
-          ? 'min-h-[88svh] sm:min-h-screen'
-          : isReducedMotion
-          ? 'min-h-[85vh]'
-          : 'h-[460vh] sm:h-[500vh]'
-      }`}
-    >
-      {/* Hero Viewport (Relative on mobile for smooth natural scrolling; Sticky on desktop for GSAP scrub) */}
-      <div
-        ref={stickyRef}
-        className={`${
-          isMobile
-            ? 'relative min-h-[88svh] sm:min-h-screen'
-            : 'sticky top-0 h-[100svh] min-h-[580px] max-h-[100svh]'
-        } w-full overflow-hidden bg-[#061226] flex flex-col justify-between`}
+    <>
+      {/* 1. Mobile & Tablet Hero (< 1024px) - Clean Luxury Editorial Landing with Live Countdown & Lead Capture */}
+      <div className="block lg:hidden w-full">
+        <MobileHero onOpenPreBook={onOpenPreBook} currentLang={currentLang} />
+      </div>
+
+      {/* 2. Desktop Hero (>= 1024px) - Interactive Eye Disassembly Scroll Video */}
+      <section
+        ref={containerRef}
+        id="hero"
+        aria-label="Interactive Eye Hero Experience"
+        className={`hidden lg:block relative w-full overflow-x-clip ${
+          isReducedMotion
+            ? 'min-h-[85vh]'
+            : 'h-[460vh] sm:h-[500vh]'
+        }`}
       >
+        {/* Desktop Sticky Viewport */}
+        <div
+          ref={stickyRef}
+          className="sticky top-0 h-[100svh] min-h-[580px] max-h-[100svh] w-full overflow-hidden bg-[#061226] flex flex-col justify-between"
+        >
         {/* Ambient Dark Canvas Base */}
         <div className="absolute inset-0 bg-[#061226] z-0 pointer-events-none" />
 
@@ -621,6 +623,7 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
         </div>
       </div>
     </section>
+    </>
   );
 }
 

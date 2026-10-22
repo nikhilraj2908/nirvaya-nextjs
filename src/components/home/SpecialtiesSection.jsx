@@ -41,45 +41,72 @@ export default function SpecialtiesSection({ currentLang = 'en' }) {
           {flagshipSpecialties.map((spec) => (
             <div
               key={spec.id}
-              className="group bg-white rounded-2xl p-6 border border-slate-200 hover:border-[#DFBF64]/80 shadow-xs hover:shadow-lg transition-all duration-300 flex flex-col justify-between reveal-up"
+              className="group bg-white rounded-2xl overflow-hidden border border-slate-200 hover:border-[#DFBF64]/80 shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between reveal-up"
             >
-              <div>
-                {/* Category & Badge */}
-                <div className="flex items-center justify-between gap-2 mb-3">
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-sky-700 bg-sky-50 px-2 py-0.5 rounded-md border border-sky-100">
-                    {spec.category}
-                  </span>
-                  <span className="text-[10px] font-medium text-amber-800 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200/60">
-                    {spec.badge}
-                  </span>
+              {/* Clinical Image Header */}
+              {spec.image && (
+                <div className="relative h-44 w-full overflow-hidden bg-slate-100 shrink-0">
+                  <img
+                    src={spec.image}
+                    alt={spec.title}
+                    className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#061226]/60 via-transparent to-transparent opacity-60 pointer-events-none" />
+
+                  {/* Floating Badges */}
+                  <div className="absolute top-3 inset-x-3 flex items-center justify-between gap-2 pointer-events-none">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-white bg-[#061226]/85 backdrop-blur-md px-2 py-0.5 rounded-md border border-white/15">
+                      {spec.category}
+                    </span>
+                    <span className="text-[10px] font-semibold text-white bg-[#C59B27] px-2 py-0.5 rounded-full shadow-xs">
+                      {spec.badge}
+                    </span>
+                  </div>
+                </div>
+              )}
+
+              <div className="p-5 flex-1 flex flex-col justify-between">
+                <div>
+                  {/* Category & Badge fallback if no image */}
+                  {!spec.image && (
+                    <div className="flex items-center justify-between gap-2 mb-3">
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-sky-700 bg-sky-50 px-2 py-0.5 rounded-md border border-sky-100">
+                        {spec.category}
+                      </span>
+                      <span className="text-[10px] font-medium text-amber-800 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200/60">
+                        {spec.badge}
+                      </span>
+                    </div>
+                  )}
+
+                  {/* Title */}
+                  <h3 className="text-base font-bold text-[#0A1E3F] group-hover:text-[#C59B27] transition-colors mb-2">
+                    {spec.title}
+                  </h3>
+
+                  {/* Short Description */}
+                  <p className="text-slate-600 text-xs sm:text-[13px] leading-relaxed mb-4 line-clamp-3">
+                    {spec.shortDescription}
+                  </p>
                 </div>
 
-                {/* Title */}
-                <h3 className="text-base font-bold text-[#0A1E3F] group-hover:text-[#C59B27] transition-colors mb-2.5">
-                  {spec.title}
-                </h3>
-
-                {/* Short Description */}
-                <p className="text-slate-600 text-xs sm:text-[13px] leading-relaxed mb-4 line-clamp-3">
-                  {spec.shortDescription}
-                </p>
-              </div>
-
-              {/* Action Link */}
-              <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
-                <Link
-                  href={`/pre-book?specialty=${encodeURIComponent(spec.title)}`}
-                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0A1E3F] hover:text-[#C59B27] transition-colors"
-                >
-                  <Calendar className="w-3.5 h-3.5 text-[#C59B27]" />
-                  <span>Pre-book Slot</span>
-                </Link>
-                <Link
-                  href="/services"
-                  className="text-[11px] font-semibold text-slate-400 hover:text-slate-700 transition-colors"
-                >
-                  Details →
-                </Link>
+                {/* Action Link */}
+                <div className="pt-3 border-t border-slate-100 flex items-center justify-between mt-auto">
+                  <Link
+                    href={`/pre-book?specialty=${encodeURIComponent(spec.title)}`}
+                    className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0A1E3F] hover:text-[#C59B27] transition-colors"
+                  >
+                    <Calendar className="w-3.5 h-3.5 text-[#C59B27]" />
+                    <span>Pre-book Slot</span>
+                  </Link>
+                  <Link
+                    href="/services"
+                    className="text-[11px] font-semibold text-slate-400 hover:text-slate-700 transition-colors"
+                  >
+                    Details →
+                  </Link>
+                </div>
               </div>
             </div>
           ))}
