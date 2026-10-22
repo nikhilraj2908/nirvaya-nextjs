@@ -31,23 +31,22 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
   const [activeStage, setActiveStage] = useState(0);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [videoError, setVideoError] = useState(false);
+  const [videoShiftX, setVideoShiftX] = useState(0);
   const [isReducedMotion, setIsReducedMotion] = useState(false);
-  const [eyeTransform, setEyeTransform] = useState({ shift: '0%', scale: 0.82 });
 
-  // Handle responsive desktop right alignment and proportional sizing of eye video
+  // Shift video 100-200px to the right on desktop so main animation is unobstructed
   useEffect(() => {
-    const updateLayout = () => {
+    const updateShift = () => {
       if (typeof window === 'undefined') return;
       const w = window.innerWidth;
-      if (w >= 1536) setEyeTransform({ shift: '22%', scale: 0.76 });
-      else if (w >= 1280) setEyeTransform({ shift: '20%', scale: 0.77 });
-      else if (w >= 1024) setEyeTransform({ shift: '18%', scale: 0.78 });
-      else if (w >= 768) setEyeTransform({ shift: '10%', scale: 0.80 });
-      else setEyeTransform({ shift: '0%', scale: 0.82 });
+      if (w >= 1536) setVideoShiftX(160);
+      else if (w >= 1280) setVideoShiftX(140);
+      else if (w >= 1024) setVideoShiftX(110);
+      else setVideoShiftX(0);
     };
-    updateLayout();
-    window.addEventListener('resize', updateLayout);
-    return () => window.removeEventListener('resize', updateLayout);
+    updateShift();
+    window.addEventListener('resize', updateShift);
+    return () => window.removeEventListener('resize', updateShift);
   }, []);
 
   // Check prefers-reduced-motion
@@ -120,6 +119,11 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
 
     const handleMetadata = () => {
       setIsVideoLoaded(true);
+      if (video && video.currentTime === 0) {
+        try {
+          video.currentTime = 0.001;
+        } catch (_) {}
+      }
       setupScrub();
     };
 
@@ -176,12 +180,12 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
         {/* Luminous Medical Halo Backlight */}
         <div className="absolute top-1/2 left-1/2 lg:left-[71%] xl:left-[72%] -translate-x-1/2 -translate-y-1/2 w-[460px] h-[460px] sm:w-[580px] sm:h-[580px] lg:w-[640px] lg:h-[640px] bg-gradient-to-tr from-sky-400/25 via-blue-500/15 to-indigo-400/10 rounded-full blur-3xl pointer-events-none z-0" />
 
-        {/* 16:9 Eye Disassembly Video Layer */}
+        {/* 16:9 Hero Video Layer */}
         {!videoError ? (
           <div className="absolute inset-0 w-full h-full z-1 overflow-hidden pointer-events-none">
             <video
               ref={videoRef}
-              src="/assets/eye-disassembly-16x9.mp4"
+              src="/assets/demo-video.mp4"
               muted
               playsInline
               preload="auto"
@@ -189,13 +193,11 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
               controls={false}
               tabIndex={-1}
               aria-hidden="true"
-              className="w-full h-full object-cover object-center select-none opacity-100 transition-transform duration-300 pointer-events-none"
+              className="w-full h-full object-cover object-right select-none opacity-100 pointer-events-none transition-transform duration-300"
               style={{
-                filter: 'brightness(1.10) contrast(1.22) saturate(1.18)',
-                transform: `translateX(${eyeTransform.shift}) scale(${eyeTransform.scale})`,
-                transformOrigin: 'center center',
-                maskImage: 'radial-gradient(circle at center, black 55%, transparent 84%)',
-                WebkitMaskImage: 'radial-gradient(circle at center, black 55%, transparent 84%)'
+                filter: 'brightness(1.04) contrast(1.08)',
+                transform: videoShiftX ? `translateX(${videoShiftX}px)` : 'none',
+                transformOrigin: 'center right'
               }}
             />
           </div>
@@ -209,23 +211,17 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
           </div>
         )}
 
-        {/* Desktop Left-to-Right Feathered Gradient */}
-        <div className="hidden lg:block absolute inset-0 w-full h-full pointer-events-none z-2 bg-gradient-to-r from-[#061226] via-[#061226] via-[36%] via-[#061226]/85 via-[48%] via-[#061226]/30 via-[58%] to-transparent to-[66%]" />
-
-        {/* Right-edge matching vignette */}
-        <div className="hidden lg:block absolute inset-y-0 right-0 w-32 xl:w-44 pointer-events-none z-2 bg-gradient-to-l from-[#061226]/80 via-[#061226]/20 to-transparent" />
+        {/* Desktop Left-to-Right Feathered Gradient for Text Contrast (fades early so center video animation is clear) */}
+        <div className="hidden lg:block absolute inset-0 w-full h-full pointer-events-none z-2 bg-gradient-to-r from-[#061226] via-[#061226] via-[24%] via-[#061226]/80 via-[32%] via-[#061226]/20 via-[40%] to-transparent to-[46%]" />
 
         {/* Mobile / Tablet Full Smooth Overlay */}
         <div className="lg:hidden absolute inset-0 pointer-events-none z-2 bg-gradient-to-t from-[#061226] via-[#061226]/75 via-[48%] to-[#061226]/35" />
 
-        {/* Top Vignette */}
-        <div className="absolute inset-x-0 top-0 h-28 pointer-events-none z-2 bg-gradient-to-b from-[#061226]/90 via-[#061226]/40 to-transparent" />
-
-        {/* Bottom Vignette */}
-        <div className="absolute inset-x-0 bottom-0 h-32 pointer-events-none z-2 bg-gradient-to-t from-[#061226] via-[#061226]/70 to-transparent" />
+        {/* Bottom Vignette for Smooth Transition to Trust Strip */}
+        <div className="absolute inset-x-0 bottom-0 h-28 pointer-events-none z-2 bg-gradient-to-t from-[#061226] via-[#061226]/60 to-transparent" />
 
         {/* Foreground Content Container */}
-        <div className="relative z-10 w-full h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-between py-6 sm:py-8 lg:py-12 pointer-events-none">
+        <div className="relative z-10 w-full h-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-between py-6 sm:py-8 lg:py-12 pointer-events-none">
           {/* Subtle top breathing space */}
           <div className="h-2 sm:h-6 pointer-events-none" />
 

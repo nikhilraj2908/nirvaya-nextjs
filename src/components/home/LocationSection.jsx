@@ -159,7 +159,7 @@ export default function LocationSection() {
             <div className="rounded-2xl sm:rounded-3xl overflow-hidden border border-slate-200 shadow-md bg-slate-100 relative h-[340px] sm:h-[380px] flex flex-col justify-between">
               <iframe
                 title="Nirvaya Eyecare Centre Location Map"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3665.253676831093!2d77.45899737532356!3d23.269999079001397!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397c6999a03194a3%3A0x6b6c0e0b3c65c26!2sAyodhya%20Bypass%20Rd%2C%20Bhopal%2C%20Madhya%20Pradesh!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+                src="https://maps.google.com/maps?q=23.269999,77.458997&hl=en&z=15&output=embed"
                 className="w-full h-full border-0 absolute inset-0"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"

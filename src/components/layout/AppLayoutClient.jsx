@@ -15,6 +15,20 @@ export default function AppLayoutClient({ children }) {
   const [currentLang, setCurrentLang] = useState('en');
   const [currentFontScale, setCurrentFontScale] = useState('md');
 
+  const [navKey, setNavKey] = useState(pathname);
+  const [isNavigating, setIsNavigating] = useState(false);
+
+  // Instantly reset scroll to top on route change (avoiding confusing slow scroll-up)
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.scrollTo(0, 0);
+    }
+    setIsNavigating(true);
+    setNavKey(pathname);
+    const timer = setTimeout(() => setIsNavigating(false), 500);
+    return () => clearTimeout(timer);
+  }, [pathname]);
+
   // Trigger bottom-to-top reveal transitions on text and elements as they enter viewport
   useScrollReveal();
 
@@ -38,6 +52,15 @@ export default function AppLayoutClient({ children }) {
 
   return (
     <div className="min-h-screen bg-white flex flex-col font-sans selection:bg-[#DFBF64] selection:text-[#0A1E3F] overflow-x-clip w-full">
+      {/* Top Route Progress Bar for clear redirection feedback */}
+      {isNavigating && (
+        <div
+          key={`progress-${navKey}`}
+          aria-hidden="true"
+          className="fixed top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#DFBF64] via-sky-400 to-[#DFBF64] z-50 animate-route-progress shadow-xs pointer-events-none"
+        />
+      )}
+
       {/* Skip to content for accessibility */}
       <a
         href="#main-content"
@@ -56,8 +79,12 @@ export default function AppLayoutClient({ children }) {
         />
       )}
 
-      {/* Main Content */}
-      <main id="main-content" className="flex-1 w-full">
+      {/* Main Content with clean page enter animation */}
+      <main
+        id="main-content"
+        key={pathname}
+        className="flex-1 w-full animate-page-enter"
+      >
         {children}
       </main>
 

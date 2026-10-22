@@ -14,32 +14,48 @@ export default function Header({
   const [showTopHeader, setShowTopHeader] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const lastScrollYRef = useRef(0);
 
   useEffect(() => {
+    let lastScrollY = typeof window !== 'undefined' ? window.scrollY : 0;
+    let upScrollAccumulator = 0;
+    let ticking = false;
+
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const currentScrollY = Math.max(0, window.scrollY);
 
-      // Track if page has scrolled away from top
-      setIsScrolled(currentScrollY > 15);
+          setIsScrolled(currentScrollY > 15);
 
-      // Always show upper header when near the very top of the page
-      if (currentScrollY <= 25) {
-        setShowTopHeader(true);
-      } else {
-        const delta = currentScrollY - lastScrollYRef.current;
+          // 1. At the very top of the page (within 20px): always show top header
+          if (currentScrollY <= 20) {
+            setShowTopHeader(true);
+            upScrollAccumulator = 0;
+          } else {
+            const diff = currentScrollY - lastScrollY;
 
-        // Scrolling DOWN -> smoothly hide ONLY the upper utility header
-        if (delta > 5 && currentScrollY > 50) {
-          setShowTopHeader(false);
-        }
-        // Scrolling UP -> reveal the upper utility header
-        else if (delta < -5) {
-          setShowTopHeader(true);
-        }
+            // 2. Scrolling DOWN: Hide top utility header immediately on a single scroll down
+            if (diff > 0) {
+              upScrollAccumulator = 0;
+              if (diff >= 3) {
+                setShowTopHeader(false);
+              }
+            }
+            // 3. Scrolling UP: Require intentional upward scroll (>= 35px) or near top (<= 30px)
+            // to completely eliminate scroll bounce/jitter feedback loops
+            else if (diff < 0) {
+              upScrollAccumulator += Math.abs(diff);
+              if (upScrollAccumulator >= 35 || currentScrollY <= 30) {
+                setShowTopHeader(true);
+              }
+            }
+          }
+
+          lastScrollY = currentScrollY;
+          ticking = false;
+        });
+        ticking = true;
       }
-
-      lastScrollYRef.current = currentScrollY;
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -60,16 +76,18 @@ export default function Header({
     <header className="sticky top-0 z-40 w-full bg-white">
       {/* Upper Utility Header (Location, Lang, Font Scale, Admin Portal): Collapses on scroll down, reappears on scroll up */}
       <div
-        className={`w-full overflow-hidden transition-all duration-300 ease-in-out ${
-          showTopHeader ? 'max-h-12 opacity-100' : 'max-h-0 opacity-0 pointer-events-none'
+        className={`grid transition-[grid-template-rows,opacity] duration-250 ease-in-out ${
+          showTopHeader ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0 pointer-events-none'
         }`}
       >
-        <TopHeader
-          currentLang={currentLang}
-          onLangChange={onLangChange}
-          currentFontScale={currentFontScale}
-          onFontScaleChange={onFontScaleChange}
-        />
+        <div className="overflow-hidden">
+          <TopHeader
+            currentLang={currentLang}
+            onLangChange={onLangChange}
+            currentFontScale={currentFontScale}
+            onFontScaleChange={onFontScaleChange}
+          />
+        </div>
       </div>
 
       {/* Lower Navigation Header (Logo, Nav items, Eye Animation Pre-book, Hamburger): ALWAYS visible and sticky */}

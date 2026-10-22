@@ -100,7 +100,7 @@ export default function DoctorSection() {
 
             <div className="space-y-3.5 text-sm sm:text-base text-slate-600 leading-relaxed">
               <p>
-                Dr Sandhya Gaur completed her postgraduate ophthalmology residency at <strong className="text-[#0A1E3F]">AIIMS New Delhi</strong>, followed by extensive sub-specialty vitreo-retinal surgical training.
+                <strong className="font-bold text-[#0A1E3F]">Dr Sandhya Gaur</strong> completed her <strong className="font-bold text-[#0A1E3F]">postgraduate ophthalmology</strong> residency at <strong className="font-bold text-[#0A1E3F]">AIIMS</strong> New Delhi, followed by extensive sub-specialty vitreo-retinal surgical training.
               </p>
               <p>
                 She was awarded the prestigious <strong className="text-[#0A1E3F]">FAICO Retina Gold Medal</strong> and has authored 18+ peer-reviewed international scientific papers. Every patient at Nirvaya receives unhurried, direct clinical evaluation by Dr Gaur herself.

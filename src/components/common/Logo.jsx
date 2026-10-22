@@ -22,23 +22,7 @@ export default function Logo({
 
     if (pathname === '/') {
       e.preventDefault();
-      const heroEl = document.getElementById('hero');
-      if (heroEl) {
-        heroEl.scrollIntoView({ behavior: 'smooth' });
-      } else {
-        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-      }
-    } else {
-      e.preventDefault();
-      router.push('/');
-      setTimeout(() => {
-        const heroEl = document.getElementById('hero');
-        if (heroEl) {
-          heroEl.scrollIntoView({ behavior: 'smooth' });
-        } else {
-          window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-        }
-      }, 100);
+      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     }
   };
 

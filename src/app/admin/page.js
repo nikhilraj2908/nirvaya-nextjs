@@ -605,7 +605,7 @@ export default function AdminPage() {
     <div className="min-h-screen bg-slate-50 flex flex-col font-sans">
       {/* Top Admin Navbar */}
       <header className="bg-[#061226] text-white border-b border-slate-800 sticky top-0 z-30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
           <div className="flex items-center gap-4">
             <Logo variant="light" size="sm" />
             <div className="h-5 w-px bg-slate-700 hidden sm:block" />
@@ -635,7 +635,7 @@ export default function AdminPage() {
         </div>
 
         {/* Tab Strip */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-1 overflow-x-auto border-t border-slate-800/80 scrollbar-none text-xs font-semibold">
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-1 overflow-x-auto border-t border-slate-800/80 scrollbar-none text-xs font-semibold">
           <button
             type="button"
             onClick={() => setActiveTab('crp')}
@@ -725,7 +725,7 @@ export default function AdminPage() {
       </header>
 
       {/* Main Content Area */}
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="flex-1 max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* ================================================================= */}
         {/* TAB 1: CRP Analytics & Funnel                                     */}
         {/* ================================================================= */}

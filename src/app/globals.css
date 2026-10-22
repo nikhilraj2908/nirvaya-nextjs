@@ -32,7 +32,6 @@
 
 html {
   font-size: var(--font-scale);
-  scroll-behavior: smooth;
   overflow-x: clip;
   max-width: 100vw;
 }
@@ -193,9 +192,49 @@ html.font-scale-lg {
 .reveal-stagger-children > *:nth-child(5) { transition-delay: 320ms; }
 .reveal-stagger-children > *:nth-child(6) { transition-delay: 390ms; }
 
+/* Page route transition and top progress line */
+@keyframes pageEnter {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-page-enter {
+  animation: pageEnter 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes topRouteProgress {
+  0% {
+    width: 0%;
+    opacity: 1;
+  }
+  50% {
+    width: 65%;
+    opacity: 1;
+  }
+  85% {
+    width: 100%;
+    opacity: 1;
+  }
+  100% {
+    width: 100%;
+    opacity: 0;
+  }
+}
+
+.animate-route-progress {
+  animation: topRouteProgress 0.45s ease-out forwards;
+}
+
 /* Accessible Reduced Motion Support */
 @media (prefers-reduced-motion: reduce) {
   .animate-page-enter,
+  .animate-route-progress,
   .animate-fade-in-up,
   .animate-slide-up-short,
   .reveal-up {
