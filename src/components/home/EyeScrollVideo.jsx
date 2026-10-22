@@ -211,8 +211,8 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
           </div>
         )}
 
-        {/* Desktop Left-to-Right Feathered Gradient for Text Contrast (fades early so center video animation is clear) */}
-        <div className="hidden lg:block absolute inset-0 w-full h-full pointer-events-none z-2 bg-gradient-to-r from-[#061226] via-[#061226] via-[24%] via-[#061226]/80 via-[32%] via-[#061226]/20 via-[40%] to-transparent to-[46%]" />
+        {/* Desktop Left-to-Right Feathered Gradient for Strong Text Contrast & Deep Canvas */}
+        <div className="hidden lg:block absolute inset-0 w-full h-full pointer-events-none z-2 bg-gradient-to-r from-[#061226] via-[#061226] via-[28%] via-[#061226]/95 via-[35%] via-[#061226]/20 via-[40%] via-[#061226]/25 via-[8%] to-transparent to-[62%]" />
 
         {/* Mobile / Tablet Full Smooth Overlay */}
         <div className="lg:hidden absolute inset-0 pointer-events-none z-2 bg-gradient-to-t from-[#061226] via-[#061226]/75 via-[48%] to-[#061226]/35" />
