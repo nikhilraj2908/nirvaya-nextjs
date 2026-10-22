@@ -41,7 +41,7 @@ export default function Footer() {
         {/* Main 4-Column Footer Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8 pb-12 border-b border-slate-800/80">
           <div className="lg:col-span-4 space-y-4">
-            <Logo type="round" variant="light" size="md" />
+            <Logo type="round" size="md" />
 
             <p className="text-slate-300 text-xs leading-relaxed pt-2">
               A specialized day-care eye centre in Bhopal focused on vitreo-retinal surgery, micro-incision cataract surgery, diabetic eye disease, and pediatric ROP screening under Dr Sandhya Gaur (MD AIIMS, FVRS, FAICO Gold Medalist).

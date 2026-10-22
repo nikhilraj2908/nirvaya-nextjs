@@ -30,10 +30,10 @@ export default function Logo({
 
   const heightClasses = isRound
     ? {
-        sm: 'h-16 w-auto max-w-[120px]',
-        md: 'h-20 sm:h-24 w-auto max-w-[160px]',
-        lg: 'h-24 sm:h-28 md:h-32 w-auto max-w-[200px]'
-      }[size] || 'h-20 sm:h-24 w-auto max-w-[160px]'
+        sm: 'h-16 w-auto max-w-[130px]',
+        md: 'h-24 sm:h-28 w-auto max-w-[180px]',
+        lg: 'h-28 sm:h-32 md:h-36 w-auto max-w-[220px]'
+      }[size] || 'h-24 sm:h-28 w-auto max-w-[180px]'
     : {
         sm: 'h-7 sm:h-8 max-w-[140px] sm:max-w-[160px]',
         md: 'h-8 sm:h-10 md:h-11 max-w-[165px] sm:max-w-[210px] md:max-w-[230px]',
@@ -45,14 +45,12 @@ export default function Logo({
       href="/"
       onClick={handleClick}
       aria-label="Nirvaya Eyecare Centre Home"
-      className={`inline-flex items-center group focus:outline-none focus:ring-2 focus:ring-[#C59B27] rounded-2xl transition-transform active:scale-[0.99] shrink-0 cursor-pointer ${className}`}
+      className={`inline-flex items-center group focus:outline-none focus:ring-2 focus:ring-[#C59B27] rounded-xl transition-transform active:scale-[0.99] shrink-0 cursor-pointer ${className}`}
     >
       <div
         className={`relative flex items-center transition-all ${
-          isLight
-            ? isRound
-              ? 'bg-white p-3 sm:p-3.5 rounded-2xl shadow-md border border-white/30'
-              : 'bg-white/95 px-2.5 py-1 rounded-lg shadow-xs border border-white/20'
+          isLight && !isRound
+            ? 'bg-white/95 px-2.5 py-1 rounded-lg shadow-xs border border-white/20'
             : ''
         }`}
       >
