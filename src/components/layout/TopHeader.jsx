@@ -1,8 +1,7 @@
 'use client';
 
 import React from 'react';
-import Link from 'next/link';
-import { MapPin, Phone, Clock, Shield } from 'lucide-react';
+import { MapPin, Phone, Clock, Languages } from 'lucide-react';
 import { CLINIC_INFO } from '@/data/siteData';
 
 export default function TopHeader({
@@ -89,42 +88,44 @@ export default function TopHeader({
             </button>
           </div>
 
+          {/* Language Switcher Icons */}
           <div
-            className="flex items-center text-[11px] sm:text-xs font-medium pl-1 sm:pl-1.5 border-l border-slate-700/80"
+            className="flex items-center rounded bg-slate-800/80 p-0.5 border border-slate-700/60 ml-1"
             role="group"
             aria-label="Language selection"
           >
+            <div className="pl-1.5 pr-1 text-slate-400 flex items-center" title="Select Language">
+              <Languages className="w-3.5 h-3.5 text-[#DFBF64]" aria-hidden="true" />
+            </div>
             <button
               type="button"
               onClick={() => onLangChange && onLangChange('en')}
+              aria-label="English"
+              title="English"
               aria-pressed={currentLang === 'en'}
-              className="px-1 sm:px-1.5 py-0.5 transition-colors cursor-pointer text-[#DFBF64] font-bold underline decoration-[#DFBF64] decoration-2 underline-offset-4"
+              className={`px-1.5 sm:px-2 py-0.5 text-[10.5px] sm:text-xs rounded font-bold transition-all cursor-pointer ${
+                currentLang === 'en'
+                  ? 'bg-[#C59B27] text-white shadow-xs'
+                  : 'text-slate-300 hover:text-white hover:bg-slate-700/50'
+              }`}
             >
-              English
+              EN
             </button>
-            <span className="text-slate-600 px-0.5">|</span>
             <button
               type="button"
-              onClick={(e) => {
-                e.preventDefault();
-              }}
-              title="हिन्दी (शीघ्र उपलब्ध / Coming Soon)"
+              onClick={() => onLangChange && onLangChange('hi')}
+              aria-label="Hindi"
+              title="हिन्दी (Hindi)"
               aria-pressed={currentLang === 'hi'}
-              className="pl-1 sm:pl-1.5 pr-0 py-0.5 font-hindi transition-colors cursor-default text-slate-400 hover:text-slate-300"
+              className={`px-1.5 sm:px-2 py-0.5 text-[10.5px] sm:text-xs rounded font-bold font-hindi transition-all cursor-pointer ${
+                currentLang === 'hi'
+                  ? 'bg-[#C59B27] text-white shadow-xs'
+                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-700/50'
+              }`}
             >
-              हिन्दी
+              हि
             </button>
           </div>
-
-          <Link
-            href="/admin"
-            className="flex items-center gap-1 text-[11.5px] font-semibold text-slate-200 hover:text-[#DFBF64] pl-2 sm:pl-3 border-l border-slate-700/80 transition-colors"
-            title="Clinic Staff & Admin Command Centre"
-          >
-            <Shield className="w-3.5 h-3.5 text-[#DFBF64]" aria-hidden="true" />
-            <span className="hidden sm:inline">Admin Portal</span>
-            <span className="sm:hidden">Admin</span>
-          </Link>
         </div>
       </div>
     </div>
