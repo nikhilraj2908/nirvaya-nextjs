@@ -24,7 +24,7 @@ export const DOCTOR_REVIEWS = [
     registrationNo: "",
     photo: "",
     approved: true,
-    quote: "Over the years, I have referred multiple patients presenting with retinal vascular occlusions and macular edema to Dr Sandhya Gaur. Her diagnostic reporting is prompt, thorough, and grounded in standard vitreo-retinal protocols. The clinical feedback loop and patient coordination remain consistently dependable."
+    quote: "I regularly refer patients with retinal vascular occlusions and macular edema to Dr Sandhya Gaur. Her diagnostic workup is thorough, prompt, and grounded in standard vitreo-retinal protocols with dependable clinical follow-through."
   },
   {
     id: "dr-rev-02",
@@ -36,7 +36,7 @@ export const DOCTOR_REVIEWS = [
     registrationNo: "",
     photo: "",
     approved: true,
-    quote: "Effective management of diabetic eye disease requires timely screening and conservative, protocol-based laser or intravitreal intervention. In our shared diabetic patients, Dr Gaur provides transparent fundus evaluation, clear procedural communication, and unhurried clinical counselling."
+    quote: "For diabetic eye disease, timely screening and protocol-based interventions are critical. In our shared patients, Dr Gaur provides meticulous fundus evaluation, clear procedural communication, and unhurried counselling."
   },
   {
     id: "dr-rev-03",
@@ -48,7 +48,7 @@ export const DOCTOR_REVIEWS = [
     registrationNo: "",
     photo: "",
     approved: true,
-    quote: "Timely retinal evaluation in preterm infants is time-critical. Dr Gaur conducts thorough indirect ophthalmoscopic ROP screening with gentleness and strict adherence to national ROP screening criteria, accompanied by clear updates to parents and attending neonatologists."
+    quote: "Retinal evaluation in preterm infants is time-critical. Dr Gaur conducts gentle, thorough ROP screenings strictly adhering to national protocols, with clear and prompt updates for neonatologists and parents."
   }
 ];
 
