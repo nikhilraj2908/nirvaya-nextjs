@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import FloatingWhatsApp from '@/components/common/FloatingWhatsApp';
@@ -10,7 +10,21 @@ import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 export default function AppLayoutClient({ children }) {
   const pathname = usePathname();
+  const router = useRouter();
   const isAdminRoute = pathname?.startsWith('/admin');
+
+  // Secret Staff/Admin shortcut: Ctrl + , (or Cmd + ,) navigates directly to Admin login
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if ((e.ctrlKey || e.metaKey) && (e.key === ',' || e.code === 'Comma')) {
+        e.preventDefault();
+        router.push('/admin');
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [router]);
 
   const [currentLang, setCurrentLang] = useState('en');
   const [currentFontScale, setCurrentFontScale] = useState('md');

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { X, ChevronDown, ChevronRight, Phone, MessageSquare, Shield } from 'lucide-react';
+import { X, ChevronDown, ChevronRight, Phone, MessageSquare } from 'lucide-react';
 import { NAVIGATION_ITEMS, CLINIC_INFO } from '@/data/siteData';
 import Logo from '@/components/common/Logo';
 import EyeTrackingButton from '@/components/common/EyeTrackingButton';
@@ -162,17 +162,6 @@ export default function MobileNavigation({
               <Phone className="w-4 h-4" />
               <span>Call Clinic</span>
             </a>
-          </div>
-
-          <div className="pt-2 border-t border-slate-200/80 text-center">
-            <Link
-              href="/admin"
-              onClick={onClose}
-              className="inline-flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg text-xs font-semibold text-slate-600 hover:text-[#0A1E3F] hover:bg-slate-100 transition-colors"
-            >
-              <Shield className="w-3.5 h-3.5 text-[#C59B27]" />
-              <span>Staff & Admin Portal</span>
-            </Link>
           </div>
 
           <div className="text-[10.5px] text-slate-500 text-center pt-0.5">

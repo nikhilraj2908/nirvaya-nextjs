@@ -10,7 +10,6 @@ import {
   Phone,
   Mail,
   Clock,
-  ShieldCheck,
   ChevronRight,
   ExternalLink,
   X
@@ -177,21 +176,16 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/faq" className="hover:text-[#DFBF64] transition-colors">
+                  Patient FAQs
+                </Link>
+              </li>
+              <li>
                 <Link
                   href="/pre-book"
                   className="hover:text-[#DFBF64] text-amber-300 font-bold block pt-1"
                 >
                   Pre-book Slot →
-                </Link>
-              </li>
-              <li className="pt-2 border-t border-slate-800/80">
-                <Link
-                  href="/admin"
-                  className="hover:text-[#DFBF64] text-slate-400 transition-colors flex items-center gap-1.5"
-                  title="Staff & Management Login"
-                >
-                  <ShieldCheck className="w-3.5 h-3.5 text-[#DFBF64]" />
-                  <span>Admin Portal</span>
                 </Link>
               </li>
             </ul>
@@ -271,14 +265,6 @@ export default function Footer() {
             >
               Patient Charter
             </button>
-            <span>•</span>
-            <Link
-              href="/admin"
-              className="hover:text-[#DFBF64] text-slate-400 transition-colors flex items-center gap-1 font-semibold"
-            >
-              <ShieldCheck className="w-3.5 h-3.5 text-[#DFBF64]" />
-              <span>Staff & Admin Portal</span>
-            </Link>
           </div>
         </div>
 
