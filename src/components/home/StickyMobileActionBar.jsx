@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import Link from 'next/link';
+import SafeLink from '@/components/common/SafeLink';
 import { CLINIC_INFO } from '@/data/siteData';
 import { Phone, MessageSquare, Calendar } from 'lucide-react';
 
@@ -14,17 +14,17 @@ export default function StickyMobileActionBar() {
     >
       <div className="grid grid-cols-3 gap-2.5 max-w-md mx-auto items-center">
         {/* Direct Call Button */}
-        <a
+        <SafeLink
           href={`tel:${CLINIC_INFO.phoneRaw}`}
           className="flex items-center justify-center gap-1.5 py-2.5 px-2 rounded-xl bg-white/10 hover:bg-white/15 border border-white/15 text-white active:scale-95 transition-all min-h-[44px]"
           aria-label="Call clinic directly"
         >
           <Phone className="w-3.5 h-3.5 text-[#DFBF64] shrink-0" />
           <span className="text-xs font-semibold tracking-tight">Call</span>
-        </a>
+        </SafeLink>
 
         {/* WhatsApp Consultation Button */}
-        <a
+        <SafeLink
           href={`https://wa.me/${CLINIC_INFO.whatsappRaw}?text=${encodeURIComponent(
             CLINIC_INFO.whatsappDefaultMessage
           )}`}
@@ -35,17 +35,17 @@ export default function StickyMobileActionBar() {
         >
           <MessageSquare className="w-3.5 h-3.5 text-[#25D366] shrink-0" />
           <span className="text-xs font-semibold tracking-tight">WhatsApp</span>
-        </a>
+        </SafeLink>
 
         {/* Pre-book OPD Slot Hero Button */}
-        <Link
+        <SafeLink
           href="/pre-book"
           className="flex items-center justify-center gap-1.5 py-2.5 px-2.5 rounded-xl bg-gradient-to-r from-[#DFBF64] via-[#C59B27] to-[#B3871B] text-[#0A1E3F] font-extrabold text-xs shadow-md shadow-[#C59B27]/25 hover:brightness-105 active:scale-95 transition-all min-h-[44px] cursor-pointer"
           aria-label="Open Pre-book Consultation Page"
         >
           <Calendar className="w-3.5 h-3.5 text-[#0A1E3F] shrink-0" />
           <span className="tracking-tight">Pre-book</span>
-        </Link>
+        </SafeLink>
       </div>
     </nav>
   );

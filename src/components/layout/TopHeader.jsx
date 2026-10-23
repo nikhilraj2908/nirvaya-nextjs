@@ -3,6 +3,7 @@
 import React from 'react';
 import { MapPin, Phone, Clock, Languages } from 'lucide-react';
 import { CLINIC_INFO } from '@/data/siteData';
+import SafeLink from '@/components/common/SafeLink';
 
 export default function TopHeader({
   currentLang = 'en',
@@ -29,13 +30,13 @@ export default function TopHeader({
             <span>OPD: 9:30 AM – 7:30 PM (Mon–Sat)</span>
           </div>
 
-          <a
+          <SafeLink
             href={`tel:${CLINIC_INFO.phoneRaw}`}
             className="hidden lg:inline-flex items-center gap-1.5 text-slate-300 hover:text-[#DFBF64] transition-colors text-xs"
           >
             <Phone className="w-3.5 h-3.5 text-[#DFBF64]" aria-hidden="true" />
             <span>{CLINIC_INFO.phone}</span>
-          </a>
+          </SafeLink>
         </div>
 
         <div className="flex items-center gap-1.5 sm:gap-3 shrink-0 ml-auto">

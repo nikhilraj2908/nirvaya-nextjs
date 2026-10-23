@@ -5,6 +5,7 @@ import { X, Calendar, Clock, CheckCircle2, ShieldCheck, Phone, ArrowRight, User,
 import { CLINIC_INFO, SPECIALTIES } from '@/data/siteData';
 import Button from './Button';
 import { bookAppointment, getAvailableSlots, trackEvent } from '@/services/api';
+import { IS_PREVIEW, showPreviewToast } from '@/lib/preview';
 
 export default function PreBookModal({ isOpen, onClose, defaultSpecialty = '' }) {
   const tomorrow = new Date();
@@ -117,6 +118,10 @@ export default function PreBookModal({ isOpen, onClose, defaultSpecialty = '' })
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (IS_PREVIEW) {
+      showPreviewToast('Preview mode – submissions disabled');
+      return;
+    }
     if (!validate()) return;
 
     setIsSubmitting(true);

@@ -1,5 +1,6 @@
 import React from 'react';
-import Link from 'next/link';
+import SafeLink from '@/components/common/SafeLink';
+import { IS_PREVIEW, showPreviewToast } from '@/lib/preview';
 
 /**
  * Premium Button component for Nirvaya Eyecare Centre
@@ -63,38 +64,35 @@ export default function Button({
   const destination = to || href;
 
   if (destination) {
-    // If external link
-    if (destination.startsWith('http') || destination.startsWith('tel:') || destination.startsWith('mailto:') || target === '_blank') {
-      return (
-        <a
-          href={destination}
-          className={classes}
-          target={target}
-          rel={target === '_blank' ? 'noopener noreferrer' : rel}
-          {...props}
-        >
-          {content}
-        </a>
-      );
-    }
-
     return (
-      <Link
+      <SafeLink
         href={destination}
         className={classes}
         onClick={onClick}
+        target={target}
+        rel={rel}
         {...props}
       >
         {content}
-      </Link>
+      </SafeLink>
     );
   }
+
+  const handleButtonClick = (e) => {
+    if (IS_PREVIEW && type === 'submit') {
+      e.preventDefault();
+      e.stopPropagation();
+      showPreviewToast('Preview mode – submissions disabled');
+      return;
+    }
+    if (onClick) onClick(e);
+  };
 
   return (
     <button
       type={type}
       className={classes}
-      onClick={onClick}
+      onClick={handleButtonClick}
       disabled={disabled}
       {...props}
     >

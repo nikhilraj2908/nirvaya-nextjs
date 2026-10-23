@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
-import Link from 'next/link';
+import SafeLink from '@/components/common/SafeLink';
 import Container from '@/components/common/Container';
 import {
   Search,
@@ -59,9 +59,9 @@ export default function FaqClient() {
         <Container className="relative z-10">
           {/* Breadcrumb */}
           <nav className="flex items-center gap-2 text-xs text-slate-400 mb-6" aria-label="Breadcrumb">
-            <Link href="/" className="hover:text-white transition-colors">
+            <SafeLink href="/" className="hover:text-white transition-colors">
               Home
-            </Link>
+            </SafeLink>
             <span>/</span>
             <span className="text-[#DFBF64] font-semibold">Patient FAQ</span>
           </nav>
@@ -230,13 +230,13 @@ export default function FaqClient() {
 
                         {faq.ctaLink && faq.ctaText && (
                           <div className="pt-1">
-                            <Link
+                            <SafeLink
                               href={faq.ctaLink}
                               className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0A1E3F] hover:text-[#C59B27] transition-colors"
                             >
                               <span>{faq.ctaText}</span>
                               <ArrowRight className="w-3.5 h-3.5 text-[#C59B27]" />
-                            </Link>
+                            </SafeLink>
                           </div>
                         )}
                       </div>
@@ -282,21 +282,21 @@ export default function FaqClient() {
             </div>
 
             <div className="flex flex-wrap items-center justify-center gap-3 shrink-0">
-              <Link
+              <SafeLink
                 href="/pre-book"
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#0A1E3F] hover:bg-[#16325C] text-white text-xs sm:text-sm font-bold shadow-xs transition"
               >
                 <CalendarCheck className="w-4 h-4 text-[#DFBF64]" />
                 <span>Pre-Book Slot</span>
-              </Link>
-              <a
+              </SafeLink>
+              <SafeLink
                 href={`tel:${CLINIC_INFO.phoneRaw}`}
                 className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-[#0A1E3F] text-xs sm:text-sm font-bold border border-slate-200 transition"
               >
                 <PhoneCall className="w-4 h-4 text-sky-600" />
                 <span>Call Clinic</span>
-              </a>
-              <a
+              </SafeLink>
+              <SafeLink
                 href="https://wa.me/917554928200"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -304,7 +304,7 @@ export default function FaqClient() {
               >
                 <MessageCircle className="w-4 h-4" />
                 <span>WhatsApp</span>
-              </a>
+              </SafeLink>
             </div>
           </div>
         </div>

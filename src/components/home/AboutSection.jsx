@@ -1,5 +1,5 @@
 import React from 'react';
-import Link from 'next/link';
+import SafeLink from '@/components/common/SafeLink';
 import { ShieldCheck, Award, Building2, Calendar, ArrowRight, Microscope } from 'lucide-react';
 import Container from '@/components/common/Container';
 import SectionHeading from '@/components/common/SectionHeading';
@@ -84,12 +84,12 @@ export default function AboutSection() {
               >
                 Pre-book Slot
               </Button>
-              <Link
+              <SafeLink
                 href="/doctors"
                 className="text-xs font-bold text-[#0A1E3F] hover:text-[#C59B27] underline decoration-slate-300 underline-offset-4 ml-1"
               >
                 Meet Dr Sandhya Gaur →
-              </Link>
+              </SafeLink>
             </div>
           </div>
 
@@ -128,13 +128,13 @@ export default function AboutSection() {
                 </div>
 
                 <div className="pt-2">
-                  <Link
+                  <SafeLink
                     href="/about"
                     className="inline-flex items-center gap-2 text-xs font-bold text-[#DFBF64] hover:text-white transition-colors"
                   >
                     <span>Read Full Centre Story & Institutional Pillars</span>
                     <ArrowRight className="w-3.5 h-3.5" />
-                  </Link>
+                  </SafeLink>
                 </div>
               </div>
             </div>

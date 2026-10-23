@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useRef, useEffect, useState } from 'react';
-import Link from 'next/link';
+import SafeLink from '@/components/common/SafeLink';
+import { IS_PREVIEW } from '@/lib/preview';
 
 /**
  * Interactive Eye-Tracking Button Component
@@ -297,7 +298,7 @@ export default function EyeTrackingButton({
 
   if (destination) {
     return (
-      <Link
+      <SafeLink
         ref={buttonRef}
         href={destination}
         onClick={onClick}
@@ -305,7 +306,7 @@ export default function EyeTrackingButton({
         aria-label={ariaLabel || label}
       >
         {content}
-      </Link>
+      </SafeLink>
     );
   }
 
@@ -313,7 +314,14 @@ export default function EyeTrackingButton({
     <button
       ref={buttonRef}
       type="button"
-      onClick={onClick}
+      onClick={(e) => {
+        if (IS_PREVIEW) {
+          e.preventDefault();
+          e.stopPropagation();
+          return;
+        }
+        if (onClick) onClick(e);
+      }}
       className={sharedClasses}
       aria-label={ariaLabel || label}
     >

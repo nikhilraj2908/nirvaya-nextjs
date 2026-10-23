@@ -35,6 +35,20 @@ const playfairDisplay = Playfair_Display({
 
 export const metadata = {
   metadataBase: new URL('https://nirvayaeyecare.com'),
+  ...(process.env.PREVIEW_MODE === 'true' || process.env.NEXT_PUBLIC_PREVIEW_MODE === 'true'
+    ? {
+        robots: {
+          index: false,
+          follow: false,
+          nocache: true,
+          googleBot: {
+            index: false,
+            follow: false,
+            noimageindex: true,
+          },
+        },
+      }
+    : {}),
   title: {
     default: 'Nirvaya Eyecare Centre | Specialist-led Retina, Cataract & Comprehensive Eye Care in Bhopal',
     template: '%s | Nirvaya Eyecare Centre'
@@ -176,8 +190,10 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className="min-h-full flex flex-col font-sans" suppressHydrationWarning>
-        {/* Google Analytics 4 (gtag.js) */}
-        {GA_MEASUREMENT_ID && (
+        {/* Google Analytics 4 (gtag.js) - Disabled in Client Preview Mode */}
+        {process.env.PREVIEW_MODE !== 'true' &&
+          process.env.NEXT_PUBLIC_PREVIEW_MODE !== 'true' &&
+          GA_MEASUREMENT_ID && (
           <>
             <Script
               strategy="afterInteractive"

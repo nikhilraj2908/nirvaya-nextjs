@@ -1,9 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
-import Link from 'next/link';
+import SafeLink from '@/components/common/SafeLink';
 import Container from '@/components/common/Container';
 import { CLINIC_INFO } from '@/data/siteData';
+import { IS_PREVIEW, showPreviewToast } from '@/lib/preview';
 import {
   MapPin,
   Phone,
@@ -30,10 +31,15 @@ export default function ContactContent() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (IS_PREVIEW) {
+      showPreviewToast('Preview mode – submissions disabled');
+      return;
+    }
     setSubmitted(true);
   };
 
   const handleWhatsAppDirect = () => {
+    if (IS_PREVIEW) return;
     const text = encodeURIComponent(
       `Hello Nirvaya Eyecare Centre, I would like to inquire about consultation and clinic directions.\nName: ${
         formData.name || 'Patient'
@@ -67,20 +73,20 @@ export default function ContactContent() {
             </p>
 
             <div className="pt-2 flex flex-wrap gap-4">
-              <Link
+              <SafeLink
                 href="/pre-book"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[#C59B27] hover:bg-[#B38A1F] text-white font-bold text-sm shadow-lg hover:shadow-xl transition-all cursor-pointer"
               >
                 <Calendar className="w-4 h-4" />
                 <span>Pre-book OPD Slot</span>
-              </Link>
-              <a
+              </SafeLink>
+              <SafeLink
                 href={`tel:${CLINIC_INFO.phoneRaw}`}
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-white/10 hover:bg-white text-white hover:text-[#0A1E3F] font-semibold text-sm border border-white/20 transition-all cursor-pointer"
               >
                 <Phone className="w-4 h-4 text-[#DFBF64]" />
                 <span>Call {CLINIC_INFO.phone}</span>
-              </a>
+              </SafeLink>
             </div>
           </div>
         </Container>

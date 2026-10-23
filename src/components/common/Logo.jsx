@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import Link from 'next/link';
+import SafeLink from '@/components/common/SafeLink';
 import { useRouter, usePathname } from 'next/navigation';
 
 export default function Logo({
@@ -41,7 +41,7 @@ export default function Logo({
       }[size] || 'h-8 sm:h-10 md:h-11 max-w-[165px] sm:max-w-[210px] md:max-w-[230px]';
 
   return (
-    <Link
+    <SafeLink
       href="/"
       onClick={handleClick}
       aria-label="Nirvaya Eyecare Centre Home"
@@ -64,6 +64,6 @@ export default function Logo({
           loading="eager"
         />
       </div>
-    </Link>
+    </SafeLink>
   );
 }

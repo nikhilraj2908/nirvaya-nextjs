@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
+import SafeLink from '@/components/common/SafeLink';
 import Container from '@/components/common/Container';
 import SectionHeading from '@/components/common/SectionHeading';
 import { CLINIC_INFO } from '@/data/siteData';
@@ -105,9 +105,9 @@ export default function DoctorsContent() {
       <section className="relative py-16 lg:py-24 bg-[#061226] text-white border-b border-slate-800">
         <Container>
           <nav className="flex items-center gap-2 text-xs text-slate-400 mb-6 font-medium">
-            <Link href="/" className="hover:text-[#DFBF64] transition-colors">
+            <SafeLink href="/" className="hover:text-[#DFBF64] transition-colors">
               Home
-            </Link>
+            </SafeLink>
             <span>/</span>
             <span className="text-[#DFBF64]">Our Doctors</span>
           </nav>
@@ -131,27 +131,27 @@ export default function DoctorsContent() {
             </p>
 
             <div className="pt-4 flex flex-wrap items-center gap-4 animate-fade-in-up stagger-5">
-              <Link
+              <SafeLink
                 href="/pre-book"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[#C59B27] hover:bg-[#B38A1F] text-white font-bold text-sm shadow-lg hover:shadow-xl transition-all cursor-pointer"
               >
                 <Calendar className="w-4 h-4" />
                 <span>Pre-book Consultation Slot</span>
-              </Link>
-              <a
+              </SafeLink>
+              <SafeLink
                 href={`tel:${CLINIC_INFO.phoneRaw}`}
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-white/10 hover:bg-white text-white hover:text-[#0A1E3F] font-semibold text-sm border border-white/20 transition-all"
               >
                 <Phone className="w-4 h-4 text-[#DFBF64]" />
                 <span>Call Clinic Desk</span>
-              </a>
-              <Link
+              </SafeLink>
+              <SafeLink
                 href="/research"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-sm border border-slate-700 transition-all"
               >
                 <BookOpen className="w-4 h-4 text-[#DFBF64]" />
                 <span>View 18+ Research Papers</span>
-              </Link>
+              </SafeLink>
             </div>
           </div>
         </Container>
@@ -240,12 +240,12 @@ export default function DoctorsContent() {
                   Consultations are intentionally spaced to ensure thorough dilated fundus evaluation without assembly-line rushing.
                 </div>
 
-                <Link
+                <SafeLink
                   href="/pre-book"
                   className="w-full py-3 rounded-lg bg-[#C59B27] hover:bg-[#B38A1F] text-white font-bold text-xs text-center block transition-all cursor-pointer shadow-md"
                 >
                   Reserve Slot with Dr Sandhya Gaur
-                </Link>
+                </SafeLink>
               </div>
 
               {/* Research and Papers Card */}
@@ -255,13 +255,13 @@ export default function DoctorsContent() {
                     <FileText className="w-4 h-4 text-[#C59B27]" />
                     <span>Research Publications</span>
                   </div>
-                  <Link
+                  <SafeLink
                     href="/research"
                     className="text-xs font-bold text-[#C59B27] hover:underline inline-flex items-center gap-1"
                   >
                     <span>View All</span>
                     <ArrowRight className="w-3 h-3" />
-                  </Link>
+                  </SafeLink>
                 </div>
 
                 <p className="text-xs text-slate-600 leading-relaxed">
@@ -361,12 +361,12 @@ export default function DoctorsContent() {
                     <span className="text-xs text-slate-500">
                       Consultation: ₹{doc.consultationFee || 700}
                     </span>
-                    <Link
+                    <SafeLink
                       href="/pre-book"
                       className="px-4 py-2 rounded-lg bg-[#0A1E3F] hover:bg-[#16325C] text-white text-xs font-bold transition-all"
                     >
                       Pre-book Slot
-                    </Link>
+                    </SafeLink>
                   </div>
                 </div>
               ))}

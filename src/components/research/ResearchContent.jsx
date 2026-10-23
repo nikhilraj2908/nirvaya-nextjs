@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
-import Link from 'next/link';
+import SafeLink from '@/components/common/SafeLink';
 import Container from '@/components/common/Container';
 import SectionHeading from '@/components/common/SectionHeading';
 import { getResearchPapers } from '@/services/api';
@@ -74,9 +74,9 @@ export default function ResearchContent() {
       <section className="relative py-16 lg:py-24 bg-[#061226] text-white border-b border-slate-800">
         <Container>
           <nav className="flex items-center gap-2 text-xs text-slate-400 mb-6 font-medium">
-            <Link href="/" className="hover:text-[#DFBF64] transition-colors">
+            <SafeLink href="/" className="hover:text-[#DFBF64] transition-colors">
               Home
-            </Link>
+            </SafeLink>
             <span>/</span>
             <span className="text-[#DFBF64]">Research & Publications</span>
           </nav>
@@ -292,7 +292,7 @@ export default function ResearchContent() {
 
                       <div className="flex items-center gap-2">
                         {paper.externalUrl && (
-                          <a
+                          <SafeLink
                             href={paper.externalUrl}
                             target="_blank"
                             rel="noopener noreferrer"
@@ -300,14 +300,14 @@ export default function ResearchContent() {
                           >
                             <span>Publisher Index</span>
                             <ExternalLink className="w-3.5 h-3.5" />
-                          </a>
+                          </SafeLink>
                         )}
-                        <Link
+                        <SafeLink
                           href="/pre-book"
                           className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#C59B27] hover:bg-[#B38A1F] text-white text-xs font-bold transition-all shadow-xs"
                         >
                           <span>Consult Author</span>
-                        </Link>
+                        </SafeLink>
                       </div>
                     </div>
                   </article>
@@ -329,18 +329,18 @@ export default function ResearchContent() {
                 At Nirvaya Eyecare Centre, your treatment is not guided by commercial targets, but by published clinical trials, precise micro-surgical protocols, and international vitreoretinal benchmarks.
               </p>
               <div className="pt-2 flex flex-wrap items-center gap-4">
-                <Link
+                <SafeLink
                   href="/pre-book"
                   className="px-6 py-3 rounded-lg bg-[#C59B27] hover:bg-[#B38A1F] text-white font-bold text-sm shadow-md transition-all"
                 >
                   Book Specialist Consultation
-                </Link>
-                <Link
+                </SafeLink>
+                <SafeLink
                   href="/doctors"
                   className="px-6 py-3 rounded-lg bg-white/10 hover:bg-white text-white hover:text-[#0A1E3F] font-semibold text-sm border border-white/20 transition-all"
                 >
                   View Dr Sandhya Gaur’s Full Profile
-                </Link>
+                </SafeLink>
               </div>
             </div>
           </div>

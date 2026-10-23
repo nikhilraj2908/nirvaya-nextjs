@@ -3,6 +3,7 @@ import { CLINIC_INFO } from '@/data/siteData';
 import Container from '@/components/common/Container';
 import SectionHeading from '@/components/common/SectionHeading';
 import Button from '@/components/common/Button';
+import SafeLink from '@/components/common/SafeLink';
 import {
   MapPin,
   Clock,
@@ -176,7 +177,7 @@ export default function LocationSection() {
                 <p className="text-[11px] text-slate-600 mb-2.5 leading-snug">
                   Ayodhya Bypass Road, Bhopal. Direct main road access.
                 </p>
-                <a
+                <SafeLink
                   href={CLINIC_INFO.social.googleBusiness}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -184,7 +185,7 @@ export default function LocationSection() {
                 >
                   <span>Open in Navigation App</span>
                   <Navigation className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-                </a>
+                </SafeLink>
               </div>
             </div>
           </div>

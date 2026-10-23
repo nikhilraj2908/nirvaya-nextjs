@@ -7,6 +7,7 @@ import Footer from '@/components/layout/Footer';
 import FloatingWhatsApp from '@/components/common/FloatingWhatsApp';
 import { usePageTracking } from '@/hooks/usePageTracking';
 import { useScrollReveal } from '@/hooks/useScrollReveal';
+import { IS_PREVIEW } from '@/lib/preview';
 
 export default function AppLayoutClient({ children }) {
   const pathname = usePathname();
@@ -17,6 +18,7 @@ export default function AppLayoutClient({ children }) {
   useEffect(() => {
     const handleKeyDown = (e) => {
       if ((e.ctrlKey || e.metaKey) && (e.key === ',' || e.code === 'Comma')) {
+        if (IS_PREVIEW) return; // Prevent admin navigation in preview mode
         e.preventDefault();
         router.push('/admin');
       }
@@ -105,6 +107,18 @@ export default function AppLayoutClient({ children }) {
       {/* Show Public Footer and Floating WhatsApp only on client-facing routes */}
       {!isAdminRoute && <Footer />}
       {!isAdminRoute && <FloatingWhatsApp />}
+
+      {/* Tiny non-blocking UI Preview ribbon shown only in preview mode */}
+      {IS_PREVIEW && (
+        <div
+          role="status"
+          aria-label="UI Preview Mode"
+          className="fixed bottom-3 left-3 z-50 pointer-events-none select-none px-2.5 py-1 rounded-full bg-[#0A1E3F]/80 backdrop-blur-md text-[#DFBF64] text-[11px] font-bold tracking-wider uppercase border border-[#DFBF64]/30 shadow-lg flex items-center gap-1.5"
+        >
+          <span className="w-1.5 h-1.5 rounded-full bg-[#DFBF64] animate-pulse" />
+          <span>UI Preview</span>
+        </div>
+      )}
     </div>
   );
 }

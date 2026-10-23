@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-import Link from 'next/link';
+import SafeLink from '@/components/common/SafeLink';
 import { ChevronDown, Menu } from 'lucide-react';
 import { NAVIGATION_ITEMS } from '@/data/siteData';
 import Logo from '@/components/common/Logo';
@@ -85,7 +85,7 @@ export default function MainNavigation({
                       }`}
                     >
                       {item.children.map((child) => (
-                        <Link
+                        <SafeLink
                           key={child.label}
                           href={child.href}
                           role="menuitem"
@@ -101,7 +101,7 @@ export default function MainNavigation({
                               {child.desc}
                             </span>
                           )}
-                        </Link>
+                        </SafeLink>
                       ))}
                     </div>
                   )}
@@ -110,13 +110,13 @@ export default function MainNavigation({
             }
 
             return (
-              <Link
+              <SafeLink
                 key={item.label}
                 href={item.href}
                 className="inline-flex items-center whitespace-nowrap px-2 xl:px-2.5 py-1.5 rounded-md hover:text-[#C59B27] hover:bg-slate-50 transition-colors focus-visible:ring-2 focus-visible:ring-[#C59B27] shrink-0"
               >
                 <span className="whitespace-nowrap">{item.label}</span>
-              </Link>
+              </SafeLink>
             );
           })}
         </nav>

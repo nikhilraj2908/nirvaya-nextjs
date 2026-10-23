@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useRef, useState, useEffect, useMemo, useCallback } from 'react';
-import Link from 'next/link';
+import SafeLink from '@/components/common/SafeLink';
 import {
   Calendar,
   ArrowRight,

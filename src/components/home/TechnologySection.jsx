@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import Link from 'next/link';
+import SafeLink from '@/components/common/SafeLink';
 import Container from '@/components/common/Container';
 import Button from '@/components/common/Button';
 import {
@@ -157,13 +157,13 @@ export default function TechnologySection() {
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
                   <span>Installed & Active</span>
                 </span>
-                <Link
+                <SafeLink
                   href="/technology"
                   className="text-[11px] font-semibold text-[#DFBF64] hover:underline flex items-center gap-1 group-hover:translate-x-0.5 transition-transform"
                 >
                   <span>Learn more</span>
                   <span>→</span>
-                </Link>
+                </SafeLink>
               </div>
             </div>
           ))}

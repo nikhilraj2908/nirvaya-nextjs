@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
+import SafeLink from '@/components/common/SafeLink';
 import { Search, Clock, ArrowRight, User, BookOpen, FileText } from 'lucide-react';
 import Container from '@/components/common/Container';
 import { getBlogs, getBlogCategories } from '@/services/api';
@@ -51,9 +51,9 @@ export default function BlogListContent() {
       <section className="relative py-16 lg:py-24 bg-[#061226] text-white border-b border-slate-800">
         <Container>
           <nav className="flex items-center gap-2 text-xs text-slate-400 mb-6 font-medium">
-            <Link href="/" className="hover:text-[#DFBF64] transition-colors">
+            <SafeLink href="/" className="hover:text-[#DFBF64] transition-colors">
               Home
-            </Link>
+            </SafeLink>
             <span>/</span>
             <span className="text-[#DFBF64]">Clinical Blog</span>
           </nav>
@@ -189,9 +189,9 @@ export default function BlogListContent() {
                       </div>
 
                       <h2 className="text-xl font-heading font-bold text-[#0A1E3F] group-hover:text-[#C59B27] transition-colors leading-snug mb-3">
-                        <Link href={`/blog/${blog.slug}`}>
+                        <SafeLink href={`/blog/${blog.slug}`}>
                           {blog.title}
-                        </Link>
+                        </SafeLink>
                       </h2>
 
                       <p className="text-sm text-slate-600 line-clamp-3 leading-relaxed mb-4">
@@ -209,13 +209,13 @@ export default function BlogListContent() {
                       </span>
                     </div>
 
-                    <Link
+                    <SafeLink
                       href={`/blog/${blog.slug}`}
                       className="inline-flex items-center gap-1.5 text-xs font-bold text-[#C59B27] group-hover:translate-x-0.5 transition-transform"
                     >
                       <span>Read Article</span>
                       <ArrowRight className="w-3.5 h-3.5" />
-                    </Link>
+                    </SafeLink>
                   </div>
                 </article>
               ))}

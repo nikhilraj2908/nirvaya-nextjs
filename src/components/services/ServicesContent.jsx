@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import Link from 'next/link';
+import SafeLink from '@/components/common/SafeLink';
 import Container from '@/components/common/Container';
 import { SPECIALTIES, CLINIC_INFO } from '@/data/siteData';
 import {
@@ -37,9 +37,9 @@ export default function ServicesContent() {
       <section className="relative py-16 lg:py-24 bg-[#061226] text-white border-b border-slate-800">
         <Container>
           <nav className="flex items-center gap-2 text-xs text-slate-400 mb-6 font-medium">
-            <Link href="/" className="hover:text-[#DFBF64] transition-colors">
+            <SafeLink href="/" className="hover:text-[#DFBF64] transition-colors">
               Home
-            </Link>
+            </SafeLink>
             <span>/</span>
             <span className="text-[#DFBF64]">Clinical Services & Specialties</span>
           </nav>
@@ -59,20 +59,20 @@ export default function ServicesContent() {
             </p>
 
             <div className="pt-4 flex flex-wrap items-center gap-4">
-              <Link
+              <SafeLink
                 href="/pre-book"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[#C59B27] hover:bg-[#B38A1F] text-white font-bold text-sm shadow-lg hover:shadow-xl transition-all cursor-pointer"
               >
                 <Calendar className="w-4 h-4" />
                 <span>Pre-book an Appointment</span>
-              </Link>
-              <a
+              </SafeLink>
+              <SafeLink
                 href={`tel:${CLINIC_INFO.phoneRaw}`}
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-white/10 hover:bg-white text-white hover:text-[#0A1E3F] font-semibold text-sm border border-white/20 transition-all"
               >
                 <Phone className="w-4 h-4 text-[#DFBF64]" />
                 <span>{CLINIC_INFO.phone}</span>
-              </a>
+              </SafeLink>
             </div>
           </div>
         </Container>
@@ -189,14 +189,14 @@ export default function ServicesContent() {
                     </div>
 
                     <div className="pt-3 border-t border-slate-200 flex flex-col gap-2.5">
-                      <Link
+                      <SafeLink
                         href={`/pre-book?specialty=${encodeURIComponent(spec.title)}`}
                         className="w-full py-2.5 px-4 rounded-lg bg-[#0A1E3F] hover:bg-[#16325C] text-white font-bold text-xs text-center transition-colors shadow-xs"
                       >
                         Pre-book Slot for {spec.title.split(' ')[0]}
-                      </Link>
+                      </SafeLink>
 
-                      <a
+                      <SafeLink
                         href={`https://wa.me/${CLINIC_INFO.whatsappRaw}?text=${encodeURIComponent(
                           `Hello Nirvaya Eyecare, I would like to enquire about ${spec.title}.`
                         )}`}
@@ -205,7 +205,7 @@ export default function ServicesContent() {
                         className="w-full py-2 px-4 rounded-lg bg-white hover:bg-slate-100 text-slate-700 font-semibold text-xs text-center border border-slate-200 transition-colors"
                       >
                         Enquire on WhatsApp
-                      </a>
+                      </SafeLink>
                     </div>
                   </div>
                 </div>

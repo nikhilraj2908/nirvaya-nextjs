@@ -14,6 +14,7 @@ import {
   AlertTriangle
 } from 'lucide-react';
 import { formatReadableDate } from '@/utils/bookingDateHelpers';
+import { IS_PREVIEW, showPreviewToast } from '@/lib/preview';
 
 export default function PatientDetailsForm({
   doctor,
@@ -58,6 +59,10 @@ export default function PatientDetailsForm({
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (IS_PREVIEW) {
+      showPreviewToast('Preview mode – submissions disabled');
+      return;
+    }
     if (submitting) return;
 
     if (validate()) {

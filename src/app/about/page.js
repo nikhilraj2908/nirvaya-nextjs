@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import SafeLink from '@/components/common/SafeLink';
 import Container from '@/components/common/Container';
 import SectionHeading from '@/components/common/SectionHeading';
 import { CLINIC_INFO } from '@/data/siteData';
@@ -121,9 +121,9 @@ export default function AboutPage() {
         <Container className="relative z-10">
           {/* Breadcrumb */}
           <nav className="flex items-center gap-2 text-xs text-slate-400 mb-6 font-medium">
-            <Link href="/" className="hover:text-[#DFBF64] transition-colors">
+            <SafeLink href="/" className="hover:text-[#DFBF64] transition-colors">
               Home
-            </Link>
+            </SafeLink>
             <span>/</span>
             <span className="text-[#DFBF64]">About Nirvaya</span>
           </nav>
@@ -143,20 +143,20 @@ export default function AboutPage() {
             </p>
 
             <div className="pt-4 flex flex-wrap items-center gap-4">
-              <Link
+              <SafeLink
                 href="/pre-book"
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[#C59B27] hover:bg-[#B38A1F] text-white font-bold text-sm shadow-lg hover:shadow-xl transition-all cursor-pointer"
               >
                 <Calendar className="w-4 h-4" />
                 <span>Pre-book a Consultation</span>
-              </Link>
-              <a
+              </SafeLink>
+              <SafeLink
                 href={`tel:${CLINIC_INFO.phoneRaw}`}
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-white/10 hover:bg-white text-white hover:text-[#0A1E3F] font-semibold text-sm border border-white/20 transition-all"
               >
                 <Phone className="w-4 h-4 text-[#DFBF64]" />
                 <span>{CLINIC_INFO.phone}</span>
-              </a>
+              </SafeLink>
             </div>
           </div>
         </Container>
@@ -248,13 +248,13 @@ export default function AboutPage() {
                   </div>
 
                   <div className="pt-2">
-                    <Link
+                    <SafeLink
                       href="/doctors"
                       className="inline-flex items-center gap-2 text-xs font-bold text-[#DFBF64] hover:text-white transition-colors"
                     >
                       <span>View Full Academic & Surgical Profile</span>
                       <ArrowRight className="w-3.5 h-3.5" />
-                    </Link>
+                    </SafeLink>
                   </div>
                 </div>
               </div>
@@ -346,20 +346,20 @@ export default function AboutPage() {
             </div>
 
             <div className="flex flex-wrap items-center gap-4 shrink-0">
-              <Link
+              <SafeLink
                 href="/pre-book"
                 className="inline-flex items-center gap-2 px-6 py-3.5 rounded-lg bg-[#C59B27] hover:bg-[#B38A1F] text-white font-bold text-sm shadow-lg hover:shadow-xl transition-all cursor-pointer"
               >
                 <Calendar className="w-4 h-4" />
                 <span>Pre-book a Slot</span>
-              </Link>
-              <Link
+              </SafeLink>
+              <SafeLink
                 href="/contact"
                 className="inline-flex items-center gap-2 px-6 py-3.5 rounded-lg bg-white/10 hover:bg-white text-white hover:text-[#0A1E3F] font-semibold text-sm border border-white/20 transition-all cursor-pointer"
               >
                 <MapPin className="w-4 h-4 text-[#DFBF64]" />
                 <span>Find Our Clinic</span>
-              </Link>
+              </SafeLink>
             </div>
           </div>
         </Container>

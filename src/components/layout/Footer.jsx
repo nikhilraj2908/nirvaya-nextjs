@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import Link from 'next/link';
+import SafeLink from '@/components/common/SafeLink';
 import { CLINIC_INFO } from '@/data/siteData';
 import Container from '@/components/common/Container';
 import Logo from '@/components/common/Logo';
@@ -53,7 +53,7 @@ export default function Footer() {
 
             {/* Social Links */}
             <div className="pt-2 flex items-center gap-3">
-              <a
+              <SafeLink
                 href={CLINIC_INFO.social.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -61,8 +61,8 @@ export default function Footer() {
                 aria-label="Instagram"
               >
                 <InstagramIcon className="w-4 h-4" />
-              </a>
-              <a
+              </SafeLink>
+              <SafeLink
                 href={CLINIC_INFO.social.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -70,8 +70,8 @@ export default function Footer() {
                 aria-label="LinkedIn"
               >
                 <LinkedinIcon className="w-4 h-4" />
-              </a>
-              <a
+              </SafeLink>
+              <SafeLink
                 href={CLINIC_INFO.social.googleBusiness}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -79,7 +79,7 @@ export default function Footer() {
               >
                 <span>Google Business Profile</span>
                 <ExternalLink className="w-3 h-3 text-[#DFBF64]" />
-              </a>
+              </SafeLink>
             </div>
           </div>
 
@@ -90,46 +90,46 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2 text-xs text-slate-300">
               <li>
-                <Link href="/services#services-retina" className="hover:text-[#DFBF64] transition-colors flex items-center gap-1.5">
+                <SafeLink href="/services#services-retina" className="hover:text-[#DFBF64] transition-colors flex items-center gap-1.5">
                   <ChevronRight className="w-3 h-3 text-[#DFBF64]" />
                   Retina & Vitreoretinal Surgery
-                </Link>
+                </SafeLink>
               </li>
               <li>
-                <Link href="/services#services-injections" className="hover:text-[#DFBF64] transition-colors flex items-center gap-1.5">
+                <SafeLink href="/services#services-injections" className="hover:text-[#DFBF64] transition-colors flex items-center gap-1.5">
                   <ChevronRight className="w-3 h-3 text-[#DFBF64]" />
                   Intravitreal Anti-VEGF Injections
-                </Link>
+                </SafeLink>
               </li>
               <li>
-                <Link href="/services#services-diabetic" className="hover:text-[#DFBF64] transition-colors flex items-center gap-1.5">
+                <SafeLink href="/services#services-diabetic" className="hover:text-[#DFBF64] transition-colors flex items-center gap-1.5">
                   <ChevronRight className="w-3 h-3 text-[#DFBF64]" />
                   Diabetic Retinopathy Care
-                </Link>
+                </SafeLink>
               </li>
               <li>
-                <Link href="/services#services-rop" className="hover:text-[#DFBF64] transition-colors flex items-center gap-1.5">
+                <SafeLink href="/services#services-rop" className="hover:text-[#DFBF64] transition-colors flex items-center gap-1.5">
                   <ChevronRight className="w-3 h-3 text-[#DFBF64]" />
                   Neonatal ROP Screening
-                </Link>
+                </SafeLink>
               </li>
               <li>
-                <Link href="/services#services-cataract" className="hover:text-[#DFBF64] transition-colors flex items-center gap-1.5">
+                <SafeLink href="/services#services-cataract" className="hover:text-[#DFBF64] transition-colors flex items-center gap-1.5">
                   <ChevronRight className="w-3 h-3 text-[#DFBF64]" />
                   Micro-Incision Cataract (Phaco)
-                </Link>
+                </SafeLink>
               </li>
               <li>
-                <Link href="/services#services-uveitis" className="hover:text-[#DFBF64] transition-colors flex items-center gap-1.5">
+                <SafeLink href="/services#services-uveitis" className="hover:text-[#DFBF64] transition-colors flex items-center gap-1.5">
                   <ChevronRight className="w-3 h-3 text-[#DFBF64]" />
                   Uveitis & Ocular Immunology
-                </Link>
+                </SafeLink>
               </li>
               <li>
-                <Link href="/services" className="hover:text-[#DFBF64] transition-colors flex items-center gap-1.5">
+                <SafeLink href="/services" className="hover:text-[#DFBF64] transition-colors flex items-center gap-1.5">
                   <ChevronRight className="w-3 h-3 text-[#DFBF64]" />
                   View All Specialties →
-                </Link>
+                </SafeLink>
               </li>
             </ul>
           </div>
@@ -141,52 +141,52 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2 text-xs text-slate-300">
               <li>
-                <Link href="/about" className="hover:text-[#DFBF64] transition-colors">
+                <SafeLink href="/about" className="hover:text-[#DFBF64] transition-colors">
                   About Nirvaya
-                </Link>
+                </SafeLink>
               </li>
               <li>
-                <Link href="/doctors" className="hover:text-[#DFBF64] transition-colors">
+                <SafeLink href="/doctors" className="hover:text-[#DFBF64] transition-colors">
                   Dr Sandhya Gaur
-                </Link>
+                </SafeLink>
               </li>
               <li>
-                <Link href="/services" className="hover:text-[#DFBF64] transition-colors">
+                <SafeLink href="/services" className="hover:text-[#DFBF64] transition-colors">
                   Clinical Services
-                </Link>
+                </SafeLink>
               </li>
               <li>
-                <Link href="/technology" className="hover:text-[#DFBF64] transition-colors">
+                <SafeLink href="/technology" className="hover:text-[#DFBF64] transition-colors">
                   Technology & OT
-                </Link>
+                </SafeLink>
               </li>
               <li>
-                <Link href="/contact" className="hover:text-[#DFBF64] transition-colors">
+                <SafeLink href="/contact" className="hover:text-[#DFBF64] transition-colors">
                   Clinic Location & Map
-                </Link>
+                </SafeLink>
               </li>
               <li>
-                <Link href="/blog" className="hover:text-[#DFBF64] transition-colors">
+                <SafeLink href="/blog" className="hover:text-[#DFBF64] transition-colors">
                   Articles & Eye Guides
-                </Link>
+                </SafeLink>
               </li>
               <li>
-                <Link href="/research" className="hover:text-[#DFBF64] transition-colors">
+                <SafeLink href="/research" className="hover:text-[#DFBF64] transition-colors">
                   Research Publications
-                </Link>
+                </SafeLink>
               </li>
               <li>
-                <Link href="/faq" className="hover:text-[#DFBF64] transition-colors">
+                <SafeLink href="/faq" className="hover:text-[#DFBF64] transition-colors">
                   Patient FAQs
-                </Link>
+                </SafeLink>
               </li>
               <li>
-                <Link
+                <SafeLink
                   href="/pre-book"
                   className="hover:text-[#DFBF64] text-amber-300 font-bold block pt-1"
                 >
                   Pre-book Slot →
-                </Link>
+                </SafeLink>
               </li>
             </ul>
           </div>
@@ -205,15 +205,15 @@ export default function Footer() {
               </div>
               <div className="flex items-center gap-2.5">
                 <Phone className="w-4 h-4 text-[#DFBF64] shrink-0" />
-                <a href={`tel:${CLINIC_INFO.phoneRaw}`} className="hover:text-white transition-colors">
+                <SafeLink href={`tel:${CLINIC_INFO.phoneRaw}`} className="hover:text-white transition-colors">
                   {CLINIC_INFO.phone}
-                </a>
+                </SafeLink>
               </div>
               <div className="flex items-center gap-2.5">
                 <Mail className="w-4 h-4 text-slate-400 shrink-0" />
-                <a href={`mailto:${CLINIC_INFO.email}`} className="hover:text-white transition-colors">
+                <SafeLink href={`mailto:${CLINIC_INFO.email}`} className="hover:text-white transition-colors">
                   {CLINIC_INFO.email}
-                </a>
+                </SafeLink>
               </div>
               <div className="flex items-start gap-2.5 pt-1">
                 <Clock className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />

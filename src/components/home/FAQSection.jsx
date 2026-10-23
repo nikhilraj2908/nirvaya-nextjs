@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import Link from 'next/link';
+import SafeLink from '@/components/common/SafeLink';
 import Container from '@/components/common/Container';
 import SectionHeading from '@/components/common/SectionHeading';
 import {
@@ -119,13 +119,13 @@ export default function FAQSection({ currentLang = 'en' }) {
 
           {/* Link to Dedicated FAQ Page */}
           <div className="mt-8 text-center">
-            <Link
+            <SafeLink
               href="/faq"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white border border-slate-300 hover:border-[#DFBF64] text-[#0A1E3F] font-bold text-xs sm:text-sm shadow-xs hover:shadow-md transition-all group"
             >
               <span>Explore All Questions on Dedicated FAQ Page</span>
               <ArrowRight className="w-4 h-4 text-[#DFBF64] group-hover:translate-x-1 transition-transform" />
-            </Link>
+            </SafeLink>
           </div>
 
           {/* Unanswered Questions Callout Banner */}
@@ -149,14 +149,14 @@ export default function FAQSection({ currentLang = 'en' }) {
             </div>
 
             <div className="flex items-center gap-2.5 shrink-0 w-full sm:w-auto">
-              <a
+              <SafeLink
                 href="tel:+917554928200"
                 className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-[#0A1E3F] font-bold text-xs shadow-2xs hover:bg-slate-50 transition"
               >
                 <PhoneCall className="w-3.5 h-3.5 text-[#00aeef]" />
                 <span>+91 755 492 8200</span>
-              </a>
-              <a
+              </SafeLink>
+              <SafeLink
                 href="https://wa.me/917554928200"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -164,7 +164,7 @@ export default function FAQSection({ currentLang = 'en' }) {
               >
                 <MessageCircle className="w-3.5 h-3.5" />
                 <span>WhatsApp</span>
-              </a>
+              </SafeLink>
             </div>
           </div>
         </div>

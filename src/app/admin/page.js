@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
+import SafeLink from '@/components/common/SafeLink';
 import { useRouter } from 'next/navigation';
 import Logo from '@/components/common/Logo';
 import {
@@ -659,12 +659,12 @@ export default function AdminPage() {
           </div>
 
           <div className="text-center mt-6">
-            <Link
+            <SafeLink
               href="/"
               className="text-xs text-[#0A1E3F] hover:text-[#C59B27] font-semibold transition-colors"
             >
               ← Return to Nirvaya Website
-            </Link>
+            </SafeLink>
           </div>
         </div>
       </div>
@@ -787,13 +787,13 @@ export default function AdminPage() {
             <span>Research Papers ({papers.length})</span>
           </button>
 
-          <Link
+          <SafeLink
             href="/"
             target="_blank"
             className="ml-auto px-3 py-1.5 rounded-lg text-slate-400 hover:text-white text-[11px] font-normal hover:bg-slate-800 transition-colors"
           >
             Visit Live Site ↗
-          </Link>
+          </SafeLink>
         </div>
       </header>
 
@@ -1077,14 +1077,14 @@ export default function AdminPage() {
                             <span className="font-mono font-bold text-[#0A1E3F] truncate">
                               {p.path}
                             </span>
-                            <Link
+                            <SafeLink
                               href={p.path}
                               target="_blank"
                               className="text-slate-400 hover:text-[#0A1E3F] transition-colors shrink-0"
                               title="Preview Page"
                             >
                               <ExternalLink className="w-3 h-3" />
-                            </Link>
+                            </SafeLink>
                           </div>
                           <div className="flex items-center gap-2 shrink-0">
                             <span className="font-bold text-[#0A1E3F]">
@@ -1518,7 +1518,7 @@ export default function AdminPage() {
                 <div className="p-5 rounded-2xl bg-slate-900 border border-slate-700 space-y-3">
                   <h4 className="font-bold text-sm text-white">Google Looker Studio Embed Screen Setup</h4>
                   <p className="text-xs text-slate-300 leading-relaxed">
-                    1. Open <a href="https://lookerstudio.google.com" target="_blank" rel="noopener noreferrer" className="text-[#DFBF64] underline">lookerstudio.google.com</a>.<br />
+                    1. Open <SafeLink href="https://lookerstudio.google.com" target="_blank" rel="noopener noreferrer" className="text-[#DFBF64] underline">lookerstudio.google.com</SafeLink>.<br />
                     2. Create a report connected to Google Analytics 4 property <strong>G-KY995SYKY6</strong>.<br />
                     3. Click <strong>File → Embed report → Enable embedding</strong>, copy the Embed URL, and paste it below:
                   </p>
@@ -2320,14 +2320,14 @@ export default function AdminPage() {
                           </td>
                           <td className="py-3.5 px-4 text-right">
                             <div className="flex items-center justify-end gap-2">
-                              <Link
+                              <SafeLink
                                 href={`/blog/${b.slug}`}
                                 target="_blank"
                                 className="p-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 transition-colors cursor-pointer"
                                 title="View on Site"
                               >
                                 <ExternalLink className="w-3.5 h-3.5" />
-                              </Link>
+                              </SafeLink>
                               <button
                                 type="button"
                                 onClick={() => handleDeleteBlog(b.id || b._id)}
@@ -2556,14 +2556,14 @@ export default function AdminPage() {
                           </td>
                           <td className="py-3.5 px-4 text-right">
                             <div className="flex items-center justify-end gap-2">
-                              <Link
+                              <SafeLink
                                 href="/research"
                                 target="_blank"
                                 className="p-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 transition-colors cursor-pointer"
                                 title="View Publication on Site"
                               >
                                 <ExternalLink className="w-3.5 h-3.5" />
-                              </Link>
+                              </SafeLink>
                               <button
                                 type="button"
                                 onClick={() => handleDeletePaper(p.id || p._id)}

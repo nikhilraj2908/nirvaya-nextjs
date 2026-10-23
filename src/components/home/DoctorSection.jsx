@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
-import Link from 'next/link';
+import SafeLink from '@/components/common/SafeLink';
 import { DOCTOR_PROFILE } from '@/data/siteData';
 import Container from '@/components/common/Container';
 import SectionHeading from '@/components/common/SectionHeading';
@@ -237,13 +237,13 @@ export default function DoctorSection() {
 
             {/* Link to Full Doctors Page */}
             <div className="pt-1 flex items-center gap-4">
-              <Link
+              <SafeLink
                 href="/doctors"
                 className="inline-flex items-center gap-2 text-sm font-bold text-[#0A1E3F] hover:text-[#C59B27] transition-colors"
               >
                 <span>Read Full Surgical Portfolio & Research Publications</span>
                 <ArrowRight className="w-4 h-4 text-[#C59B27]" />
-              </Link>
+              </SafeLink>
             </div>
           </div>
         </div>

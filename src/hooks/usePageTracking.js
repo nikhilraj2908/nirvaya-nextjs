@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { trackEvent } from '@/services/api';
 import { pageview as gaPageview } from '@/lib/gtag';
+import { IS_PREVIEW } from '@/lib/preview';
 
 /**
  * Hook to automatically track page views for CRP analytics & Google Analytics (GA4) in Next.js
@@ -14,6 +15,8 @@ export function usePageTracking() {
   const pathname = usePathname();
 
   useEffect(() => {
+    if (IS_PREVIEW) return;
+
     // 1. Internal CRP Analytics
     trackEvent('page_view', {
       pathname,

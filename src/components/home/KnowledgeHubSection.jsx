@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
+import SafeLink from '@/components/common/SafeLink';
 import { FileText, BookOpen, ArrowRight } from 'lucide-react';
 import Container from '@/components/common/Container';
 import { getResourceHub } from '@/services/api';
@@ -100,13 +100,13 @@ export default function KnowledgeHubSection() {
                 </div>
 
                 <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
-                  <Link
+                  <SafeLink
                     href={opt.route}
                     className="inline-flex items-center gap-2 text-sm sm:text-base font-bold text-[#0A1E3F] group-hover:text-[#C59B27] transition-colors"
                   >
                     <span>{opt.ctaText}</span>
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                  </Link>
+                  </SafeLink>
 
                   <span className="text-xs text-slate-400 font-medium">
                     {isBlog ? 'Public Guides' : 'Indexed Studies'}

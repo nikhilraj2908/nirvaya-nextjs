@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import Link from 'next/link';
+import SafeLink from '@/components/common/SafeLink';
 import {
   CheckCircle2,
   Calendar,
@@ -120,13 +120,13 @@ export default function BookingConfirmation({ booking, onResetBooking }) {
 
       {/* Navigation Actions */}
       <div className="mt-8 pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3">
-        <Link
+        <SafeLink
           href="/"
           className="w-full sm:w-auto px-5 py-3 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 hover:bg-slate-50 transition-colors flex items-center justify-center space-x-1.5"
         >
           <Home className="w-4 h-4" />
           <span>Return to Homepage</span>
-        </Link>
+        </SafeLink>
 
         <button
           type="button"

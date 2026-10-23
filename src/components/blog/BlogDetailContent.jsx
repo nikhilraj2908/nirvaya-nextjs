@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import Link from 'next/link';
+import SafeLink from '@/components/common/SafeLink';
 import {
   Clock,
   Calendar,
@@ -43,13 +43,13 @@ export default function BlogDetailContent({ blog }) {
             <p className="text-sm text-slate-500 mb-6">
               The requested article may have been unpublished or moved.
             </p>
-            <Link
+            <SafeLink
               href="/blog"
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-[#0A1E3F] text-white text-xs font-bold hover:bg-[#16325C]"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>Back to Articles</span>
-            </Link>
+            </SafeLink>
           </div>
         </Container>
       </div>
@@ -62,13 +62,13 @@ export default function BlogDetailContent({ blog }) {
       <section className="bg-[#061226] text-white py-12 sm:py-16 border-b border-slate-800">
         <Container>
           <div className="max-w-3xl mx-auto">
-            <Link
+            <SafeLink
               href="/blog"
               className="inline-flex items-center gap-2 text-xs font-bold text-slate-400 hover:text-[#DFBF64] transition-colors mb-6"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>All Articles</span>
-            </Link>
+            </SafeLink>
 
             <div className="flex flex-wrap items-center gap-3 text-xs mb-4">
               <span className="px-3 py-1 rounded-full font-bold bg-[#C59B27] text-white">

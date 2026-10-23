@@ -1,5 +1,5 @@
 import React from 'react';
-import Link from 'next/link';
+import SafeLink from '@/components/common/SafeLink';
 import { SPECIALTIES } from '@/data/siteData';
 import Container from '@/components/common/Container';
 import SectionHeading from '@/components/common/SectionHeading';
@@ -26,13 +26,13 @@ export default function SpecialtiesSection({ currentLang = 'en' }) {
             className="mb-0! lg:mb-0 max-w-3xl"
           />
           <div className="shrink-0">
-            <Link
+            <SafeLink
               href="/services"
               className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-[#0A1E3F] bg-white hover:bg-slate-100 border border-slate-200 shadow-xs hover:shadow transition-all"
             >
               <span>View All 8 Specialties</span>
               <ArrowRight className="w-3.5 h-3.5 text-[#C59B27]" />
-            </Link>
+            </SafeLink>
           </div>
         </div>
 
@@ -93,19 +93,19 @@ export default function SpecialtiesSection({ currentLang = 'en' }) {
 
                 {/* Action Link */}
                 <div className="pt-3 border-t border-slate-100 flex items-center justify-between mt-auto">
-                  <Link
+                  <SafeLink
                     href={`/pre-book?specialty=${encodeURIComponent(spec.title)}`}
                     className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0A1E3F] hover:text-[#C59B27] transition-colors"
                   >
                     <Calendar className="w-3.5 h-3.5 text-[#C59B27]" />
                     <span>Pre-book Slot</span>
-                  </Link>
-                  <Link
+                  </SafeLink>
+                  <SafeLink
                     href="/services"
                     className="text-[11px] font-semibold text-slate-400 hover:text-slate-700 transition-colors"
                   >
                     Details →
-                  </Link>
+                  </SafeLink>
                 </div>
               </div>
             </div>

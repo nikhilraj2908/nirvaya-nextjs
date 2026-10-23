@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useRef, useEffect, useState, useMemo } from 'react';
-import Link from 'next/link';
+import SafeLink from '@/components/common/SafeLink';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
@@ -417,12 +417,12 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
                         {currentMobileSlide.secondaryCta.text}
                       </Button>
                     ) : (
-                      <Link
+                      <SafeLink
                         href={currentMobileSlide.secondaryCta.href}
                         className="text-xs text-slate-200 hover:text-white underline decoration-slate-400 underline-offset-4 font-medium drop-shadow-xs"
                       >
                         {currentMobileSlide.secondaryCta.text}
-                      </Link>
+                      </SafeLink>
                     )}
                   </div>
                 </div>
@@ -587,12 +587,12 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
                   >
                     Consult Doctor for this
                   </Button>
-                  <Link
+                  <SafeLink
                     href="/services"
                     className="text-xs text-slate-300 hover:text-white underline decoration-slate-500 underline-offset-4"
                   >
                     View All Procedures
-                  </Link>
+                  </SafeLink>
                 </div>
               </div>
             )}
