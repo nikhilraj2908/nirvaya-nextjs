@@ -275,39 +275,7 @@ export const TECHNOLOGY_FACILITIES = [
   }
 ];
 
-export const GOOGLE_REVIEWS_PLACEHOLDER = {
-  isLiveIntegrationPending: true,
-  averageRating: 4.9,
-  totalReviewsCount: "Verified Patient Feedback",
-  source: "Google Reviews (Ethically Curated)",
-  disclaimer: "Ethically sourced patient experiences regarding doctor counselling, clinical attention and hospital hygiene.",
-  reviews: [
-    {
-      author: "Rajesh S. Verma",
-      city: "Bhopal",
-      date: "Recent Patient",
-      treatment: "Diabetic Retinopathy Care",
-      stars: 5,
-      comment: "Dr Sandhya Gaur took the time to explain my retina scan in complete detail on the monitor. Her diagnosis was precise and reassuring. The clinic has a very calm, professional environment unlike crowded commercial hospitals."
-    },
-    {
-      author: "Sunita Agrawal",
-      city: "Vidisha / Bhopal",
-      date: "Recent Patient",
-      treatment: "Micro-Incision Cataract",
-      stars: 5,
-      comment: "Got my mother operated for cataract. The surgery was completely painless without injections. Next morning my mother's vision was crystal clear. Outstanding surgeon and very polite support team."
-    },
-    {
-      author: "Dr P. K. Saxena",
-      city: "Consultant Physician, Bhopal",
-      date: "Referring Doctor",
-      treatment: "Retinal Vascular Occlusion Referral",
-      stars: 5,
-      comment: "As a physician, I have referred multiple complex diabetic macular edema and retinal detachment patients to Dr Gaur. Her clinical acumen, ethical reporting and surgical skills are second to none in Madhya Pradesh."
-    }
-  ]
-};
+export { DOCTOR_REVIEWS } from './doctorReviews';
 
 export const PATIENT_ARTICLES = [
   {

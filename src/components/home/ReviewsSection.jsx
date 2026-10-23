@@ -1,44 +1,45 @@
 import React from 'react';
-import { GOOGLE_REVIEWS_PLACEHOLDER, CLINIC_INFO } from '@/data/siteData';
+import { DOCTOR_REVIEWS } from '@/data/doctorReviews';
 import Container from '@/components/common/Container';
 import SectionHeading from '@/components/common/SectionHeading';
 import {
-  Star,
   ShieldCheck,
-  MessageCircle,
-  ExternalLink,
   Award,
   BookOpen,
   GraduationCap
 } from 'lucide-react';
 
-export default function ReviewsSection() {
-  const { averageRating, reviews, disclaimer, source } = GOOGLE_REVIEWS_PLACEHOLDER;
+function getDoctorInitials(name) {
+  if (!name) return 'DR';
+  const clean = name.replace(/^Dr\.?\s+/i, '').replace(/\[.*?\]/g, '').trim();
+  const parts = clean.split(/\s+/).filter(Boolean);
+  if (parts.length === 0) return 'DR';
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
 
-  const impactStats = [
-    {
-      icon: Star,
-      value: `${averageRating} ★`,
-      label: 'Google Patient Rating',
-      sub: 'Verified Clinical Feedback'
-    },
-    {
-      icon: BookOpen,
-      value: '18+',
-      label: 'Published Research Papers',
-      sub: 'Indexed International Journals'
-    },
+export default function ReviewsSection() {
+  // Only render client-approved reviews
+  const approvedReviews = DOCTOR_REVIEWS.filter((item) => item.approved);
+
+  const credentialsStats = [
     {
       icon: GraduationCap,
       value: 'MD AIIMS',
       label: 'Apex National Institute',
-      sub: 'Dr. R.P. Centre Fellowship'
+      sub: 'Dr. R.P. Centre for Ophthalmic Sciences'
     },
     {
       icon: Award,
       value: 'Gold Medal',
       label: 'FAICO (Retina) National Honours',
       sub: 'All India Ophthalmological Society'
+    },
+    {
+      icon: BookOpen,
+      value: '18+',
+      label: 'Published Research Papers',
+      sub: 'Indexed International Journals'
     }
   ];
 
@@ -50,40 +51,15 @@ export default function ReviewsSection() {
           <SectionHeading
             align="center"
             light={false}
-            eyebrow="Patient Feedback & Trust"
-            title="Ethical Care. Transparent Outcomes. Restored Vision."
-            subtitle="Verified patient experiences regarding surgical precision, unhurried clinical counselling, and dedicated vitreo-retinal attention under Dr Sandhya Gaur."
+            eyebrow="Peer Recommendations"
+            title="Professional Collaboration & Clinical Trust"
+            subtitle="Observations and referral experiences shared by referring physicians, paediatricians, diabetologists, and medical colleagues collaborating with Dr Sandhya Gaur for specialized vitreo-retinal care."
           />
-
-          {/* Centered Rating Trust Pill */}
-          <div className="inline-flex flex-wrap items-center justify-center gap-3 px-5 py-2.5 rounded-full bg-white border border-slate-200 text-xs text-slate-700 shadow-sm -mt-6">
-            <div className="flex items-center gap-1 text-amber-500">
-              <span className="font-extrabold text-[#0A1E3F] text-sm mr-1">{averageRating}</span>
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-3.5 h-3.5 fill-current" />
-              ))}
-            </div>
-            <span className="text-slate-300">•</span>
-            <span className="font-semibold text-slate-700 flex items-center gap-1.5">
-              <ShieldCheck className="w-4 h-4 text-emerald-600" />
-              {source}
-            </span>
-            <span className="text-slate-300 hidden sm:inline">•</span>
-            <a
-              href={CLINIC_INFO.social.googleBusiness}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 text-sky-700 hover:text-sky-900 font-bold transition-colors"
-            >
-              <span>View Google Profile</span>
-              <ExternalLink className="w-3 h-3" />
-            </a>
-          </div>
         </div>
 
-        {/* Clinical Impact Stats Strip */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-16 max-w-5xl mx-auto reveal-up">
-          {impactStats.map((stat, idx) => {
+        {/* Clinical Credentials Stats Strip */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-16 max-w-4xl mx-auto reveal-up">
+          {credentialsStats.map((stat, idx) => {
             const IconComponent = stat.icon;
             return (
               <div
@@ -107,55 +83,76 @@ export default function ReviewsSection() {
           })}
         </div>
 
-        {/* Reviews Cards Grid */}
+        {/* Doctor Reviews Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto reveal-up">
-          {reviews.map((rev, index) => (
+          {approvedReviews.map((rev) => (
             <div
-              key={index}
+              key={rev.id}
               className="bg-white rounded-2xl p-6 sm:p-7 border border-slate-200/90 shadow-2xs hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
             >
               <div>
+                {/* Card Header: Specialty & Peer Badge */}
                 <div className="flex items-center justify-between gap-2 mb-4">
-                  <div className="flex items-center text-amber-500">
-                    {[...Array(rev.stars)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-current" />
-                    ))}
-                  </div>
+                  <span className="inline-flex items-center gap-1.5 text-[11px] font-bold text-sky-800 bg-sky-50 px-2.5 py-1 rounded-md border border-sky-100">
+                    <ShieldCheck className="w-3.5 h-3.5 text-sky-600" />
+                    <span>{rev.specialty || 'Peer Review'}</span>
+                  </span>
                   <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md">
-                    {rev.date}
+                    Peer Recommendation
                   </span>
                 </div>
 
-                <div className="inline-block text-xs font-semibold text-sky-800 bg-sky-50 px-2.5 py-1 rounded-md mb-3 border border-sky-100">
-                  {rev.treatment}
-                </div>
+                {rev.referralContext && (
+                  <div className="text-[11px] text-slate-500 font-medium mb-3 flex items-center gap-1.5">
+                    <span className="text-slate-400">Context:</span>
+                    <span className="text-slate-700 font-semibold">{rev.referralContext}</span>
+                  </div>
+                )}
 
                 <p className="text-slate-700 text-sm leading-relaxed italic mb-6">
-                  &ldquo;{rev.comment}&rdquo;
+                  &ldquo;{rev.quote}&rdquo;
                 </p>
               </div>
 
-              <div className="pt-4 border-t border-slate-100 flex items-center justify-between">
-                <div>
-                  <h4 className="text-sm font-bold text-[#0A1E3F]">
-                    {rev.author}
+              {/* Card Footer: Doctor Info */}
+              <div className="pt-4 border-t border-slate-100 flex items-center gap-3.5">
+                {rev.photo ? (
+                  <img
+                    src={rev.photo}
+                    alt={rev.doctorName}
+                    className="w-10 h-10 rounded-full object-cover border border-slate-200"
+                  />
+                ) : (
+                  <div className="w-10 h-10 rounded-full bg-[#0A1E3F] text-[#DFBF64] flex items-center justify-center font-heading font-extrabold text-xs shadow-xs shrink-0">
+                    {getDoctorInitials(rev.doctorName)}
+                  </div>
+                )}
+
+                <div className="min-w-0 flex-1">
+                  <h4 className="text-sm font-bold text-[#0A1E3F] truncate">
+                    {rev.doctorName}
                   </h4>
-                  <p className="text-xs text-slate-500">
-                    {rev.city}
+                  <p className="text-xs text-slate-600 font-medium truncate">
+                    {rev.designation}
                   </p>
-                </div>
-                <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-400">
-                  <MessageCircle className="w-4 h-4" />
+                  <p className="text-[11px] text-slate-500 truncate">
+                    {rev.hospitalOrClinic} {rev.specialty ? `• ${rev.specialty}` : ''}
+                  </p>
+                  {rev.registrationNo && (
+                    <p className="text-[10px] text-slate-400 font-mono">
+                      Reg: {rev.registrationNo}
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
           ))}
         </div>
 
-        {/* Ethical Transparency Disclaimer */}
+        {/* Compliance Footnote */}
         <div className="mt-10 text-center text-xs text-slate-500 max-w-2xl mx-auto">
           <p>
-            * {disclaimer}
+            * Reviews are shared by fellow medical professionals with their consent. Individual outcomes may vary.
           </p>
         </div>
       </Container>

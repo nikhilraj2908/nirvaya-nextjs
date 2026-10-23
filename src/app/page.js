@@ -40,7 +40,7 @@ export default function HomePage() {
       {/* 7. Clinical Knowledge Hub: Articles & Research Publications */}
       <KnowledgeHubSection />
 
-      {/* 8. Patient Trust & Google Reviews */}
+      {/* 8. Peer Recommendations & Referring Doctors */}
       <ReviewsSection />
 
       {/* 9. Clinic Location, Hours & Map Directions */}
