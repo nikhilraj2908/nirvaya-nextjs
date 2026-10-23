@@ -155,7 +155,7 @@ export default function ReviewsSection() {
         {/* Ethical Transparency Disclaimer */}
         <div className="mt-10 text-center text-xs text-slate-500 max-w-2xl mx-auto">
           <p>
-            * {disclaimer} Live API synchronisation with Google Maps Business Place ID configured for upcoming deployment.
+            * {disclaimer}
           </p>
         </div>
       </Container>

@@ -13,9 +13,7 @@ import {
   CheckCircle2
 } from 'lucide-react';
 
-export default function TechnologySection({ initialImage = '/assets/img1.webp' }) {
-  // Supports switching between img1 (OT optics & slit lamp) and img2 (clinical examination)
-  const [activeImage, setActiveImage] = useState(initialImage);
+export default function TechnologySection() {
   const [isInView, setIsInView] = useState(false);
   const sectionRef = useRef(null);
 
@@ -71,7 +69,7 @@ export default function TechnologySection({ initialImage = '/assets/img1.webp' }
         <div
           className="absolute inset-0 w-full h-full bg-fixed bg-cover bg-center transition-all duration-700 ease-out"
           style={{
-            backgroundImage: `url('${activeImage}')`,
+            backgroundImage: "url('/assets/img1.webp')",
             backgroundPosition: 'center 40%',
             backgroundAttachment: 'fixed'
           }}
@@ -102,35 +100,7 @@ export default function TechnologySection({ initialImage = '/assets/img1.webp' }
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-3 shrink-0">
-            {/* Quick Image Toggle (img1 / img2 switcher) */}
-            <div className="inline-flex items-center p-1 rounded-xl bg-slate-900/80 border border-slate-700/80 backdrop-blur-md shadow-lg">
-              <button
-                type="button"
-                onClick={() => setActiveImage('/assets/img1.webp')}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                  activeImage === '/assets/img1.webp'
-                    ? 'bg-[#C59B27] text-white shadow-sm'
-                    : 'text-slate-400 hover:text-white'
-                }`}
-                title="Switch to OT Optics Slit-Lamp (img1)"
-              >
-                OT Optics (img1)
-              </button>
-              <button
-                type="button"
-                onClick={() => setActiveImage('/assets/img2.webp')}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                  activeImage === '/assets/img2.webp'
-                    ? 'bg-[#C59B27] text-white shadow-sm'
-                    : 'text-slate-400 hover:text-white'
-                }`}
-                title="Switch to Clinical Trial Frame (img2)"
-              >
-                Clinical (img2)
-              </button>
-            </div>
-
+          <div className="flex items-center gap-3 shrink-0">
             <Button
               href="/technology"
               to="/technology"
