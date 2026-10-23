@@ -211,6 +211,16 @@ header.sticky {
   backface-visibility: hidden;
 }
 
+/* Hero Section Interactive Content & Overlay Pointer Event Safeguards */
+#hero .relative.z-10 {
+  pointer-events: auto;
+}
+#hero [class*="z-0"],
+#hero [class*="z-1"],
+#hero [class*="z-2"] {
+  pointer-events: none;
+}
+
 @keyframes topRouteProgress {
   0% {
     width: 0%;

@@ -330,8 +330,8 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
         {/* Bottom Vignette for Smooth Transition to Trust Strip */}
         <div className="absolute inset-x-0 bottom-0 h-24 pointer-events-none z-2 bg-gradient-to-t from-[#061226] via-[#061226]/60 to-transparent" />
 
-        {/* Foreground Content Container */}
-        <div className="relative z-10 w-full h-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-between py-4 sm:py-6 lg:py-12 pointer-events-none">
+        {/* Foreground Content Container - pointer-events-auto enables user interactions with buttons and links */}
+        <div className="relative z-10 w-full h-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-between py-4 sm:py-6 lg:py-12 pointer-events-auto">
           {/* Subtle top breathing space */}
           <div className="h-2 sm:h-4 lg:h-6 pointer-events-none" />
 

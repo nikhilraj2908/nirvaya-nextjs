@@ -65,15 +65,15 @@ export default function TechnologySection({ initialImage = '/assets/img1.webp' }
       id="technology"
       ref={sectionRef}
       className="relative py-20 lg:py-28 text-white scroll-mt-24"
-      style={{ clipPath: 'inset(0)', WebkitClipPath: 'inset(0)' }}
     >
-      {/* Sticky Parallax Background Layer (Stays fixed in viewport, clipped strictly to this section) */}
-      <div className="fixed inset-0 z-0 pointer-events-none">
+      {/* Sticky / Fixed Parallax Background Layer */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <div
-          className="absolute inset-0 w-full h-full bg-cover bg-center transition-all duration-700 ease-out"
+          className="absolute inset-0 w-full h-full bg-fixed bg-cover bg-center transition-all duration-700 ease-out"
           style={{
             backgroundImage: `url('${activeImage}')`,
-            backgroundPosition: 'center 40%'
+            backgroundPosition: 'center 40%',
+            backgroundAttachment: 'fixed'
           }}
           aria-hidden="true"
         />
