@@ -1,6 +1,9 @@
 import { Plus_Jakarta_Sans, Noto_Sans, Noto_Sans_Devanagari, Playfair_Display } from 'next/font/google';
+import Script from 'next/script';
 import './globals.css';
 import AppLayoutClient from '@/components/layout/AppLayoutClient';
+
+const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || 'G-KY995SYKY6';
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],
@@ -173,6 +176,29 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className="min-h-full flex flex-col font-sans" suppressHydrationWarning>
+        {/* Google Analytics 4 (gtag.js) */}
+        {GA_MEASUREMENT_ID && (
+          <>
+            <Script
+              strategy="afterInteractive"
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+            />
+            <Script
+              id="google-analytics"
+              strategy="afterInteractive"
+              dangerouslySetInnerHTML={{
+                __html: `
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config', '${GA_MEASUREMENT_ID}', {
+                    page_path: window.location.pathname,
+                  });
+                `,
+              }}
+            />
+          </>
+        )}
         <AppLayoutClient>{children}</AppLayoutClient>
       </body>
     </html>
