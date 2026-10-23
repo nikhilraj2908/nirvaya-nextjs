@@ -15,14 +15,14 @@ export default function AboutSection() {
             <SectionHeading
               align="left"
               eyebrow="Clinical Vision & Specialist Leadership"
-              title="A Specialist-Led Vision for Eye Care in Central India"
-              subtitle="Delivering meticulous, evidence-grounded retina and cataract microsurgery with unhurried clinical listening."
+              title="Specialist-Led Eye Care in Central India"
               className="mb-4!"
             />
 
             <div className="space-y-4 text-sm sm:text-base text-slate-600 leading-relaxed">
               <p>
-                Retinal disorders and delicate micro-incision cataract procedures require specialized surgical skill, high-resolution diagnostic imaging, and absolute clinical integrity.
+              Advanced retina care and precision cataract surgery, guided by experience and compassion.
+
               </p>
               <p>
                 At <strong className="text-[#0A1E3F]">Nirvaya Eyecare Centre</strong>, every patient evaluation, dilated fundus scan, and surgical planning is overseen directly by senior Vitreo-Retinal specialist{' '}

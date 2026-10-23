@@ -241,7 +241,7 @@ export default function DoctorSection() {
                 href="/doctors"
                 className="inline-flex items-center gap-2 text-sm font-bold text-[#0A1E3F] hover:text-[#C59B27] transition-colors"
               >
-                <span>Read Full Surgical Portfolio & Research Publications</span>
+                <span>View Full Academic Profile</span>
                 <ArrowRight className="w-4 h-4 text-[#C59B27]" />
               </SafeLink>
             </div>
