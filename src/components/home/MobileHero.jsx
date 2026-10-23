@@ -9,8 +9,7 @@ import {
   ShieldCheck,
   ChevronLeft,
   ChevronRight,
-  Layers,
-  Sparkles
+  Layers
 } from 'lucide-react';
 import Button from '@/components/common/Button';
 import { HERO_STAGES } from '@/data/siteData';
@@ -224,9 +223,7 @@ export default function MobileHero({ onOpenPreBook, currentLang = 'en' }) {
                   {/* Eyebrow Badge + Slide Counter */}
                   <div className="flex items-center justify-between gap-2">
                     <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] sm:text-xs font-bold tracking-wider uppercase bg-[#C59B27]/15 text-[#8C6D1F] border border-[#C59B27]/30">
-                      {slide.isHero ? (
-                        <Sparkles className="w-3.5 h-3.5 text-[#C59B27] shrink-0" />
-                      ) : (
+                      {!slide.isHero && (
                         <Layers className="w-3.5 h-3.5 text-[#C59B27] shrink-0" />
                       )}
                       <span className="truncate max-w-[200px] sm:max-w-none">{slide.eyebrow}</span>

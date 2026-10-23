@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Check, Sparkles, Clock } from 'lucide-react';
+import { Check, Award, Clock } from 'lucide-react';
 
 export default function DoctorSelector({
   doctors = [],
@@ -96,7 +96,7 @@ export default function DoctorSelector({
                   </div>
                   {doctor.isDirector && (
                     <div className="absolute -bottom-1 -right-1 bg-[#DFBF64] text-[#0A1E3F] rounded-full p-0.5">
-                      <Sparkles className="w-2.5 h-2.5" />
+                      <Award className="w-2.5 h-2.5" />
                     </div>
                   )}
                 </div>

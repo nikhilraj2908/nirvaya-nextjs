@@ -44,7 +44,6 @@ import {
   X,
   BarChart3,
   TrendingUp,
-  Sparkles,
   BookOpen,
   FileText,
   Trash2,

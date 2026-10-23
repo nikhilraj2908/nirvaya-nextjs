@@ -25,7 +25,6 @@ import BookingConfirmation from '@/components/booking/BookingConfirmation';
 import {
   Clock,
   ShieldCheck,
-  Sparkles,
   Building2
 } from 'lucide-react';
 
@@ -337,7 +336,7 @@ export default function PreBookContent() {
         {/* Header Hero Banner */}
         <div className="mb-8 max-w-3xl">
           <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-[#0A1E3F]/5 border border-[#0A1E3F]/10 text-xs font-bold text-[#0A1E3F] mb-3 animate-fade-in-up stagger-1">
-            <Sparkles className="w-3.5 h-3.5 text-[#DFBF64]" />
+            <ShieldCheck className="w-3.5 h-3.5 text-[#C59B27]" />
             <span>Real-Time Clinical Scheduling Engine</span>
           </div>
 

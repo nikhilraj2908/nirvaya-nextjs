@@ -12,7 +12,7 @@ import {
   ChevronDown,
   ChevronUp,
   Quote,
-  Sparkles
+  Award
 } from 'lucide-react';
 
 export default function ResearchContent() {
@@ -83,7 +83,7 @@ export default function ResearchContent() {
 
           <div className="max-w-3xl space-y-4">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase bg-[#C59B27]/20 text-[#DFBF64] border border-[#C59B27]/40">
-              <Sparkles className="w-3.5 h-3.5" />
+              <Award className="w-3.5 h-3.5" />
               <span>Evidence-Based Medicine</span>
             </div>
 

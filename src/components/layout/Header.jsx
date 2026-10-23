@@ -25,27 +25,24 @@ export default function Header({
         window.requestAnimationFrame(() => {
           const currentScrollY = Math.max(0, window.scrollY);
 
-          setIsScrolled(currentScrollY > 15);
+          setIsScrolled(currentScrollY > 20);
 
-          // 1. At the very top of the page (within 20px): always show top header
-          if (currentScrollY <= 20) {
+          // 1. Initial fold dead zone (within 80px): always show top header to eliminate boundary flickering
+          if (currentScrollY <= 80) {
             setShowTopHeader(true);
             upScrollAccumulator = 0;
           } else {
             const diff = currentScrollY - lastScrollY;
 
-            // 2. Scrolling DOWN: Hide top utility header immediately on a single scroll down
-            if (diff > 0) {
+            // 2. Scrolling DOWN: Hide top utility header only after sustained downward scroll (> 12px)
+            if (diff > 12) {
               upScrollAccumulator = 0;
-              if (diff >= 3) {
-                setShowTopHeader(false);
-              }
+              setShowTopHeader(false);
             }
-            // 3. Scrolling UP: Require intentional upward scroll (>= 35px) or near top (<= 30px)
-            // to completely eliminate scroll bounce/jitter feedback loops
-            else if (diff < 0) {
+            // 3. Scrolling UP: Require intentional upward scroll (>= 30px accumulator)
+            else if (diff < -12) {
               upScrollAccumulator += Math.abs(diff);
-              if (upScrollAccumulator >= 35 || currentScrollY <= 30) {
+              if (upScrollAccumulator >= 30) {
                 setShowTopHeader(true);
               }
             }
@@ -73,7 +70,15 @@ export default function Header({
   }, []);
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-white">
+    <header
+      className="sticky top-0 z-40 w-full bg-white transform-gpu"
+      style={{
+        willChange: 'transform',
+        transform: 'translateZ(0)',
+        WebkitBackfaceVisibility: 'hidden',
+        backfaceVisibility: 'hidden'
+      }}
+    >
       {/* Upper Utility Header (Location, Lang, Font Scale, Admin Portal): Collapses on scroll down, reappears on scroll up */}
       <div
         className={`grid transition-[grid-template-rows,opacity] duration-250 ease-in-out ${

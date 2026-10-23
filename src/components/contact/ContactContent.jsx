@@ -15,7 +15,7 @@ import {
   MessageCircle,
   ShieldCheck,
   Building2,
-  Sparkles
+  Car
 } from 'lucide-react';
 
 export default function ContactContent() {
@@ -395,7 +395,7 @@ export default function ContactContent() {
 
             <div className="p-6 rounded-2xl bg-white border border-slate-200/80 shadow-sm space-y-3">
               <div className="w-10 h-10 rounded-xl bg-[#0A1E3F]/5 text-[#C59B27] flex items-center justify-center">
-                <Sparkles className="w-5 h-5" />
+                <Car className="w-5 h-5" />
               </div>
               <h3 className="font-heading font-bold text-[#0A1E3F] text-base">Parking & Accessibility</h3>
               <p className="text-xs text-slate-600 leading-relaxed">

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { FileText, BookOpen, ArrowRight, Sparkles } from 'lucide-react';
+import { FileText, BookOpen, ArrowRight } from 'lucide-react';
 import Container from '@/components/common/Container';
 import { getResourceHub } from '@/services/api';
 
@@ -55,7 +55,7 @@ export default function KnowledgeHubSection() {
       <Container>
         <div className="text-center max-w-3xl mx-auto mb-14">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0A1E3F]/5 text-[#0A1E3F] text-xs font-bold uppercase tracking-wider mb-4 border border-[#0A1E3F]/10">
-            <Sparkles className="w-3.5 h-3.5 text-[#C59B27]" />
+            <BookOpen className="w-3.5 h-3.5 text-[#C59B27]" />
             <span>Academic & Clinical Publications</span>
           </div>
 

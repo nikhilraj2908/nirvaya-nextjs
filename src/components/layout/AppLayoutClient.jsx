@@ -51,7 +51,7 @@ export default function AppLayoutClient({ children }) {
   };
 
   return (
-    <div className="min-h-screen bg-white flex flex-col font-sans selection:bg-[#DFBF64] selection:text-[#0A1E3F] overflow-x-clip w-full">
+    <div className="min-h-screen bg-white flex flex-col font-sans selection:bg-[#DFBF64] selection:text-[#0A1E3F] w-full">
       {/* Top Route Progress Bar for clear redirection feedback */}
       {isNavigating && (
         <div

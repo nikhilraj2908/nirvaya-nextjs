@@ -2,7 +2,7 @@ import React from 'react';
 import { CLINIC_INFO } from '@/data/siteData';
 import Container from '@/components/common/Container';
 import Button from '@/components/common/Button';
-import { Calendar, MessageSquare, Phone, ShieldCheck, Sparkles, Clock, MapPin } from 'lucide-react';
+import { Calendar, MessageSquare, Phone, ShieldCheck, Clock, MapPin } from 'lucide-react';
 
 export default function FinalCTA({ onOpenPreBook, currentLang = 'en' }) {
   return (
@@ -16,7 +16,7 @@ export default function FinalCTA({ onOpenPreBook, currentLang = 'en' }) {
           <div className="relative z-10 max-w-3xl">
             {/* Badge */}
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase bg-[#C59B27]/20 text-[#DFBF64] border border-[#C59B27]/40 mb-4">
-              <Sparkles className="w-3.5 h-3.5" />
+              <ShieldCheck className="w-3.5 h-3.5" />
               Specialist Ophthalmology in Bhopal
             </div>
 

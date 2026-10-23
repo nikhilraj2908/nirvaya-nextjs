@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Search, Clock, ArrowRight, User, Sparkles, FileText } from 'lucide-react';
+import { Search, Clock, ArrowRight, User, BookOpen, FileText } from 'lucide-react';
 import Container from '@/components/common/Container';
 import { getBlogs, getBlogCategories } from '@/services/api';
 
@@ -60,7 +60,7 @@ export default function BlogListContent() {
 
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase bg-[#C59B27]/20 text-[#DFBF64] border border-[#C59B27]/40 mb-4">
-              <Sparkles className="w-3.5 h-3.5" />
+              <BookOpen className="w-3.5 h-3.5" />
               <span>Patient Education & Medical Guides</span>
             </div>
 

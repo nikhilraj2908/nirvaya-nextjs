@@ -10,8 +10,7 @@ import {
   ChevronDown,
   CheckCircle2,
   PhoneCall,
-  MessageCircle,
-  Sparkles
+  MessageCircle
 } from 'lucide-react';
 import Button from '@/components/common/Button';
 
@@ -219,7 +218,7 @@ export default function FAQSection({ currentLang = 'en' }) {
                     <div className="px-5 sm:px-6 pb-6 pt-1 text-slate-700 leading-relaxed border-t border-slate-100/90 animate-in fade-in duration-200">
                       {/* Clinical Subtitle Context */}
                       <p className="text-xs sm:text-sm font-semibold text-[#0A1E3F] mb-3 flex items-center gap-1.5 pt-2">
-                        <Sparkles className="w-3.5 h-3.5 text-[#C59B27] shrink-0" />
+                        <CheckCircle2 className="w-3.5 h-3.5 text-[#C59B27] shrink-0" />
                         <span>{faq.subtitle[lang]}</span>
                       </p>
 
