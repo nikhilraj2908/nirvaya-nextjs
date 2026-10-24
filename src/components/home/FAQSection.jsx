@@ -30,8 +30,103 @@ export default function FAQSection({ currentLang = 'en' }) {
   };
 
   return (
-    <section id="faq" className="py-16 lg:py-24 bg-[#FAFBFC] border-t border-slate-200/80 scroll-mt-24">
-      <Container>
+    <section
+      id="faq"
+      className="relative py-16 lg:py-24 bg-gradient-to-b from-[#FAFBFD] via-[#F6F9FD] to-[#FAFBFD] border-t border-slate-200/70 scroll-mt-24 overflow-hidden"
+    >
+      {/* ============================================================== */}
+      {/* MINIMALIST BRAND BACKGROUND: Optical Vector Waves & Dot Matrix  */}
+      {/* ============================================================== */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 pointer-events-none select-none overflow-hidden z-0"
+      >
+        {/* Soft Ambient Corner Lighting Blobs */}
+        <div className="absolute -top-28 -right-28 w-[500px] h-[500px] bg-sky-400/[0.07] rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-28 -left-28 w-[450px] h-[450px] bg-[#C59B27]/[0.05] rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-sky-100/[0.3] rounded-full blur-3xl pointer-events-none" />
+
+        {/* Crisp Vector Wave Ribbons & Dot Grid */}
+        <svg
+          className="w-full h-full object-cover"
+          viewBox="0 0 1440 900"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          preserveAspectRatio="none"
+        >
+          <defs>
+            {/* Linear Gradient: Nirvaya Cyan / Azure Wave */}
+            <linearGradient id="faq-wave-cyan" x1="100%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="#00aeef" stopOpacity="0.04" />
+              <stop offset="30%" stopColor="#00aeef" stopOpacity="0.32" />
+              <stop offset="70%" stopColor="#0284c7" stopOpacity="0.22" />
+              <stop offset="100%" stopColor="#0A1E3F" stopOpacity="0.02" />
+            </linearGradient>
+
+            {/* Linear Gradient: Nirvaya Gold Accent Wave */}
+            <linearGradient id="faq-wave-gold" x1="0%" y1="100%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#C59B27" stopOpacity="0.03" />
+              <stop offset="40%" stopColor="#DFBF64" stopOpacity="0.28" />
+              <stop offset="80%" stopColor="#C59B27" stopOpacity="0.18" />
+              <stop offset="100%" stopColor="#DFBF64" stopOpacity="0.02" />
+            </linearGradient>
+
+            {/* Radial Mask for Bottom-Left Dot Matrix Grid */}
+            <radialGradient id="faq-dot-fade" cx="12%" cy="88%" r="48%">
+              <stop offset="0%" stopColor="#ffffff" stopOpacity="1" />
+              <stop offset="55%" stopColor="#ffffff" stopOpacity="0.45" />
+              <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
+            </radialGradient>
+            <mask id="faq-dot-mask">
+              <rect width="100%" height="100%" fill="url(#faq-dot-fade)" />
+            </mask>
+
+            {/* High-Precision Modern Dot Matrix Pattern */}
+            <pattern id="faq-dot-grid" x="0" y="0" width="22" height="22" patternUnits="userSpaceOnUse">
+              <circle cx="2" cy="2" r="1.1" fill="#0A1E3F" fillOpacity="0.1" />
+            </pattern>
+          </defs>
+
+          {/* 1. Subtle Dot Matrix (fades softly in the bottom-left corner) */}
+          <rect width="100%" height="100%" fill="url(#faq-dot-grid)" mask="url(#faq-dot-mask)" />
+
+          {/* 2. Right-Hand Flowing Contour Wave Ribbon (Concentric Fine Curves) */}
+          <g stroke="url(#faq-wave-cyan)" strokeWidth="1" fill="none">
+            <path d="M1440,60 C1280,140 1140,240 1060,390 C980,540 1020,700 950,880 L940,900" opacity="0.35" />
+            <path d="M1440,85 C1290,165 1160,260 1085,405 C1010,550 1045,710 980,890 L972,900" opacity="0.45" />
+            <path d="M1440,110 C1300,190 1180,280 1110,420 C1040,560 1070,720 1010,900" opacity="0.55" />
+            <path d="M1440,135 C1310,215 1200,300 1135,435 C1070,570 1095,730 1040,900" opacity="0.65" />
+            <path d="M1440,160 C1320,240 1220,320 1160,450 C1100,580 1120,740 1070,900" opacity="0.75" />
+            <path d="M1440,185 C1330,265 1240,340 1185,465 C1130,590 1145,750 1100,900" opacity="0.85" />
+            <path d="M1440,210 C1340,290 1260,360 1210,480 C1160,600 1170,760 1130,900" opacity="0.75" />
+            <path d="M1440,235 C1350,315 1280,380 1235,495 C1190,610 1195,770 1160,900" opacity="0.6" />
+            <path d="M1440,260 C1360,340 1300,400 1260,510 C1220,620 1220,780 1190,900" opacity="0.45" />
+            <path d="M1440,285 C1370,365 1320,420 1285,525 C1250,630 1245,790 1220,900" opacity="0.3" />
+          </g>
+
+          {/* 3. Left-Hand Sweeping Contour Waves with Warm Gold Accent Lines */}
+          <g stroke="url(#faq-wave-gold)" strokeWidth="1" fill="none">
+            <path d="M0,580 C200,520 380,620 540,550 C700,480 840,540 1020,460 C1180,390 1320,440 1440,380" opacity="0.3" />
+            <path d="M0,610 C210,550 395,645 560,575 C725,505 865,565 1045,485 C1205,415 1340,460 1440,405" opacity="0.42" />
+            <path d="M0,640 C220,580 410,670 580,600 C750,530 890,590 1070,510 C1230,440 1360,480 1440,430" opacity="0.55" />
+            <path d="M0,670 C230,610 425,695 600,625 C775,555 915,615 1095,535 C1255,465 1380,500 1440,455" opacity="0.65" />
+            <path d="M0,700 C240,640 440,720 620,650 C800,580 940,640 1120,560 C1280,490 1400,520 1440,480" opacity="0.5" />
+            <path d="M0,730 C250,670 455,745 640,675 C825,605 965,665 1145,585 C1305,515 1420,540 1440,505" opacity="0.35" />
+          </g>
+
+          {/* 4. Fine Ambient Horizon Arc */}
+          <path
+            d="M-50,750 Q720,450 1490,750"
+            stroke="url(#faq-wave-cyan)"
+            strokeWidth="1.25"
+            strokeDasharray="4 6"
+            opacity="0.35"
+            fill="none"
+          />
+        </svg>
+      </div>
+
+      <Container className="relative z-10">
         <div className="max-w-4xl mx-auto">
           {/* Section Header */}
           <div className="reveal-up text-center mb-10 sm:mb-14">

@@ -136,7 +136,7 @@ export const HERO_STAGES = [
     headline: "Optic Nerve & Ocular Health",
     description: "Direct conduit to visual perception. Comprehensive screening for glaucoma, ischemic neuropathies, and systemic vascular changes.",
     subDetail: "Holistic ophthalmic protection for lifelong sight.",
-    tags: ["Visual Field Perimetry", "RNFL Thickness Analysis", "Glaucoma Care"],
+    tags: ["Visual Field Perimetry", "RNFL Analysis", "Glaucoma Care"],
     stat: { label: "Protection", value: "Lifelong Vision Health" }
   }
 ];

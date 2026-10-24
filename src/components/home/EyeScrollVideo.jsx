@@ -368,10 +368,10 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
           {/* Bottom Vignette for Smooth Transition to Trust Strip */}
           <div className="absolute inset-x-0 bottom-0 h-24 pointer-events-none z-2 bg-gradient-to-t from-[#061226] via-[#061226]/60 to-transparent" />
 
-          {/* Foreground Content Container - pointer-events-auto enables user interactions with buttons and links */}
-          <div className="relative z-10 w-full h-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-between py-4 sm:py-6 lg:py-12 pointer-events-auto">
-            {/* Subtle top breathing space */}
-            <div className="h-2 sm:h-4 lg:h-6 pointer-events-none" />
+          {/* Foreground Content Container - pt-24/lg:pt-32 clears the sticky navigation header with generous margin */}
+          <div className="relative z-10 w-full h-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-between pt-20 sm:pt-24 lg:pt-28 pb-4 sm:pb-6 lg:pb-6 pointer-events-auto">
+            {/* Top breathing space below sticky header */}
+            <div className="h-2 sm:h-4 lg:h-6 pointer-events-none shrink-0" />
 
             {/* ============================================================== */}
             {/* 1. MOBILE CAROUSEL VIEW (< 1024px)                             */}
@@ -520,7 +520,7 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
             {/* ============================================================== */}
             {/* 2. DESKTOP VIEW (>= 1024px): Smooth crossfaded stage copy      */}
             {/* ============================================================== */}
-            <div className="hidden lg:grid grid-cols-1 grid-rows-1 my-auto max-w-xl lg:max-w-lg xl:max-w-xl pointer-events-auto">
+            <div className="hidden lg:grid grid-cols-1 grid-rows-1 my-auto max-w-xl lg:max-w-lg xl:max-w-xl pointer-events-auto mt-2 lg:mt-4">
               {/* STAGE 0: Initial Hero Entry (Crossfades smoothly on scroll) */}
               <div
                 className={`col-start-1 row-start-1 space-y-6 transition-all duration-500 ease-out ${activeStage === 0
@@ -596,16 +596,16 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
               </div>
 
               {/* STAGES 1 TO 5: Smooth Independent Animated Stage Cards (drsandhyagaur.com style) */}
-              <div className="col-start-1 row-start-1 relative w-full min-h-[450px] pointer-events-none">
+              <div className="col-start-1 row-start-1 relative w-full min-h-[420px] pointer-events-none">
                 {HERO_STAGES.slice(1).map((stageItem) => {
                   const isActive = activeStage === stageItem.stage;
                   return (
                     <article
                       key={stageItem.stage}
-                      className={`hero-stage-card bg-[#061226]/85 backdrop-blur-2xl p-6 xl:p-8 rounded-3xl border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.65),0_0_30px_rgba(197,155,39,0.15)] flex flex-col justify-between ${
+                      className={`hero-stage-card bg-[#061226]/85 backdrop-blur-2xl p-5 sm:p-6 lg:p-6 xl:p-7 rounded-3xl border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.65),0_0_30px_rgba(197,155,39,0.15)] flex flex-col justify-between ${
                         isActive ? 'is-active' : ''
                       }`}
-                      style={{ minHeight: '430px' }}
+                      style={{ minHeight: '410px' }}
                     >
                       {/* Top Header: Eyebrow + Stage Index Badge */}
                       <div className="hero-stagger-item hero-stagger-1 flex items-center justify-between gap-3 border-b border-white/10 pb-3">
