@@ -83,6 +83,8 @@ export default function MobileHero({ onOpenPreBook, currentLang = 'en' }) {
       ),
       description: s.description,
       subDetail: s.subDetail,
+      tags: s.tags,
+      stat: s.stat,
       isHero: false,
       primaryCta: {
         text: currentLang === 'hi' ? 'परामर्श स्लॉट प्री-बुक करें' : 'Consult Doctor for this',
@@ -255,10 +257,30 @@ export default function MobileHero({ onOpenPreBook, currentLang = 'en' }) {
                       ))}
                     </div>
                   ) : (
-                    <div className="pt-2">
-                      <div className="p-2.5 sm:p-3 rounded-xl bg-slate-50/90 border border-slate-200/80 text-[11px] sm:text-xs text-slate-700 font-medium flex items-center gap-2">
-                        <ShieldCheck className="w-4 h-4 text-[#C59B27] shrink-0" />
-                        <span className="leading-tight">{slide.subDetail}</span>
+                    <div className="pt-2 space-y-2">
+                      {slide.tags && slide.tags.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5">
+                          {slide.tags.map((tag, tIdx) => (
+                            <span
+                              key={tIdx}
+                              className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-medium bg-[#0A1E3F]/5 text-[#0A1E3F] border border-slate-200"
+                            >
+                              <CheckCircle2 className="w-2.5 h-2.5 text-[#C59B27]" />
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                      <div className="p-2.5 sm:p-3 rounded-xl bg-slate-50/90 border border-slate-200/80 text-[11px] sm:text-xs text-slate-700 font-medium flex items-center justify-between gap-2">
+                        <div className="flex items-center gap-2">
+                          <ShieldCheck className="w-4 h-4 text-[#C59B27] shrink-0" />
+                          <span className="leading-tight">{slide.subDetail}</span>
+                        </div>
+                        {slide.stat && (
+                          <div className="text-right shrink-0 pl-2 border-l border-slate-200 text-[10px]">
+                            <span className="font-bold text-[#8C6D1F]">{slide.stat.value}</span>
+                          </div>
+                        )}
                       </div>
                     </div>
                   )}
@@ -314,11 +336,10 @@ export default function MobileHero({ onOpenPreBook, currentLang = 'en' }) {
                           aria-selected={activeIndex === dotIdx}
                           aria-label={`Go to slide ${dotIdx + 1}`}
                           onClick={() => scrollToSlide(dotIdx)}
-                          className={`h-2 rounded-full transition-all duration-300 ${
-                            activeIndex === dotIdx
+                          className={`h-2 rounded-full transition-all duration-300 ${activeIndex === dotIdx
                               ? 'w-6 bg-[#C59B27] shadow-[0_0_8px_rgba(197,155,39,0.5)]'
                               : 'w-2 bg-slate-300 hover:bg-slate-400'
-                          }`}
+                            }`}
                         />
                       ))}
                     </div>

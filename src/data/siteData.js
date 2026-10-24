@@ -11,7 +11,7 @@ export const CLINIC_INFO = {
   medicalDirector: "Dr Sandhya Gaur",
   qualifications: "MD (Ophthalmology, AIIMS New Delhi), DNB, FVRS, FAICO (Retina - Gold Medalist)",
   publicationsCount: 18,
-  
+
   // Contact details (Configurable placeholders)
   phone: "+91 755 492 8200",
   phoneRaw: "+917554928200",
@@ -21,7 +21,7 @@ export const CLINIC_INFO = {
   whatsappDefaultMessage: "Hello Nirvaya Eyecare Centre, I would like to enquire about an eye consultation.",
   email: "info@nirvayaeyecare.com",
   medicalDirectorEmail: "medical.director@nirvayaeyecare.com",
-  
+
   // Location
   addressLine1: "Plot No. 7, Rajvansh Colony",
   addressLine2: "Ayodhya Bypass Road",
@@ -30,7 +30,7 @@ export const CLINIC_INFO = {
   pincode: "462016",
   landmark: "Near Ayodhya Nagar Square, Easy Parking Available",
   fullAddress: "Plot No. 7, Rajvansh Colony, Ayodhya Bypass Road, Bhopal, MP - 462016",
-  
+
   // Timings
   timings: {
     weekdays: "Monday – Saturday: 9:30 AM – 7:30 PM",
@@ -38,7 +38,7 @@ export const CLINIC_INFO = {
     opdDays: "Mon, Tue, Wed, Thu, Fri, Sat",
     emergency: "24/7 Retina & Ocular Trauma on call"
   },
-  
+
   social: {
     instagram: "https://instagram.com/nirvayaeyecare",
     linkedin: "https://linkedin.com/company/nirvaya-eyecare",
@@ -85,7 +85,9 @@ export const HERO_STAGES = [
     eyebrow: "SPECIALIST EYE CARE IN BHOPAL",
     headline: "Specialist-led Retina & Cataract Eye Care",
     description: "Expert evaluation and personalised eye care for retina, cataract, diabetic eye disease, ROP and comprehensive ophthalmology in a serene, modern clinical setting.",
-    subDetail: "Equipped for delicate microsurgery and comprehensive medical retina management."
+    subDetail: "Equipped for delicate microsurgery and comprehensive medical retina management.",
+    tags: ["Retina & Vitrectomy", "Micro-Incision Phaco", "Diabetic Eye Care", "ROP Screening"],
+    stat: { label: "Lead Surgeon", value: "AIIMS Alumna" }
   },
   {
     stage: 1,
@@ -93,7 +95,9 @@ export const HERO_STAGES = [
     eyebrow: "ANTERIOR SEGMENT & CORNEA",
     headline: "Optical Clarity & Cornea",
     description: "The eye's natural crystalline protective front surface. Clear light refraction is vital for high-resolution visual acuity.",
-    subDetail: "Diagnostic topography and optical biometry for customized visual restoration."
+    subDetail: "Diagnostic topography and optical biometry for customized visual restoration.",
+    tags: ["Corneal Topography", "Dry Eye Evaluation", "Optical Biometry"],
+    stat: { label: "Precision", value: "Sub-Micron Mapping" }
   },
   {
     stage: 2,
@@ -101,7 +105,9 @@ export const HERO_STAGES = [
     eyebrow: "CRYSTALLINE LENS",
     headline: "Crystalline Lens & Cataract",
     description: "Precision-focused cataract care with micro-incision phacoemulsification and advanced customized premium intraocular lens implantation.",
-    subDetail: "Day-care stitchless surgery with rapid visual recovery."
+    subDetail: "Day-care stitchless surgery with rapid visual recovery.",
+    tags: ["Micro-Phaco MICS", "Toric & Trifocal IOLs", "Rapid 24h Recovery"],
+    stat: { label: "Incision", value: "1.8–2.2mm Stitchless" }
   },
   {
     stage: 3,
@@ -109,7 +115,9 @@ export const HERO_STAGES = [
     eyebrow: "VITREOUS & RETINAL INTERFACE",
     headline: "Vitreous Cavity & Floatage",
     description: "Specialized vitrectomy care for vitreous hemorrhages, floaters, diabetic traction and complex posterior segment trauma.",
-    subDetail: "Ultra-high speed sutureless micro-incision vitrectomy surgery (MIVS)."
+    subDetail: "Ultra-high speed sutureless micro-incision vitrectomy surgery (MIVS).",
+    tags: ["25G/27G MIVS", "Vitreous Clearance", "Tamponade Delivery"],
+    stat: { label: "Speed", value: "10,000 cuts/min" }
   },
   {
     stage: 4,
@@ -117,7 +125,9 @@ export const HERO_STAGES = [
     eyebrow: "RETINA & MACULA",
     headline: "Retina, Macula & Central Vision",
     description: "The delicate neural tapestry of vision. Expert treatment for retinal detachments, diabetic macular edema, AMD and vein occlusions.",
-    subDetail: "Sub-micron optical coherence tomography (OCT) and targeted anti-VEGF injections."
+    subDetail: "Sub-micron optical coherence tomography (OCT) and targeted anti-VEGF injections.",
+    tags: ["HD-OCT Imaging", "Anti-VEGF Therapy", "Green Laser Photocoagulation"],
+    stat: { label: "Specialty", value: "FAICO Gold Medalist" }
   },
   {
     stage: 5,
@@ -125,7 +135,9 @@ export const HERO_STAGES = [
     eyebrow: "POSTERIOR SEGMENT & NEURO-PATHWAY",
     headline: "Optic Nerve & Ocular Health",
     description: "Direct conduit to visual perception. Comprehensive screening for glaucoma, ischemic neuropathies, and systemic vascular changes.",
-    subDetail: "Holistic ophthalmic protection for lifelong sight."
+    subDetail: "Holistic ophthalmic protection for lifelong sight.",
+    tags: ["Visual Field Perimetry", "RNFL Thickness Analysis", "Glaucoma Care"],
+    stat: { label: "Protection", value: "Lifelong Vision Health" }
   }
 ];
 

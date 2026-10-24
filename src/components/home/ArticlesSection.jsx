@@ -97,7 +97,7 @@ export default function ArticlesSection() {
     >
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         <div
-          className="absolute inset-0 w-full h-full bg-fixed bg-cover bg-center"
+          className="absolute inset-0 w-full h-full bg-cover bg-center"
           style={{ backgroundImage: `url('/assets/img1.webp')` }}
           aria-hidden="true"
         />
