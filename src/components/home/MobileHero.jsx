@@ -20,20 +20,6 @@ export default function MobileHero({ onOpenPreBook, currentLang = 'en' }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [cardHeight, setCardHeight] = useState(450);
 
-  // Measure card height to reserve exact matching space in normal document flow
-  useEffect(() => {
-    if (!cardMeasureRef.current) return;
-    const updateHeight = () => {
-      if (cardMeasureRef.current) {
-        setCardHeight(cardMeasureRef.current.offsetHeight);
-      }
-    };
-    updateHeight();
-    const ro = new ResizeObserver(updateHeight);
-    ro.observe(cardMeasureRef.current);
-    return () => ro.disconnect();
-  }, []);
-
   // 6 Clinical Stages adapted from PC View (HERO_STAGES)
   const slides = useMemo(() => [
     {
@@ -96,6 +82,31 @@ export default function MobileHero({ onOpenPreBook, currentLang = 'en' }) {
       }
     }))
   ], [currentLang]);
+
+  // Measure card height to reserve exact matching space in normal document flow
+  useEffect(() => {
+    if (!scrollContainerRef.current) return;
+    const updateHeight = () => {
+      if (scrollContainerRef.current) {
+        const cards = scrollContainerRef.current.querySelectorAll('.mobile-hero-card');
+        let maxH = 0;
+        cards.forEach((c) => {
+          if (c.offsetHeight > maxH) maxH = c.offsetHeight;
+        });
+        if (maxH > 0) {
+          setCardHeight(maxH);
+        }
+      }
+    };
+    updateHeight();
+    const ro = new ResizeObserver(updateHeight);
+    ro.observe(scrollContainerRef.current);
+    window.addEventListener('resize', updateHeight);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener('resize', updateHeight);
+    };
+  }, [slides]);
 
   // Handle horizontal scroll update to synchronize active index indicator
   const handleScroll = useCallback(() => {
@@ -219,9 +230,9 @@ export default function MobileHero({ onOpenPreBook, currentLang = 'en' }) {
               ref={idx === 0 ? cardMeasureRef : null}
               className="w-full shrink-0 snap-center px-4 sm:px-6 flex justify-center"
             >
-              <div className="w-full max-w-md bg-white/95 backdrop-blur-xl rounded-2xl sm:rounded-3xl border border-slate-200/90 shadow-[0_16px_40px_-8px_rgba(10,30,63,0.14),0_2px_12px_rgba(197,155,39,0.08)] p-5 sm:p-6 space-y-3.5 flex flex-col justify-between min-h-[380px] sm:min-h-[400px]">
+              <div className="mobile-hero-card w-full max-w-md bg-white/95 backdrop-blur-xl rounded-2xl sm:rounded-3xl border border-slate-200/90 shadow-[0_16px_40px_-8px_rgba(10,30,63,0.14),0_2px_12px_rgba(197,155,39,0.08)] p-4 sm:p-5 flex flex-col justify-start">
                 {/* Upper Card Content */}
-                <div className="space-y-3">
+                <div className="space-y-2.5">
                   {/* Eyebrow Badge + Slide Counter */}
                   <div className="flex items-center justify-between gap-2">
                     <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] sm:text-xs font-bold tracking-wider uppercase bg-[#C59B27]/15 text-[#8C6D1F] border border-[#C59B27]/30">
@@ -248,7 +259,7 @@ export default function MobileHero({ onOpenPreBook, currentLang = 'en' }) {
 
                   {/* Feature Grid (Stage 0) OR SubDetail Badge (Stages 1-5) */}
                   {slide.isHero ? (
-                    <div className="pt-2 border-t border-slate-100 grid grid-cols-2 gap-2 text-[11px] sm:text-xs text-slate-700 font-medium">
+                    <div className="pt-2 border-t border-slate-100 grid grid-cols-2 gap-x-2 gap-y-1.5 text-[11px] sm:text-xs text-slate-700 font-medium">
                       {slide.features.map((feat, fIdx) => (
                         <div key={fIdx} className="flex items-center gap-1.5">
                           <CheckCircle2 className="w-3.5 h-3.5 text-[#C59B27] shrink-0" />
@@ -271,7 +282,7 @@ export default function MobileHero({ onOpenPreBook, currentLang = 'en' }) {
                           ))}
                         </div>
                       )}
-                      <div className="p-2.5 sm:p-3 rounded-xl bg-slate-50/90 border border-slate-200/80 text-[11px] sm:text-xs text-slate-700 font-medium flex items-center justify-between gap-2">
+                      <div className="p-2 sm:p-2.5 rounded-xl bg-slate-50/90 border border-slate-200/80 text-[11px] sm:text-xs text-slate-700 font-medium flex items-center justify-between gap-2">
                         <div className="flex items-center gap-2">
                           <ShieldCheck className="w-4 h-4 text-[#C59B27] shrink-0" />
                           <span className="leading-tight">{slide.subDetail}</span>
@@ -287,7 +298,7 @@ export default function MobileHero({ onOpenPreBook, currentLang = 'en' }) {
                 </div>
 
                 {/* Lower Card Area: CTAs + Navigation Controls */}
-                <div className="pt-2 space-y-3">
+                <div className="mt-3 pt-2.5 border-t border-slate-100/90 space-y-2.5">
                   {/* Action CTAs */}
                   <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
                     <Button
@@ -296,7 +307,7 @@ export default function MobileHero({ onOpenPreBook, currentLang = 'en' }) {
                       href={slide.primaryCta.href}
                       to={slide.primaryCta.href}
                       icon={Calendar}
-                      className="w-full sm:w-auto font-bold text-xs sm:text-sm shadow-md justify-center"
+                      className="w-full sm:w-auto font-bold text-xs sm:text-sm shadow-md justify-center py-2.5"
                     >
                       {slide.primaryCta.text}
                     </Button>
@@ -308,14 +319,14 @@ export default function MobileHero({ onOpenPreBook, currentLang = 'en' }) {
                       to={slide.secondaryCta.href}
                       icon={ArrowRight}
                       iconPosition="right"
-                      className="w-full sm:w-auto text-xs sm:text-sm font-semibold bg-slate-100 hover:bg-slate-200 text-[#0A1E3F] border border-slate-200 justify-center"
+                      className="w-full sm:w-auto text-xs sm:text-sm font-semibold bg-slate-100 hover:bg-slate-200 text-[#0A1E3F] border border-slate-200 justify-center py-2.5"
                     >
                       {slide.secondaryCta.text}
                     </Button>
                   </div>
 
                   {/* Carousel Navigation Bar (Prev / 6 Dots / Next) */}
-                  <div className="pt-2.5 border-t border-slate-100 flex items-center justify-between">
+                  <div className="pt-2 border-t border-slate-100 flex items-center justify-between">
                     {/* Previous Button */}
                     <button
                       type="button"
