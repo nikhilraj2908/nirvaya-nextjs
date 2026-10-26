@@ -9,6 +9,7 @@ import {
   Calendar,
   Layers
 } from 'lucide-react';
+import en from '@/locales/en.json';
 
 export default function SpecialtiesSection({ currentLang = 'en' }) {
   const flagshipSpecialties = SPECIALTIES.slice(0, 4);
@@ -20,9 +21,9 @@ export default function SpecialtiesSection({ currentLang = 'en' }) {
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
           <SectionHeading
             align="left"
-            eyebrow="Clinical Excellence & Core Focus"
-            title="Comprehensive Vitreo-Retinal & Advanced Cataract Care"
-            description="Specialist-led diagnostic and surgical procedures guided by apex AIIMS protocols and performed with sutureless micro-incision precision."
+            eyebrow={en.specialties.eyebrow}
+            title={en.specialties.title}
+            description={en.specialties.description}
             className="mb-0! lg:mb-0 max-w-3xl"
           />
           <div className="shrink-0">
@@ -30,7 +31,7 @@ export default function SpecialtiesSection({ currentLang = 'en' }) {
               href="/services"
               className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-bold text-[#0A1E3F] bg-white hover:bg-slate-100 border border-slate-200 shadow-xs hover:shadow transition-all"
             >
-              <span>View All 8 Specialties</span>
+              <span>{en.specialties.viewAll}</span>
               <ArrowRight className="w-3.5 h-3.5 text-[#C59B27]" />
             </SafeLink>
           </div>
@@ -98,13 +99,13 @@ export default function SpecialtiesSection({ currentLang = 'en' }) {
                     className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0A1E3F] hover:text-[#C59B27] transition-colors"
                   >
                     <Calendar className="w-3.5 h-3.5 text-[#C59B27]" />
-                    <span>Pre-book Slot</span>
+                    <span>{en.common.preBookSlot}</span>
                   </SafeLink>
                   <SafeLink
                     href="/services"
                     className="text-[11px] font-semibold text-slate-400 hover:text-slate-700 transition-colors"
                   >
-                    Details →
+                    {en.specialties.details}
                   </SafeLink>
                 </div>
               </div>
@@ -120,10 +121,10 @@ export default function SpecialtiesSection({ currentLang = 'en' }) {
             </div>
             <div>
               <p className="text-xs sm:text-sm font-bold text-[#0A1E3F]">
-                Looking for ROP screening, Uveitis care, or Optical diagnostics?
+                {en.specialties.reassuranceTitle}
               </p>
               <p className="text-xs text-slate-500">
-                Explore our full clinical directory with condition guidelines and treatment overviews.
+                {en.specialties.reassuranceDesc}
               </p>
             </div>
           </div>
@@ -136,7 +137,7 @@ export default function SpecialtiesSection({ currentLang = 'en' }) {
             iconPosition="right"
             className="shrink-0 text-xs font-bold"
           >
-            Explore Services Directory
+            {en.specialties.directoryCTA}
           </Button>
         </div>
       </Container>

@@ -10,10 +10,11 @@ import ReviewsSection from '@/components/home/ReviewsSection';
 import LocationSection from '@/components/home/LocationSection';
 import FAQSection from '@/components/home/FAQSection';
 import FinalCTA from '@/components/home/FinalCTA';
+import en from '@/locales/en.json';
 
 export const metadata = {
-  title: 'Nirvaya Eyecare Centre | Specialist-led Retina, Cataract & Eye Care in Bhopal',
-  description: 'Specialist-led day-care eye centre in Bhopal focused on vitreo-retinal surgery, micro-incision cataract, diabetic eye care, and pediatric ROP under Dr Sandhya Gaur (MD AIIMS).'
+  title: en.metadata.title,
+  description: en.metadata.description
 };
 
 export default function HomePage() {

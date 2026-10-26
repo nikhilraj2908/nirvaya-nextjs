@@ -18,6 +18,7 @@ import {
 import { CLINIC_INFO, HERO_STAGES } from '@/data/siteData';
 import Button from '@/components/common/Button';
 import MobileHero from './MobileHero';
+import en from '@/locales/en.json';
 
 // Register GSAP ScrollTrigger plugin safely
 if (typeof window !== 'undefined') {
@@ -547,7 +548,7 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
                 <p className="text-base lg:text-lg text-slate-200 leading-relaxed max-w-xl font-normal">
                   {currentLang === 'hi'
                     ? 'रेटिना, मोतियाबिंद, डायबिटिक नेत्र रोग, ROP और समग्र नेत्र स्वास्थ्य के लिए उच्च गुणवत्ता और विशेषज्ञ परामर्श।'
-                    : 'Expert evaluation and personalised eye care for retina, cataract, diabetic eye disease, ROP and comprehensive ophthalmology in Bhopal.'}
+                    : en.mobileHero.description}
                 </p>
 
                 <div className="flex flex-wrap items-center gap-4 pt-1">
@@ -559,7 +560,7 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
                     icon={Calendar}
                     className="shadow-lg hover:shadow-xl font-bold"
                   >
-                    {currentLang === 'hi' ? 'परामर्श स्लॉट प्री-बुक करें' : 'Pre-book a Slot'}
+                    {currentLang === 'hi' ? 'परामर्श स्लॉट प्री-बुक करें' : en.common.preBookSlot}
                   </Button>
 
                   <Button
@@ -571,27 +572,17 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
                     iconPosition="right"
                     className="bg-white/10 hover:bg-white text-white hover:text-[#0A1E3F] border-white/30 backdrop-blur-xs font-semibold shadow-md transition-all duration-200"
                   >
-                    {currentLang === 'hi' ? 'हमारी सेवाएं देखें' : 'Explore Our Services'}
+                    {currentLang === 'hi' ? 'हमारी सेवाएं देखें' : en.common.exploreServices}
                   </Button>
                 </div>
 
                 <div className="pt-4 border-t border-slate-700/60 flex flex-wrap gap-4 text-xs text-slate-300 font-medium">
-                  <div className="flex items-center gap-1.5">
-                    <CheckCircle2 className="w-4 h-4 text-[#DFBF64] shrink-0" />
-                    <span>Retina & Vitreoretinal Care</span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <CheckCircle2 className="w-4 h-4 text-[#DFBF64] shrink-0" />
-                    <span>Micro-Incision Cataract</span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <CheckCircle2 className="w-4 h-4 text-[#DFBF64] shrink-0" />
-                    <span>Diabetic Eye Care</span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <CheckCircle2 className="w-4 h-4 text-[#DFBF64] shrink-0" />
-                    <span>Bedside ROP Screening</span>
-                  </div>
+                  {en.mobileHero.features.map((feat, fIdx) => (
+                    <div key={fIdx} className="flex items-center gap-1.5">
+                      <CheckCircle2 className="w-4 h-4 text-[#DFBF64] shrink-0" />
+                      <span>{feat}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
 
@@ -669,13 +660,13 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
                             icon={Calendar}
                             className="font-semibold shadow-md"
                           >
-                            Consult Specialist for this
+                            {en.common.consultDoctor}
                           </Button>
                           <SafeLink
                             href="/services"
                             className="text-xs text-slate-300 hover:text-white underline decoration-slate-500 underline-offset-4"
                           >
-                            All Procedures
+                            {en.common.viewAllProcedures}
                           </SafeLink>
                         </div>
 

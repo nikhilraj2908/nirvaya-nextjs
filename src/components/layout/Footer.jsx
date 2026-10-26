@@ -14,6 +14,7 @@ import {
   ExternalLink,
   X
 } from 'lucide-react';
+import en from '@/locales/en.json';
 
 const InstagramIcon = ({ className = 'w-4 h-4' }) => (
   <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -43,12 +44,12 @@ export default function Footer() {
             <Logo type="round" size="md" />
 
             <p className="text-slate-300 text-xs leading-relaxed pt-2">
-              A specialized day-care eye centre in Bhopal focused on vitreo-retinal surgery, micro-incision cataract surgery, diabetic eye disease, and pediatric ROP screening under Dr Sandhya Gaur (MD AIIMS, FVRS, FAICO Gold Medalist).
+              {en.footer.tagline}
             </p>
 
             <div className="pt-2 text-[11px] text-slate-400 space-y-1">
-              <p>Legal Entity: <span className="text-slate-200 font-semibold">{CLINIC_INFO.legalEntity}</span></p>
-              <p>Medical Director: <span className="text-[#DFBF64] font-semibold">{CLINIC_INFO.medicalDirector}</span></p>
+              <p>{en.footer.legalEntityLabel} <span className="text-slate-200 font-semibold">{CLINIC_INFO.legalEntity}</span></p>
+              <p>{en.footer.medicalDirectorLabel} <span className="text-[#DFBF64] font-semibold">{CLINIC_INFO.medicalDirector}</span></p>
             </div>
 
             {/* Social Links */}
@@ -77,7 +78,7 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition-colors"
               >
-                <span>Google Business Profile</span>
+                <span>{en.footer.googleBusinessProfile}</span>
                 <ExternalLink className="w-3 h-3 text-[#DFBF64]" />
               </SafeLink>
             </div>
@@ -86,7 +87,7 @@ export default function Footer() {
           {/* Column 2: Clinical Services (3 cols) */}
           <div className="lg:col-span-3 space-y-3">
             <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4 border-b border-slate-800 pb-2">
-              Clinical Specialties
+              {en.footer.clinicalSpecialtiesTitle}
             </h4>
             <ul className="space-y-2 text-xs text-slate-300">
               <li>
@@ -128,7 +129,7 @@ export default function Footer() {
               <li>
                 <SafeLink href="/services" className="hover:text-[#DFBF64] transition-colors flex items-center gap-1.5">
                   <ChevronRight className="w-3 h-3 text-[#DFBF64]" />
-                  View All Specialties →
+                  {en.footer.viewAllSpecialties}
                 </SafeLink>
               </li>
             </ul>
@@ -137,7 +138,7 @@ export default function Footer() {
           {/* Column 3: Patient Resources & Quick Links (2 cols) */}
           <div className="lg:col-span-2 space-y-3">
             <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4 border-b border-slate-800 pb-2">
-              Patient Care
+              {en.footer.patientCareTitle}
             </h4>
             <ul className="space-y-2 text-xs text-slate-300">
               <li>
@@ -185,7 +186,7 @@ export default function Footer() {
                   href="/pre-book"
                   className="hover:text-[#DFBF64] text-amber-300 font-bold block pt-1"
                 >
-                  Pre-book Slot →
+                  {en.footer.preBookSlot}
                 </SafeLink>
               </li>
             </ul>
@@ -194,7 +195,7 @@ export default function Footer() {
           {/* Column 4: Contact, Timings & Emergency (3 cols) */}
           <div className="lg:col-span-3 space-y-3">
             <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-4 border-b border-slate-800 pb-2">
-              Clinic Contact & Hours
+              {en.footer.clinicContactHoursTitle}
             </h4>
             <div className="space-y-2.5 text-xs text-slate-300">
               <div className="flex items-start gap-2.5">
@@ -229,17 +230,17 @@ export default function Footer() {
         {/* Medical & Statutory Disclaimer */}
         <div className="py-6 border-b border-slate-800 text-[11px] text-slate-400 leading-relaxed space-y-1.5">
           <p>
-            <strong className="text-slate-300">Medical Disclaimer:</strong> The information provided on this website is for general patient educational purposes and does not replace individualized clinical evaluation or ophthalmological consultation by a qualified doctor. If you experience sudden vision loss, severe eye pain, or flashes/floaters, please seek immediate emergency ophthalmic care.
+            <strong className="text-slate-300">{en.footer.disclaimerTitle}</strong> {en.footer.disclaimerText}
           </p>
           <p>
-            Compliant with Indian Digital Personal Data Protection (DPDP) Act 2023. Patient inquiries and pre-booking records are processed solely for clinical scheduling and communication.
+            {en.footer.dpdpNotice}
           </p>
         </div>
 
         {/* Bottom Bar: Copyright & Legal Policies */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-400">
           <p>
-            © 2026 {CLINIC_INFO.legalEntity}. All rights reserved. NIRVAYA EYECARE CENTRE™
+            © 2026 {CLINIC_INFO.legalEntity}. {en.footer.allRightsReserved}
           </p>
           <div className="flex items-center gap-4">
             <button
@@ -247,7 +248,7 @@ export default function Footer() {
               onClick={() => setLegalModal('privacy')}
               className="hover:text-slate-200 transition-colors underline cursor-pointer"
             >
-              Privacy Policy
+              {en.footer.privacyPolicy}
             </button>
             <span>•</span>
             <button
@@ -255,7 +256,7 @@ export default function Footer() {
               onClick={() => setLegalModal('terms')}
               className="hover:text-slate-200 transition-colors underline cursor-pointer"
             >
-              Terms of Use
+              {en.footer.termsOfUse}
             </button>
             <span>•</span>
             <button
@@ -263,7 +264,7 @@ export default function Footer() {
               onClick={() => setLegalModal('disclaimer')}
               className="hover:text-slate-200 transition-colors underline cursor-pointer"
             >
-              Patient Charter
+              {en.footer.patientCharter}
             </button>
           </div>
         </div>
@@ -299,7 +300,7 @@ export default function Footer() {
                   onClick={() => setLegalModal(null)}
                   className="px-4 py-2 rounded-xl bg-[#0A1E3F] text-white text-xs font-semibold cursor-pointer"
                 >
-                  Close
+                  {en.footer.close}
                 </button>
               </div>
             </div>

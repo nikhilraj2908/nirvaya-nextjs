@@ -3,6 +3,7 @@ import { CLINIC_INFO } from '@/data/siteData';
 import Container from '@/components/common/Container';
 import Button from '@/components/common/Button';
 import { Calendar, MessageSquare, Phone, ShieldCheck, Clock, MapPin } from 'lucide-react';
+import en from '@/locales/en.json';
 
 export default function FinalCTA({ onOpenPreBook, currentLang = 'en' }) {
   return (
@@ -42,32 +43,32 @@ export default function FinalCTA({ onOpenPreBook, currentLang = 'en' }) {
             {/* Badge */}
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase bg-[#C59B27]/20 text-[#DFBF64] border border-[#C59B27]/40 mb-4">
               <ShieldCheck className="w-3.5 h-3.5" />
-              Specialist Ophthalmology in Bhopal
+              {en.finalCTA.badge}
             </div>
 
             {/* Headline */}
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white mb-4 leading-tight">
-              Protect Your Vision with Timely, Specialist-Led Eye Care
+              {en.finalCTA.headline}
             </h2>
 
             {/* Subtext */}
             <p className="text-slate-200 text-sm sm:text-base lg:text-lg leading-relaxed mb-6 max-w-2xl">
-              Whether you require a detailed retina evaluation, expert cataract assessment, diabetic screening, or a second opinion on surgery—our dedicated team is here to guide you with clinical integrity.
+              {en.finalCTA.subtext}
             </p>
 
             {/* Quick trust strip */}
             <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-xs text-slate-300 font-medium mb-8 pb-5 border-b border-slate-700/60">
               <div className="flex items-center gap-1.5">
                 <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>Dr Sandhya Gaur (MD AIIMS)</span>
+                <span>{en.finalCTA.trust1}</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <Clock className="w-4 h-4 text-[#DFBF64] shrink-0" />
-                <span>Mon-Sat: 9:30 AM - 7:30 PM</span>
+                <span>{en.finalCTA.trust2}</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <MapPin className="w-4 h-4 text-sky-400 shrink-0" />
-                <span>Ayodhya Bypass Road, Bhopal</span>
+                <span>{en.finalCTA.trust3}</span>
               </div>
             </div>
 
@@ -81,7 +82,7 @@ export default function FinalCTA({ onOpenPreBook, currentLang = 'en' }) {
                 icon={Calendar}
                 className="font-bold shadow-xl text-sm"
               >
-                Pre-book Consultation Slot
+                {en.finalCTA.ctaPrimary}
               </Button>
 
               <Button
@@ -94,7 +95,7 @@ export default function FinalCTA({ onOpenPreBook, currentLang = 'en' }) {
                 icon={MessageSquare}
                 className="bg-white/10 hover:bg-white text-white hover:text-[#0A1E3F] border-white/25 backdrop-blur-xs font-semibold text-sm"
               >
-                Chat on WhatsApp
+                {en.finalCTA.ctaWhatsApp}
               </Button>
 
               <Button
@@ -104,7 +105,7 @@ export default function FinalCTA({ onOpenPreBook, currentLang = 'en' }) {
                 icon={Phone}
                 className="border-slate-600 text-slate-200 hover:text-white hover:border-slate-400 text-sm"
               >
-                Call: {CLINIC_INFO.phone}
+                {en.common.phoneLabel} {CLINIC_INFO.phone}
               </Button>
             </div>
           </div>

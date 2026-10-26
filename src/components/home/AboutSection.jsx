@@ -5,6 +5,8 @@ import Container from '@/components/common/Container';
 import SectionHeading from '@/components/common/SectionHeading';
 import Button from '@/components/common/Button';
 
+import en from '@/locales/en.json';
+
 export default function AboutSection() {
   return (
     <section id="about" className="py-16 lg:py-24 bg-white border-b border-slate-200/80">
@@ -14,19 +16,16 @@ export default function AboutSection() {
           <div className="lg:col-span-7 space-y-6">
             <SectionHeading
               align="left"
-              eyebrow="Clinical Vision & Specialist Leadership"
-              title="Specialist-Led Eye Care in Central India"
+              eyebrow={en.about.eyebrow}
+              title={en.about.title}
               className="mb-4!"
             />
 
             <div className="space-y-4 text-sm sm:text-base text-slate-600 leading-relaxed">
+              <p>{en.about.lead}</p>
               <p>
-              Advanced retina care and precision cataract surgery, guided by experience and compassion.
-
-              </p>
-              <p>
-                At <strong className="text-[#0A1E3F]">Nirvaya Eyecare Centre</strong>, every patient evaluation, dilated fundus scan, and surgical planning is overseen directly by senior Vitreo-Retinal specialist{' '}
-                <strong className="text-[#0A1E3F]">Dr Sandhya Gaur (MD AIIMS New Delhi, FVRS, FAICO Gold Medalist)</strong> with zero assembly-line rushing.
+                At <strong className="text-[#0A1E3F]">{en.clinic.name}</strong>, every patient evaluation, dilated fundus scan, and surgical planning is overseen directly by senior Vitreo-Retinal specialist{' '}
+                <strong className="text-[#0A1E3F]">{en.clinic.medicalDirector} ({en.clinic.qualifications})</strong> with zero assembly-line rushing.
               </p>
             </div>
 
@@ -37,8 +36,8 @@ export default function AboutSection() {
                   <Award className="w-4 h-4" />
                 </div>
                 <div>
-                  <h4 className="text-xs font-bold text-[#0A1E3F]">AIIMS Rigour</h4>
-                  <p className="text-[11px] text-slate-500">Apex Institute Trained</p>
+                  <h4 className="text-xs font-bold text-[#0A1E3F]">{en.about.badges.aiims.title}</h4>
+                  <p className="text-[11px] text-slate-500">{en.about.badges.aiims.desc}</p>
                 </div>
               </div>
 
@@ -47,8 +46,8 @@ export default function AboutSection() {
                   <ShieldCheck className="w-4 h-4" />
                 </div>
                 <div>
-                  <h4 className="text-xs font-bold text-[#0A1E3F]">Ethical Care</h4>
-                  <p className="text-[11px] text-slate-500">Zero forced procedures</p>
+                  <h4 className="text-xs font-bold text-[#0A1E3F]">{en.about.badges.ethical.title}</h4>
+                  <p className="text-[11px] text-slate-500">{en.about.badges.ethical.desc}</p>
                 </div>
               </div>
 
@@ -57,8 +56,8 @@ export default function AboutSection() {
                   <Microscope className="w-4 h-4" />
                 </div>
                 <div>
-                  <h4 className="text-xs font-bold text-[#0A1E3F]">Micro-Incision</h4>
-                  <p className="text-[11px] text-slate-500">25G/27G Vitrectomy</p>
+                  <h4 className="text-xs font-bold text-[#0A1E3F]">{en.about.badges.microIncision.title}</h4>
+                  <p className="text-[11px] text-slate-500">{en.about.badges.microIncision.desc}</p>
                 </div>
               </div>
             </div>
@@ -73,23 +72,17 @@ export default function AboutSection() {
                 icon={ArrowRight}
                 iconPosition="right"
               >
-                Learn More About Nirvaya
+                {en.about.cta}
               </Button>
               <Button
                 href="/pre-book"
                 to="/pre-book"
-                variant="primary"
+                variant="outline"
                 size="md"
                 icon={Calendar}
               >
-                Pre-book Slot
+                {en.about.ctaSecondary}
               </Button>
-              <SafeLink
-                href="/doctors"
-                className="text-xs font-bold text-[#0A1E3F] hover:text-[#C59B27] underline decoration-slate-300 underline-offset-4 ml-1"
-              >
-                Meet Dr Sandhya Gaur →
-              </SafeLink>
             </div>
           </div>
 
@@ -101,29 +94,29 @@ export default function AboutSection() {
               <div className="relative z-10 space-y-5">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wider bg-[#C59B27]/20 text-[#DFBF64] border border-[#C59B27]/40">
                   <Building2 className="w-3.5 h-3.5" />
-                  <span>Day-Care Surgical Excellence</span>
+                  <span>{en.about.card.badge}</span>
                 </div>
 
                 <h3 className="font-heading text-xl sm:text-2xl font-bold text-white tracking-tight">
-                  Modern Outpatient & Surgical Centre
+                  {en.about.card.title}
                 </h3>
 
                 <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                  Located along Ayodhya Bypass Road, Bhopal, custom-designed for rapid same-day recovery without stressful overnight stays.
+                  {en.about.card.description}
                 </p>
 
                 <div className="space-y-2.5 pt-2 border-t border-slate-700/80 text-xs">
                   <div className="flex items-center justify-between text-slate-300">
-                    <span>Clinical Director:</span>
-                    <strong className="text-white">Dr Sandhya Gaur</strong>
+                    <span>{en.about.card.clinicalDirectorLabel}</span>
+                    <strong className="text-white">{en.clinic.medicalDirector}</strong>
                   </div>
                   <div className="flex items-center justify-between text-slate-300">
-                    <span>Surgical Focus:</span>
-                    <strong className="text-[#DFBF64]">Retina & Phaco Cataract</strong>
+                    <span>{en.about.card.surgicalFocusLabel}</span>
+                    <strong className="text-[#DFBF64]">{en.about.card.surgicalFocusValue}</strong>
                   </div>
                   <div className="flex items-center justify-between text-slate-300">
-                    <span>Infection Control:</span>
-                    <strong className="text-white">Class 100 HEPA Clean Air OT</strong>
+                    <span>{en.about.card.infectionControlLabel}</span>
+                    <strong className="text-white">{en.about.card.infectionControlValue}</strong>
                   </div>
                 </div>
 
@@ -132,7 +125,7 @@ export default function AboutSection() {
                     href="/about"
                     className="inline-flex items-center gap-2 text-xs font-bold text-[#DFBF64] hover:text-white transition-colors"
                   >
-                    <span>Read Full Centre Story & Institutional Pillars</span>
+                    <span>{en.about.card.storyLink}</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </SafeLink>
                 </div>

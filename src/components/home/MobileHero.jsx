@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import Button from '@/components/common/Button';
 import { HERO_STAGES } from '@/data/siteData';
+import en from '@/locales/en.json';
 
 export default function MobileHero({ onOpenPreBook, currentLang = 'en' }) {
   const scrollContainerRef = useRef(null);
@@ -24,34 +25,23 @@ export default function MobileHero({ onOpenPreBook, currentLang = 'en' }) {
   const slides = useMemo(() => [
     {
       stage: 0,
-      eyebrow: currentLang === 'hi' ? 'विशेषज्ञ नेत्र देखभाल' : 'SPECIALIST EYE CARE IN BHOPAL',
-      headline: currentLang === 'hi' ? (
-        <span className="font-hindi">
-          विशेषज्ञ-नेतृत्व <span className="text-[#C59B27]">रेटिना और मोतियाबिंद</span> नेत्र देखभाल
-        </span>
-      ) : (
+      eyebrow: en.mobileHero.eyebrow,
+      headline: (
         <>
           Specialist-led{' '}
           <span className="text-[#C59B27]">Retina & Cataract</span>{' '}
           Eye Care
         </>
       ),
-      description: currentLang === 'hi'
-        ? 'रेटिना, मोतियाबिंद, डायबिटिक नेत्र रोग, ROP और समग्र नेत्र स्वास्थ्य के लिए उच्च गुणवत्ता और विशेषज्ञ परामर्श।'
-        : 'Expert evaluation and personalised eye care for retina, cataract, diabetic eye disease, ROP and comprehensive ophthalmology in Bhopal.',
+      description: en.mobileHero.description,
       isHero: true,
-      features: [
-        'Retina & Vitreo Care',
-        'Micro-Incision Cataract',
-        'Diabetic Eye Care',
-        'Bedside ROP Screening'
-      ],
+      features: en.mobileHero.features,
       primaryCta: {
-        text: currentLang === 'hi' ? 'परामर्श स्लॉट प्री-बुक करें' : 'Pre-book a Slot',
+        text: en.common.preBookSlot,
         href: '/pre-book'
       },
       secondaryCta: {
-        text: currentLang === 'hi' ? 'हमारी सेवाएं देखें' : 'Explore Our Services',
+        text: en.common.exploreServices,
         href: '/services'
       }
     },
@@ -73,15 +63,15 @@ export default function MobileHero({ onOpenPreBook, currentLang = 'en' }) {
       stat: s.stat,
       isHero: false,
       primaryCta: {
-        text: currentLang === 'hi' ? 'परामर्श स्लॉट प्री-बुक करें' : 'Consult Doctor for this',
+        text: en.common.consultDoctor,
         href: '/pre-book'
       },
       secondaryCta: {
-        text: currentLang === 'hi' ? 'हमारी सेवाएं देखें' : 'View All Procedures',
+        text: en.common.viewAllProcedures,
         href: '/services'
       }
     }))
-  ], [currentLang]);
+  ], []);
 
   // Measure card height to reserve exact matching space in normal document flow
   useEffect(() => {
@@ -185,11 +175,11 @@ export default function MobileHero({ onOpenPreBook, currentLang = 'en' }) {
         {/* Layer 3: Left-Aligned Editorial Typography */}
         <div className="relative z-10 pt-2 sm:pt-4 max-w-[58%] sm:max-w-[52%]">
           <h1 className="font-[family-name:var(--font-serif-luxury),Georgia,serif] text-[31px] sm:text-[38px] font-bold text-[#0A1E3F] leading-[1.08] tracking-tight">
-            Vision
+            {en.mobileHero.editorial.titlePart1}
             <br />
-            Without
+            {en.mobileHero.editorial.titlePart2}
             <br />
-            <span className="text-[#C59B27]">Symptoms.</span>
+            <span className="text-[#C59B27]">{en.mobileHero.editorial.titleHighlight}</span>
           </h1>
 
           {/* Golden Horizontal Accent Line */}
@@ -197,16 +187,12 @@ export default function MobileHero({ onOpenPreBook, currentLang = 'en' }) {
 
           {/* Subtitle */}
           <h2 className="font-[family-name:var(--font-serif-luxury),Georgia,serif] text-[15.5px] sm:text-[18px] font-semibold text-[#0A1E3F] leading-snug">
-            Your Future Needs
-            <br />
-            Attention Now.
+            {en.mobileHero.editorial.subtitle}
           </h2>
 
           {/* Tagline */}
           <p className="text-[12px] sm:text-[13px] text-slate-600 mt-2 leading-relaxed font-normal">
-            Advanced Eye Care for
-            <br />
-            a Clearer Tomorrow.
+            {en.mobileHero.editorial.tagline}
           </p>
         </div>
       </div>
@@ -374,7 +360,7 @@ export default function MobileHero({ onOpenPreBook, currentLang = 'en' }) {
         {/* Swipe Hint Cue */}
         <div className="mt-2 flex items-center justify-center text-[10px] sm:text-[11px] text-slate-400">
           <span className="bg-white/80 backdrop-blur-xs px-3 py-0.5 rounded-full border border-slate-200/60 shadow-2xs">
-            ← Swipe cards to explore all 6 clinical stages →
+            {en.mobileHero.swipeHint}
           </span>
         </div>
       </div>

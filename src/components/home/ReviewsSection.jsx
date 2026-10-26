@@ -8,6 +8,7 @@ import {
   BookOpen,
   GraduationCap
 } from 'lucide-react';
+import en from '@/locales/en.json';
 
 // Preserved credentials data (per requirement: do not delete the data)
 export const credentialsStats = [
@@ -52,9 +53,9 @@ export default function ReviewsSection() {
           <SectionHeading
             align="center"
             light={false}
-            eyebrow="WHAT FELLOW DOCTORS SAY"
-            title="Doctors' Point of View"
-            subtitle="Referring physicians, paediatricians and diabetologists share their clinical experience of working with Dr Sandhya Gaur."
+            eyebrow={en.reviews.eyebrow}
+            title={en.reviews.title}
+            subtitle={en.reviews.subtitle}
           />
         </div>
 
@@ -73,14 +74,14 @@ export default function ReviewsSection() {
                     <span className="truncate">{rev.specialty || 'Specialist'}</span>
                   </span>
                   <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 bg-slate-100 px-2 py-1 rounded-md shrink-0 whitespace-nowrap">
-                    DOCTOR&apos;S VIEW
+                    {en.reviews.cardBadge}
                   </span>
                 </div>
 
                 {/* Referral Context */}
                 {rev.referralContext && (
                   <div className="text-[11px] text-slate-500 font-medium mb-3 flex items-start gap-1.5 leading-snug">
-                    <span className="text-slate-400 shrink-0">Referred for:</span>
+                    <span className="text-slate-400 shrink-0">{en.reviews.referredFor}</span>
                     <span className="text-slate-700 font-semibold">{rev.referralContext}</span>
                   </div>
                 )}
@@ -128,7 +129,7 @@ export default function ReviewsSection() {
 
         {/* Small Muted Footnote */}
         <div className="mt-8 sm:mt-10 text-center text-xs text-slate-400 max-w-2xl mx-auto">
-          <p>Views shared by fellow medical professionals with their consent.</p>
+          <p>{en.reviews.footnote}</p>
         </div>
       </Container>
     </section>

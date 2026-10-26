@@ -4,6 +4,7 @@ import React from 'react';
 import SafeLink from '@/components/common/SafeLink';
 import { CLINIC_INFO } from '@/data/siteData';
 import { Phone, MessageSquare, Calendar } from 'lucide-react';
+import en from '@/locales/en.json';
 
 export default function StickyMobileActionBar() {
   return (
@@ -20,7 +21,7 @@ export default function StickyMobileActionBar() {
           aria-label="Call clinic directly"
         >
           <Phone className="w-3.5 h-3.5 text-[#DFBF64] shrink-0" />
-          <span className="text-xs font-semibold tracking-tight">Call</span>
+          <span className="text-xs font-semibold tracking-tight">{en.common.call}</span>
         </SafeLink>
 
         {/* WhatsApp Consultation Button */}
@@ -34,7 +35,7 @@ export default function StickyMobileActionBar() {
           aria-label="Chat on WhatsApp"
         >
           <MessageSquare className="w-3.5 h-3.5 text-[#25D366] shrink-0" />
-          <span className="text-xs font-semibold tracking-tight">WhatsApp</span>
+          <span className="text-xs font-semibold tracking-tight">{en.common.whatsApp}</span>
         </SafeLink>
 
         {/* Pre-book OPD Slot Hero Button */}
@@ -44,7 +45,7 @@ export default function StickyMobileActionBar() {
           aria-label="Open Pre-book Consultation Page"
         >
           <Calendar className="w-3.5 h-3.5 text-[#0A1E3F] shrink-0" />
-          <span className="tracking-tight">Pre-book</span>
+          <span className="tracking-tight">{en.common.preBook}</span>
         </SafeLink>
       </div>
     </nav>

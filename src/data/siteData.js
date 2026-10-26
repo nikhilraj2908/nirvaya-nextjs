@@ -1,15 +1,12 @@
-/**
- * Centralized Site Configuration & Content Data for NIRVAYA EYECARE CENTRE
- * All values are maintained here for easy updates and multi-lingual support.
- */
+import en from '@/locales/en.json';
 
 export const CLINIC_INFO = {
-  name: "Nirvaya Eyecare Centre",
-  legalEntity: "M/s Nirvaya Health",
-  tagline: "Specialist-led Retina, Cataract & Comprehensive Eye Care",
-  shortDescription: "A specialist-led day-care eye centre in Bhopal delivering evidence-based vitreo-retinal surgery, micro-incision cataract surgery, diabetic eye care, and pediatric ROP screening.",
-  medicalDirector: "Dr Sandhya Gaur",
-  qualifications: "MD (Ophthalmology, AIIMS New Delhi), DNB, FVRS, FAICO (Retina - Gold Medalist)",
+  name: en.clinic.name,
+  legalEntity: en.clinic.legalEntity,
+  tagline: en.clinic.tagline,
+  shortDescription: en.clinic.shortDescription,
+  medicalDirector: en.clinic.medicalDirector,
+  qualifications: en.clinic.qualifications,
   publicationsCount: 18,
 
   // Contact details (Configurable placeholders)
@@ -23,21 +20,16 @@ export const CLINIC_INFO = {
   medicalDirectorEmail: "medical.director@nirvayaeyecare.com",
 
   // Location
-  addressLine1: "Plot No. 7, Rajvansh Colony",
-  addressLine2: "Ayodhya Bypass Road",
-  city: "Bhopal",
-  state: "Madhya Pradesh",
-  pincode: "462016",
-  landmark: "Near Ayodhya Nagar Square, Easy Parking Available",
-  fullAddress: "Plot No. 7, Rajvansh Colony, Ayodhya Bypass Road, Bhopal, MP - 462016",
+  addressLine1: en.clinic.addressLine1,
+  addressLine2: en.clinic.addressLine2,
+  city: en.clinic.city,
+  state: en.clinic.state,
+  pincode: en.clinic.pincode,
+  landmark: en.clinic.landmark,
+  fullAddress: en.clinic.fullAddress,
 
   // Timings
-  timings: {
-    weekdays: "Monday – Saturday: 9:30 AM – 7:30 PM",
-    sunday: "Sunday: 10:00 AM – 1:00 PM (Emergency & Prior Slots Only)",
-    opdDays: "Mon, Tue, Wed, Thu, Fri, Sat",
-    emergency: "24/7 Retina & Ocular Trauma on call"
-  },
+  timings: en.clinic.timings,
 
   social: {
     instagram: "https://instagram.com/nirvayaeyecare",
@@ -47,11 +39,11 @@ export const CLINIC_INFO = {
 };
 
 export const NAVIGATION_ITEMS = [
-  { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
-  { label: "Doctors", href: "/doctors" },
+  { label: en.nav.home, href: "/" },
+  { label: en.nav.about, href: "/about" },
+  { label: en.nav.doctors, href: "/doctors" },
   {
-    label: "Services",
+    label: en.nav.services,
     href: "/services",
     isDropdown: true,
     children: [
@@ -66,7 +58,7 @@ export const NAVIGATION_ITEMS = [
     ]
   },
   {
-    label: "Knowledge Hub",
+    label: en.nav.knowledgeHub,
     href: "/blog",
     isDropdown: true,
     children: [
@@ -74,72 +66,23 @@ export const NAVIGATION_ITEMS = [
       { label: "Research Publications", href: "/research", desc: "18+ Peer-reviewed clinical papers by Dr Sandhya Gaur" }
     ]
   },
-  { label: "Technology", href: "/technology" },
-  { label: "Contact", href: "/contact" }
+  { label: en.nav.technology, href: "/technology" },
+  { label: en.nav.contact, href: "/contact" }
 ];
 
-export const HERO_STAGES = [
-  {
-    stage: 0,
-    progressRange: [0, 0.18],
-    eyebrow: "SPECIALIST EYE CARE IN BHOPAL",
-    headline: "Specialist-led Retina & Cataract Eye Care",
-    description: "Expert evaluation and personalised eye care for retina, cataract, diabetic eye disease, ROP and comprehensive ophthalmology in a serene, modern clinical setting.",
-    subDetail: "Equipped for delicate microsurgery and comprehensive medical retina management.",
-    tags: ["Retina & Vitrectomy", "Micro-Incision Phaco", "Diabetic Eye Care", "ROP Screening"],
-    stat: { label: "Lead Surgeon", value: "AIIMS Alumna" }
-  },
-  {
-    stage: 1,
-    progressRange: [0.18, 0.35],
-    eyebrow: "ANTERIOR SEGMENT & CORNEA",
-    headline: "Optical Clarity & Cornea",
-    description: "The eye's natural crystalline protective front surface. Clear light refraction is vital for high-resolution visual acuity.",
-    subDetail: "Diagnostic topography and optical biometry for customized visual restoration.",
-    tags: ["Corneal Topography", "Dry Eye Evaluation", "Optical Biometry"],
-    stat: { label: "Precision", value: "Sub-Micron Mapping" }
-  },
-  {
-    stage: 2,
-    progressRange: [0.35, 0.52],
-    eyebrow: "CRYSTALLINE LENS",
-    headline: "Crystalline Lens & Cataract",
-    description: "Precision-focused cataract care with micro-incision phacoemulsification and advanced customized premium intraocular lens implantation.",
-    subDetail: "Day-care stitchless surgery with rapid visual recovery.",
-    tags: ["Micro-Phaco MICS", "Toric & Trifocal IOLs", "Rapid 24h Recovery"],
-    stat: { label: "Incision", value: "1.8–2.2mm Stitchless" }
-  },
-  {
-    stage: 3,
-    progressRange: [0.52, 0.68],
-    eyebrow: "VITREOUS & RETINAL INTERFACE",
-    headline: "Vitreous Cavity & Floatage",
-    description: "Specialized vitrectomy care for vitreous hemorrhages, floaters, diabetic traction and complex posterior segment trauma.",
-    subDetail: "Ultra-high speed sutureless micro-incision vitrectomy surgery (MIVS).",
-    tags: ["25G/27G MIVS", "Vitreous Clearance", "Tamponade Delivery"],
-    stat: { label: "Speed", value: "10,000 cuts/min" }
-  },
-  {
-    stage: 4,
-    progressRange: [0.68, 0.84],
-    eyebrow: "RETINA & MACULA",
-    headline: "Retina, Macula & Central Vision",
-    description: "The delicate neural tapestry of vision. Expert treatment for retinal detachments, diabetic macular edema, AMD and vein occlusions.",
-    subDetail: "Sub-micron optical coherence tomography (OCT) and targeted anti-VEGF injections.",
-    tags: ["HD-OCT Imaging", "Anti-VEGF Therapy", "Green Laser Photocoagulation"],
-    stat: { label: "Specialty", value: "FAICO Gold Medalist" }
-  },
-  {
-    stage: 5,
-    progressRange: [0.84, 1.0],
-    eyebrow: "POSTERIOR SEGMENT & NEURO-PATHWAY",
-    headline: "Optic Nerve & Ocular Health",
-    description: "Direct conduit to visual perception. Comprehensive screening for glaucoma, ischemic neuropathies, and systemic vascular changes.",
-    subDetail: "Holistic ophthalmic protection for lifelong sight.",
-    tags: ["Visual Field Perimetry", "RNFL Analysis", "Glaucoma Care"],
-    stat: { label: "Protection", value: "Lifelong Vision Health" }
-  }
+const STAGE_PROGRESS_RANGES = [
+  [0, 0.18],
+  [0.18, 0.35],
+  [0.35, 0.52],
+  [0.52, 0.68],
+  [0.68, 0.84],
+  [0.84, 1.0]
 ];
+
+export const HERO_STAGES = en.heroStages.map((stageItem, idx) => ({
+  ...stageItem,
+  progressRange: STAGE_PROGRESS_RANGES[idx] || [0, 1]
+}));
 
 export const SPECIALTIES = [
   {

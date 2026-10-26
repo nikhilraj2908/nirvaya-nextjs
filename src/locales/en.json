@@ -1,0 +1,337 @@
+{
+  "metadata": {
+    "title": "Nirvaya Eyecare Centre | Specialist-led Retina, Cataract & Eye Care in Bhopal",
+    "description": "Specialist-led day-care eye centre in Bhopal focused on vitreo-retinal surgery, micro-incision cataract, diabetic eye care, and pediatric ROP under Dr Sandhya Gaur (MD AIIMS)."
+  },
+  "common": {
+    "preBookSlot": "Pre-book a Slot",
+    "preBookConsultation": "Pre-book Consultation Slot",
+    "exploreServices": "Explore Our Services",
+    "viewAllProcedures": "View All Procedures",
+    "consultDoctor": "Consult Doctor for this",
+    "chatWhatsApp": "Chat on WhatsApp",
+    "callClinic": "Call Clinic",
+    "phoneLabel": "Call:",
+    "phone": "+91 755 492 8200",
+    "openToday": "Open Today",
+    "opdHours": "9:30 AM - 7:30 PM",
+    "experience": "10+ Years Dedicated",
+    "experienceLabel": "Experience:",
+    "opdHoursLabel": "OPD Hours:",
+    "aiimsTrained": "AIIMS Trained",
+    "call": "Call",
+    "whatsApp": "WhatsApp",
+    "preBook": "Pre-book"
+  },
+  "clinic": {
+    "name": "Nirvaya Eyecare Centre",
+    "legalEntity": "M/s Nirvaya Health",
+    "tagline": "Specialist-led Retina, Cataract & Comprehensive Eye Care",
+    "shortDescription": "A specialist-led day-care eye centre in Bhopal delivering evidence-based vitreo-retinal surgery, micro-incision cataract surgery, diabetic eye care, and pediatric ROP screening.",
+    "medicalDirector": "Dr Sandhya Gaur",
+    "qualifications": "MD (Ophthalmology, AIIMS New Delhi), DNB, FVRS, FAICO (Retina - Gold Medalist)",
+    "addressLine1": "Plot No. 7, Rajvansh Colony",
+    "addressLine2": "Ayodhya Bypass Road",
+    "city": "Bhopal",
+    "state": "Madhya Pradesh",
+    "pincode": "462016",
+    "landmark": "Near Ayodhya Nagar Square, Easy Parking Available",
+    "fullAddress": "Plot No. 7, Rajvansh Colony, Ayodhya Bypass Road, Bhopal, MP - 462016",
+    "timings": {
+      "weekdays": "Monday – Saturday: 9:30 AM – 7:30 PM",
+      "sunday": "Sunday: 10:00 AM – 1:00 PM (Emergency & Prior Slots Only)",
+      "opdDays": "Mon, Tue, Wed, Thu, Fri, Sat",
+      "emergency": "24/7 Retina & Ocular Trauma on call"
+    }
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "doctors": "Doctors",
+    "services": "Services",
+    "knowledgeHub": "Knowledge Hub",
+    "technology": "Technology",
+    "contact": "Contact",
+    "emergencyCall": "Emergency 24/7",
+    "preBookAppointment": "Pre-Book Appointment"
+  },
+  "mobileHero": {
+    "eyebrow": "SPECIALIST EYE CARE IN BHOPAL",
+    "headline": "Specialist-led Retina & Cataract Eye Care",
+    "description": "Expert evaluation and personalised eye care for retina, cataract, diabetic eye disease, ROP and comprehensive ophthalmology in Bhopal.",
+    "editorial": {
+      "titlePart1": "Vision",
+      "titlePart2": "Without",
+      "titleHighlight": "Symptoms.",
+      "subtitle": "Your Future Needs Attention Now.",
+      "tagline": "Advanced Eye Care for a Clearer Tomorrow."
+    },
+    "features": [
+      "Retina & Vitreo Care",
+      "Micro-Incision Cataract",
+      "Diabetic Eye Care",
+      "Bedside ROP Screening"
+    ],
+    "swipeHint": "← Swipe cards to explore all 6 clinical stages →"
+  },
+  "heroStages": [
+    {
+      "stage": 0,
+      "eyebrow": "SPECIALIST EYE CARE IN BHOPAL",
+      "headline": "Specialist-led Retina & Cataract Eye Care",
+      "description": "Expert evaluation and personalised eye care for retina, cataract, diabetic eye disease, ROP and comprehensive ophthalmology in a serene, modern clinical setting.",
+      "subDetail": "Equipped for delicate microsurgery and comprehensive medical retina management.",
+      "tags": ["Retina & Vitrectomy", "Micro-Incision Phaco", "Diabetic Eye Care", "ROP Screening"],
+      "stat": { "label": "Lead Surgeon", "value": "AIIMS Alumna" }
+    },
+    {
+      "stage": 1,
+      "eyebrow": "ANTERIOR SEGMENT & CORNEA",
+      "headline": "Optical Clarity & Cornea",
+      "description": "The eye's natural crystalline protective front surface. Clear light refraction is vital for high-resolution visual acuity.",
+      "subDetail": "Diagnostic topography and optical biometry for customized visual restoration.",
+      "tags": ["Corneal Topography", "Dry Eye Evaluation", "Optical Biometry"],
+      "stat": { "label": "Precision", "value": "Sub-Micron Mapping" }
+    },
+    {
+      "stage": 2,
+      "eyebrow": "CRYSTALLINE LENS",
+      "headline": "Crystalline Lens & Cataract",
+      "description": "Precision-focused cataract care with micro-incision phacoemulsification and advanced customized premium intraocular lens implantation.",
+      "subDetail": "Day-care stitchless surgery with rapid visual recovery.",
+      "tags": ["Micro-Phaco MICS", "Toric & Trifocal IOLs", "Rapid 24h Recovery"],
+      "stat": { "label": "Incision", "value": "1.8–2.2mm Stitchless" }
+    },
+    {
+      "stage": 3,
+      "eyebrow": "VITREOUS & RETINAL INTERFACE",
+      "headline": "Vitreous Cavity & Floatage",
+      "description": "Specialized vitrectomy care for vitreous hemorrhages, floaters, diabetic traction and complex posterior segment trauma.",
+      "subDetail": "Ultra-high speed sutureless micro-incision vitrectomy surgery (MIVS).",
+      "tags": ["25G/27G MIVS", "Vitreous Clearance", "Tamponade Delivery"],
+      "stat": { "label": "Speed", "value": "10,000 cuts/min" }
+    },
+    {
+      "stage": 4,
+      "eyebrow": "RETINA & MACULA",
+      "headline": "Retina, Macula & Central Vision",
+      "description": "The delicate neural tapestry of vision. Expert treatment for retinal detachments, diabetic macular edema, AMD and vein occlusions.",
+      "subDetail": "Sub-micron optical coherence tomography (OCT) and targeted anti-VEGF injections.",
+      "tags": ["HD-OCT Imaging", "Anti-VEGF Therapy", "Green Laser Photocoagulation"],
+      "stat": { "label": "Specialty", "value": "FAICO Gold Medalist" }
+    },
+    {
+      "stage": 5,
+      "eyebrow": "POSTERIOR SEGMENT & NEURO-PATHWAY",
+      "headline": "Optic Nerve & Ocular Health",
+      "description": "Direct conduit to visual perception. Comprehensive screening for glaucoma, ischemic neuropathies, and systemic vascular changes.",
+      "subDetail": "Holistic ophthalmic protection for lifelong sight.",
+      "tags": ["Visual Field Perimetry", "RNFL Analysis", "Glaucoma Care"],
+      "stat": { "label": "Protection", "value": "Lifelong Vision Health" }
+    }
+  ],
+  "trustStrip": [
+    {
+      "title": "MD AIIMS & FAICO Gold Medalist",
+      "desc": "Apex national training in Vitreo-Retinal surgery"
+    },
+    {
+      "title": "25G / 27G Sutureless Vitrectomy",
+      "desc": "Micro-incision posterior segment surgery"
+    },
+    {
+      "title": "18 Indexed Research Publications",
+      "desc": "Evidence-based, peer-reviewed clinical protocols"
+    },
+    {
+      "title": "Positive-Pressure HEPA OT",
+      "desc": "Class 100 laminar cleanroom infection defense"
+    }
+  ],
+  "about": {
+    "eyebrow": "Clinical Vision & Specialist Leadership",
+    "title": "Specialist-Led Eye Care in Central India",
+    "lead": "Advanced retina care and precision cataract surgery, guided by experience and compassion.",
+    "p1": "At Nirvaya Eyecare Centre, every patient evaluation, dilated fundus scan, and surgical planning is overseen directly by senior Vitreo-Retinal specialist Dr Sandhya Gaur (MD AIIMS New Delhi, FVRS, FAICO Gold Medalist) with zero assembly-line rushing.",
+    "badges": {
+      "aiims": {
+        "title": "AIIMS Rigour",
+        "desc": "Apex Institute Trained"
+      },
+      "ethical": {
+        "title": "Ethical Care",
+        "desc": "Zero forced procedures"
+      },
+      "microIncision": {
+        "title": "Micro-Incision",
+        "desc": "25G/27G Vitrectomy"
+      }
+    },
+    "cta": "Learn About Nirvaya & Dr. Sandhya",
+    "ctaSecondary": "Pre-book Slot",
+    "card": {
+      "badge": "Day-Care Surgical Excellence",
+      "title": "Modern Outpatient & Surgical Centre",
+      "description": "Located along Ayodhya Bypass Road, Bhopal, custom-designed for rapid same-day recovery without stressful overnight stays.",
+      "clinicalDirectorLabel": "Clinical Director:",
+      "surgicalFocusLabel": "Surgical Focus:",
+      "surgicalFocusValue": "Retina & Phaco Cataract",
+      "infectionControlLabel": "Infection Control:",
+      "infectionControlValue": "Class 100 HEPA Clean Air OT",
+      "storyLink": "Read Full Centre Story & Institutional Pillars"
+    }
+  },
+  "specialties": {
+    "eyebrow": "Clinical Excellence & Core Focus",
+    "title": "Comprehensive Vitreo-Retinal & Advanced Cataract Care",
+    "description": "Specialist-led diagnostic and surgical procedures guided by apex AIIMS protocols and performed with sutureless micro-incision precision.",
+    "viewAll": "View All 8 Specialties",
+    "details": "Details →",
+    "exploreProcedure": "Explore Procedure",
+    "reassuranceTitle": "Looking for ROP screening, Uveitis care, or Optical diagnostics?",
+    "reassuranceDesc": "Explore our full clinical directory with condition guidelines and treatment overviews.",
+    "directoryCTA": "Explore Services Directory"
+  },
+  "doctor": {
+    "eyebrow": "CHIEF VITREORETINAL SURGEON",
+    "experienceLabel": "Experience:",
+    "experienceValue": "10+ Years Dedicated",
+    "opdHoursLabel": "OPD Hours:",
+    "opdHoursValue": "9:30 AM - 7:30 PM",
+    "ctaPrimary": "Pre-book Consultation Slot",
+    "ctaSecondary": "View Academic Profile",
+    "sectionEyebrow": "Medical Leadership & Surgical Mastery",
+    "sectionTitle": "Expertise Shaped at India's Apex Institute",
+    "bio": {
+      "prefix": "Dr Sandhya Gaur",
+      "part1": "completed her",
+      "part2": "postgraduate ophthalmology",
+      "part3": "residency at",
+      "part4": "AIIMS",
+      "part5": "New Delhi, followed by extensive sub-specialty vitreo-retinal surgical training."
+    },
+    "metrics": {
+      "papers": "Scientific Papers",
+      "goldMedal": "Gold Medal",
+      "faico": "FAICO Vitreo-Retina",
+      "surgeries": "Evaluations & Surgeries"
+    },
+    "viewAcademicProfile": "View Full Academic Profile"
+  },
+  "technology": {
+    "badge": "Cutting-Edge Infrastructure",
+    "title": "Microsurgical Technology & Aseptic OT",
+    "description": "Delicate ophthalmic structures demand sub-micron imaging and precision fluidics to maximize patient visual recovery.",
+    "exploreCTA": "Explore Full OT Facility",
+    "statusActive": "Installed & Active",
+    "learnMore": "Learn more",
+    "items": [
+      {
+        "category": "Surgical Vitreo-Retina",
+        "title": "25G / 27G Sutureless Vitrectomy",
+        "desc": "High-speed pneumatic cut rates with micro-cannulas for retinal detachment repair, macular holes, and diabetic vitreous hemorrhage with rapid healing."
+      },
+      {
+        "category": "High-Resolution Diagnostics",
+        "title": "Carl Zeiss Optics & Spectral OCT",
+        "desc": "Stereoscopic high-depth red reflex visualization and micron-level optical coherence tomography for early detection of retinal disorders."
+      },
+      {
+        "category": "Cleanroom Environment",
+        "title": "Class 100 HEPA Clean Air OT",
+        "desc": "Modular positive-pressure laminar airflow with 99.97% bacterial air filtration for ultra-sterile microsurgical safety and zero endophthalmitis."
+      }
+    ]
+  },
+  "knowledgeHub": {
+    "badge": "Academic & Clinical Publications",
+    "title": "Knowledge & Clinical Insights",
+    "description": "Delivering transparent, evidence-based ophthalmology education for patients and publishing peer-reviewed clinical research for the global medical community.",
+    "subOptions": [
+      {
+        "id": "blogs",
+        "title": "Articles & Patient Guides",
+        "description": "Read practical medical perspectives on retinal health, digital eye strain, diabetic eye care, and emergency warning signs.",
+        "countLabel": "3 Articles Published",
+        "ctaText": "Read Articles",
+        "tag": "Public Guides"
+      },
+      {
+        "id": "papers",
+        "title": "Research Papers & Clinical Studies",
+        "description": "Explore indexed peer-reviewed publications, surgical techniques, and clinical research in vitreoretinal surgery by Dr. Sandhya Gaur.",
+        "countLabel": "5 Indexed Publications",
+        "ctaText": "Explore Research",
+        "tag": "Indexed Studies"
+      }
+    ]
+  },
+  "reviews": {
+    "eyebrow": "WHAT FELLOW DOCTORS SAY",
+    "title": "Doctors' Point of View",
+    "subtitle": "Referring physicians, paediatricians and diabetologists share their clinical experience of working with Dr Sandhya Gaur.",
+    "cardBadge": "DOCTOR'S VIEW",
+    "referredFor": "Referred for:",
+    "footnote": "Views shared by fellow medical professionals with their consent."
+  },
+  "location": {
+    "eyebrow": "Visit Our Centre",
+    "title": "Convenient Location on Ayodhya Bypass Road, Bhopal",
+    "description": "Nirvaya Eyecare Centre is purpose-built to offer relaxed, ground-floor accessibility with spacious waiting areas and hassle-free vehicular parking.",
+    "consultationHoursTitle": "Consultation & Day-Care Hours",
+    "consultationHoursSub": "Routine OPD & Surgical Admissions",
+    "weekdayLabel": "Monday to Saturday",
+    "sundayLabel": "Sunday",
+    "sundayTimings": "10:00 AM - 1:00 PM (Prior Slots)",
+    "emergencyLabel": "Ocular Emergencies",
+    "emergencyVal": "24/7 Retina Trauma On-Call",
+    "dilationNotice": "* Pupil dilation for retinal exams takes 45 minutes; please schedule arrival at least 1 hour before OPD closing.",
+    "connectivityTitle": "Prime Arterial Highway Connectivity",
+    "addressTitle": "Complete Address",
+    "landmarkLabel": "Landmark:",
+    "parkingFeature": "Ample Dedicated Parking",
+    "accessibleFeature": "Senior Citizen & Wheelchair Friendly",
+    "directionsCTA": "Get Directions in Google Maps",
+    "openInNav": "Open in Navigation App"
+  },
+  "faq": {
+    "eyebrow": "Clinical Guidance & Patient FAQ",
+    "title": "Frequently Asked Questions",
+    "description": "Clear, transparent answers about appointments, retina imaging, painless cataract surgery, and what to expect during your clinic visit.",
+    "dedicatedPageCTA": "Explore All Questions on Dedicated FAQ Page",
+    "unansweredTitle": "Have a specific clinical question?",
+    "unansweredDesc": "Speak directly with our clinic coordinator or message us on WhatsApp for personal guidance.",
+    "phone": "+91 755 492 8200",
+    "whatsapp": "WhatsApp"
+  },
+  "finalCTA": {
+    "badge": "Specialist Ophthalmology in Bhopal",
+    "headline": "Protect Your Vision with Timely, Specialist-Led Eye Care",
+    "subtext": "Whether you require a detailed retina evaluation, expert cataract assessment, diabetic screening, or a second opinion on surgery—our dedicated team is here to guide you with clinical integrity.",
+    "trust1": "Dr Sandhya Gaur (MD AIIMS)",
+    "trust2": "Mon-Sat: 9:30 AM - 7:30 PM",
+    "trust3": "Ayodhya Bypass Road, Bhopal",
+    "ctaPrimary": "Pre-book Consultation Slot",
+    "ctaWhatsApp": "Chat on WhatsApp",
+    "ctaCall": "Call: +91 755 492 8200"
+  },
+  "footer": {
+    "tagline": "A specialized day-care eye centre in Bhopal focused on vitreo-retinal surgery, micro-incision cataract surgery, diabetic eye disease, and pediatric ROP screening under Dr Sandhya Gaur (MD AIIMS, FVRS, FAICO Gold Medalist).",
+    "legalEntityLabel": "Legal Entity:",
+    "medicalDirectorLabel": "Medical Director:",
+    "googleBusinessProfile": "Google Business Profile",
+    "clinicalSpecialtiesTitle": "Clinical Specialties",
+    "viewAllSpecialties": "View All Specialties →",
+    "patientCareTitle": "Patient Care",
+    "preBookSlot": "Pre-book Slot →",
+    "clinicContactHoursTitle": "Clinic Contact & Hours",
+    "disclaimerTitle": "Medical Disclaimer:",
+    "disclaimerText": "The information provided on this website is for general patient educational purposes and does not replace individualized clinical evaluation or ophthalmological consultation by a qualified doctor. If you experience sudden vision loss, severe eye pain, or flashes/floaters, please seek immediate emergency ophthalmic care.",
+    "dpdpNotice": "Compliant with Indian Digital Personal Data Protection (DPDP) Act 2023. Patient inquiries and pre-booking records are processed solely for clinical scheduling and communication.",
+    "allRightsReserved": "All rights reserved. NIRVAYA EYECARE CENTRE™",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfUse": "Terms of Use",
+    "patientCharter": "Patient Charter",
+    "close": "Close"
+  }
+}

@@ -5,6 +5,7 @@ import SafeLink from '@/components/common/SafeLink';
 import { FileText, BookOpen, ArrowRight } from 'lucide-react';
 import Container from '@/components/common/Container';
 import { getResourceHub } from '@/services/api';
+import en from '@/locales/en.json';
 
 export default function KnowledgeHubSection() {
   const [hubData, setHubData] = useState(null);
@@ -26,26 +27,13 @@ export default function KnowledgeHubSection() {
     };
   }, []);
 
-  const subOptions = hubData?.subOptions || [
-    {
-      id: 'blogs',
-      title: 'Articles & Patient Guides',
-      slug: 'blog',
-      description: 'Read practical medical perspectives on retinal health, digital eye strain, diabetic eye care, and emergency warning signs.',
-      countLabel: '3 Articles Published',
-      ctaText: 'Read Articles',
-      route: '/blog'
-    },
-    {
-      id: 'papers',
-      title: 'Research Papers & Clinical Studies',
-      slug: 'research',
-      description: 'Explore indexed peer-reviewed publications, surgical techniques, and clinical research in vitreoretinal surgery by Dr. Sandhya Gaur.',
-      countLabel: '5 Indexed Publications',
-      ctaText: 'Explore Research',
-      route: '/research'
-    }
-  ];
+  const defaultSubOptions = en.knowledgeHub.subOptions.map((opt) => ({
+    ...opt,
+    slug: opt.id === 'blogs' ? 'blog' : 'research',
+    route: opt.id === 'blogs' ? '/blog' : '/research'
+  }));
+
+  const subOptions = hubData?.subOptions || defaultSubOptions;
 
   return (
     <section className="py-20 lg:py-28 bg-[#F8FAFC] border-t border-slate-200/80 relative overflow-hidden">
@@ -56,15 +44,15 @@ export default function KnowledgeHubSection() {
         <div className="text-center max-w-3xl mx-auto mb-14">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0A1E3F]/5 text-[#0A1E3F] text-xs font-bold uppercase tracking-wider mb-4 border border-[#0A1E3F]/10">
             <BookOpen className="w-3.5 h-3.5 text-[#C59B27]" />
-            <span>Academic & Clinical Publications</span>
+            <span>{en.knowledgeHub.badge}</span>
           </div>
 
           <h2 className="text-3xl sm:text-4xl font-heading font-extrabold text-[#0A1E3F] tracking-tight">
-            Knowledge & Clinical Insights
+            {en.knowledgeHub.title}
           </h2>
 
           <p className="mt-3.5 text-base sm:text-lg text-slate-600 leading-relaxed">
-            Delivering transparent, evidence-based ophthalmology education for patients and publishing peer-reviewed clinical research for the global medical community.
+            {en.knowledgeHub.description}
           </p>
         </div>
 
@@ -109,7 +97,7 @@ export default function KnowledgeHubSection() {
                   </SafeLink>
 
                   <span className="text-xs text-slate-400 font-medium">
-                    {isBlog ? 'Public Guides' : 'Indexed Studies'}
+                    {opt.tag || (isBlog ? 'Public Guides' : 'Indexed Studies')}
                   </span>
                 </div>
               </div>

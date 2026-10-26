@@ -13,6 +13,7 @@ import {
   ShieldCheck,
   CheckCircle2
 } from 'lucide-react';
+import en from '@/locales/en.json';
 
 export default function LocationSection() {
   return (
@@ -22,9 +23,9 @@ export default function LocationSection() {
           {/* Left Column: Heading + Consultation Timings + Arterial Connectivity */}
           <div className="lg:col-span-6 space-y-6">
             <SectionHeading
-              eyebrow="Visit Our Centre"
-              title="Convenient Location on Ayodhya Bypass Road, Bhopal"
-              description="Nirvaya Eyecare Centre is purpose-built to offer relaxed, ground-floor accessibility with spacious waiting areas and hassle-free vehicular parking."
+              eyebrow={en.location.eyebrow}
+              title={en.location.title}
+              description={en.location.description}
             />
 
             {/* Timings Card */}
@@ -36,36 +37,36 @@ export default function LocationSection() {
                   </div>
                   <div>
                     <h4 className="text-base font-bold text-[#0A1E3F]">
-                      Consultation & Day-Care Hours
+                      {en.location.consultationHoursTitle}
                     </h4>
                     <span className="text-xs text-sky-700 font-medium">
-                      Routine OPD & Surgical Admissions
+                      {en.location.consultationHoursSub}
                     </span>
                   </div>
                 </div>
                 <span className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                  Open Today
+                  {en.common.openToday}
                 </span>
               </div>
 
               <div className="space-y-3 text-xs sm:text-sm pt-2">
                 <div className="flex justify-between items-center py-2 border-b border-sky-100/80">
-                  <span className="font-semibold text-slate-700">Monday to Saturday</span>
-                  <span className="font-bold text-sky-950">9:30 AM - 7:30 PM</span>
+                  <span className="font-semibold text-slate-700">{en.location.weekdayLabel}</span>
+                  <span className="font-bold text-sky-950">{en.common.opdHours}</span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-sky-100/80">
-                  <span className="font-semibold text-slate-700">Sunday</span>
-                  <span className="font-semibold text-amber-800">10:00 AM - 1:00 PM (Prior Slots)</span>
+                  <span className="font-semibold text-slate-700">{en.location.sundayLabel}</span>
+                  <span className="font-semibold text-amber-800">{en.location.sundayTimings}</span>
                 </div>
                 <div className="flex justify-between items-center py-2">
-                  <span className="font-semibold text-slate-700">Ocular Emergencies</span>
-                  <span className="text-emerald-700 font-bold">24/7 Retina Trauma On-Call</span>
+                  <span className="font-semibold text-slate-700">{en.location.emergencyLabel}</span>
+                  <span className="text-emerald-700 font-bold">{en.location.emergencyVal}</span>
                 </div>
               </div>
 
               <p className="text-[11px] text-slate-500 italic pt-1 border-t border-sky-100/60">
-                * Pupil dilation for retinal exams takes 45 minutes; please schedule arrival at least 1 hour before OPD closing.
+                {en.location.dilationNotice}
               </p>
             </div>
 
@@ -73,7 +74,7 @@ export default function LocationSection() {
             <div className="bg-slate-50/80 border border-slate-200/80 rounded-2xl p-5 sm:p-6 space-y-3">
               <h5 className="text-xs font-bold uppercase tracking-wider text-slate-600 flex items-center gap-2">
                 <CheckCircle2 className="w-4 h-4 text-[#C59B27]" />
-                <span>Prime Arterial Highway Connectivity</span>
+                <span>{en.location.connectivityTitle}</span>
               </h5>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1 text-xs text-slate-700">
                 <div className="p-3 rounded-xl bg-white border border-slate-200/80 shadow-2xs">
@@ -104,7 +105,7 @@ export default function LocationSection() {
                 </div>
                 <div className="flex-1">
                   <h4 className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">
-                    Complete Address
+                    {en.location.addressTitle}
                   </h4>
                   <p className="text-base font-bold text-[#0A1E3F]">
                     {CLINIC_INFO.name}
@@ -116,7 +117,7 @@ export default function LocationSection() {
                     {CLINIC_INFO.city}, {CLINIC_INFO.state} - {CLINIC_INFO.pincode}
                   </p>
                   <p className="text-xs text-slate-500 font-medium mt-1.5 flex items-center gap-1.5">
-                    <span className="font-semibold text-slate-600">Landmark:</span>
+                    <span className="font-semibold text-slate-600">{en.location.landmarkLabel}</span>
                     <span>{CLINIC_INFO.landmark}</span>
                   </p>
                 </div>
@@ -125,11 +126,11 @@ export default function LocationSection() {
               <div className="pt-4 border-t border-slate-200/80 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-slate-700">
                 <div className="flex items-center gap-2">
                   <Car className="w-4 h-4 text-emerald-600 shrink-0" />
-                  <span>Ample Dedicated Parking</span>
+                  <span>{en.location.parkingFeature}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
-                  <span>Senior Citizen & Wheelchair Friendly</span>
+                  <span>{en.location.accessibleFeature}</span>
                 </div>
               </div>
 
@@ -142,7 +143,7 @@ export default function LocationSection() {
                   icon={Navigation}
                   className="font-semibold text-xs"
                 >
-                  Get Directions in Google Maps
+                  {en.location.directionsCTA}
                 </Button>
                 <Button
                   variant="outline"
@@ -151,7 +152,7 @@ export default function LocationSection() {
                   icon={Phone}
                   className="text-xs font-semibold"
                 >
-                  Call: {CLINIC_INFO.phone}
+                  {en.common.phoneLabel} {CLINIC_INFO.phone}
                 </Button>
               </div>
             </div>
@@ -171,11 +172,11 @@ export default function LocationSection() {
                 <div className="flex items-center gap-2 mb-1">
                   <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
                   <span className="text-xs font-bold text-[#0A1E3F]">
-                    Nirvaya Eyecare Centre
+                    {CLINIC_INFO.name}
                   </span>
                 </div>
                 <p className="text-[11px] text-slate-600 mb-2.5 leading-snug">
-                  Ayodhya Bypass Road, Bhopal. Direct main road access.
+                  {CLINIC_INFO.addressLine2}, {CLINIC_INFO.city}. Direct main road access.
                 </p>
                 <SafeLink
                   href={CLINIC_INFO.social.googleBusiness}
@@ -183,7 +184,7 @@ export default function LocationSection() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 text-xs font-bold text-sky-700 hover:text-sky-900 group"
                 >
-                  <span>Open in Navigation App</span>
+                  <span>{en.location.openInNav}</span>
                   <Navigation className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
                 </SafeLink>
               </div>

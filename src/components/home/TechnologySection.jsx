@@ -12,6 +12,7 @@ import {
   ArrowRight,
   CheckCircle2
 } from 'lucide-react';
+import en from '@/locales/en.json';
 
 export default function TechnologySection() {
   const [isInView, setIsInView] = useState(false);
@@ -34,29 +35,16 @@ export default function TechnologySection() {
     return () => observer.disconnect();
   }, []);
 
-  const coreTech = [
-    {
-      category: 'Surgical Vitreo-Retina',
-      title: '25G / 27G Sutureless Vitrectomy',
-      desc: 'High-speed pneumatic cut rates with micro-cannulas for retinal detachment repair, macular holes, and diabetic vitreous hemorrhage with rapid healing.',
-      icon: <Zap className="w-5 h-5 text-[#DFBF64]" />,
-      accentColor: 'border-[#DFBF64]/50'
-    },
-    {
-      category: 'High-Resolution Diagnostics',
-      title: 'Carl Zeiss Optics & Spectral OCT',
-      desc: 'Stereoscopic high-depth red reflex visualization and micron-level optical coherence tomography for early detection of retinal disorders.',
-      icon: <Activity className="w-5 h-5 text-sky-400" />,
-      accentColor: 'border-sky-400/50'
-    },
-    {
-      category: 'Cleanroom Environment',
-      title: 'Class 100 HEPA Clean Air OT',
-      desc: 'Modular positive-pressure laminar airflow with 99.97% bacterial air filtration for ultra-sterile microsurgical safety and zero endophthalmitis.',
-      icon: <Wind className="w-5 h-5 text-cyan-400" />,
-      accentColor: 'border-cyan-400/50'
-    }
+  const techIcons = [
+    <Zap key="0" className="w-5 h-5 text-[#DFBF64]" />,
+    <Activity key="1" className="w-5 h-5 text-sky-400" />,
+    <Wind key="2" className="w-5 h-5 text-cyan-400" />
   ];
+
+  const coreTech = en.technology.items.map((item, idx) => ({
+    ...item,
+    icon: techIcons[idx] || techIcons[0]
+  }));
 
   return (
     <section
@@ -90,13 +78,13 @@ export default function TechnologySection() {
           <div className="max-w-2xl space-y-3">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase bg-[#C59B27]/20 text-[#DFBF64] border border-[#C59B27]/40 shadow-xs">
               <Cpu className="w-3.5 h-3.5" />
-              <span>Cutting-Edge Infrastructure</span>
+              <span>{en.technology.badge}</span>
             </div>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight drop-shadow-sm">
-              Microsurgical Technology & Aseptic OT
+              {en.technology.title}
             </h2>
             <p className="text-slate-200 text-sm sm:text-base leading-relaxed drop-shadow-xs">
-              Delicate ophthalmic structures demand sub-micron imaging and precision fluidics to maximize patient visual recovery.
+              {en.technology.description}
             </p>
           </div>
 
@@ -110,7 +98,7 @@ export default function TechnologySection() {
               iconPosition="right"
               className="text-white border-white/30 hover:bg-white hover:text-[#0A1E3F] text-xs font-bold shadow-md"
             >
-              Explore Full OT Facility
+              {en.technology.exploreCTA}
             </Button>
           </div>
         </div>
@@ -155,13 +143,13 @@ export default function TechnologySection() {
                     <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                   </span>
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>Installed & Active</span>
+                  <span>{en.technology.statusActive}</span>
                 </span>
                 <SafeLink
                   href="/technology"
                   className="text-[11px] font-semibold text-[#DFBF64] hover:underline flex items-center gap-1 group-hover:translate-x-0.5 transition-transform"
                 >
-                  <span>Learn more</span>
+                  <span>{en.technology.learnMore}</span>
                   <span>→</span>
                 </SafeLink>
               </div>

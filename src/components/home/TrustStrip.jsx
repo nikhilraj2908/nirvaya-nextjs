@@ -1,30 +1,15 @@
 import React from 'react';
 import { Award, ShieldCheck, FileText, Activity } from 'lucide-react';
 import Container from '@/components/common/Container';
+import en from '@/locales/en.json';
+
+const trustIcons = [Award, Activity, FileText, ShieldCheck];
 
 export default function TrustStrip() {
-  const trustItems = [
-    {
-      icon: Award,
-      title: "MD AIIMS & FAICO Gold Medalist",
-      desc: "Apex national training in Vitreo-Retinal surgery"
-    },
-    {
-      icon: Activity,
-      title: "25G / 27G Sutureless Vitrectomy",
-      desc: "Micro-incision posterior segment surgery"
-    },
-    {
-      icon: FileText,
-      title: "18 Indexed Research Publications",
-      desc: "Evidence-based, peer-reviewed clinical protocols"
-    },
-    {
-      icon: ShieldCheck,
-      title: "Positive-Pressure HEPA OT",
-      desc: "Class 100 laminar cleanroom infection defense"
-    }
-  ];
+  const trustItems = en.trustStrip.map((item, idx) => ({
+    ...item,
+    icon: trustIcons[idx] || trustIcons[0]
+  }));
 
   return (
     <div className="w-full bg-[#061226] text-white border-y border-slate-800 py-8 lg:py-10">

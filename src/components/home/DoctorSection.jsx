@@ -11,6 +11,7 @@ import {
   Calendar,
   ArrowRight
 } from 'lucide-react';
+import en from '@/locales/en.json';
 
 export default function DoctorSection() {
   const metricsRef = useRef(null);
@@ -95,7 +96,7 @@ export default function DoctorSection() {
                   <div className="absolute -bottom-2 inset-x-0 flex justify-center">
                     <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wide bg-[#C59B27] text-white shadow-md">
                       <Award className="w-3 h-3" />
-                      AIIMS Trained
+                      {en.common.aiimsTrained}
                     </span>
                   </div>
                 </div>
@@ -113,12 +114,12 @@ export default function DoctorSection() {
                 {/* Registration & OPD Badges */}
                 <div className="w-full my-4 pt-3 border-t border-slate-700/80 grid grid-cols-2 gap-2 text-left">
                   <div className="p-2.5 rounded-xl bg-slate-900/60 border border-slate-700/60 text-[11px]">
-                    <span className="text-slate-400 block text-[10px]">Experience:</span>
-                    <strong className="text-white">10+ Years Dedicated</strong>
+                    <span className="text-slate-400 block text-[10px]">{en.doctor.experienceLabel}</span>
+                    <strong className="text-white">{en.doctor.experienceValue}</strong>
                   </div>
                   <div className="p-2.5 rounded-xl bg-slate-900/60 border border-slate-700/60 text-[11px]">
-                    <span className="text-slate-400 block text-[10px]">OPD Hours:</span>
-                    <strong className="text-emerald-400">9:30 AM - 7:30 PM</strong>
+                    <span className="text-slate-400 block text-[10px]">{en.doctor.opdHoursLabel}</span>
+                    <strong className="text-emerald-400">{en.doctor.opdHoursValue}</strong>
                   </div>
                 </div>
 
@@ -132,7 +133,7 @@ export default function DoctorSection() {
                     icon={Calendar}
                     className="w-full justify-center font-bold text-xs sm:text-sm shadow-md"
                   >
-                    Pre-book Consultation Slot
+                    {en.doctor.ctaPrimary}
                   </Button>
                   <Button
                     href="/doctors"
@@ -143,7 +144,7 @@ export default function DoctorSection() {
                     iconPosition="right"
                     className="w-full justify-center text-white border-white/25 hover:bg-white/10 text-xs"
                   >
-                    View Academic Profile
+                    {en.doctor.ctaSecondary}
                   </Button>
                 </div>
               </div>
@@ -154,14 +155,14 @@ export default function DoctorSection() {
           <div className="lg:col-span-7 space-y-6 reveal-up">
             <SectionHeading
               align="left"
-              eyebrow="Medical Leadership & Surgical Mastery"
-              title="Expertise Shaped at India's Apex Institute"
+              eyebrow={en.doctor.sectionEyebrow}
+              title={en.doctor.sectionTitle}
               className="mb-1!"
             />
 
             <div className="space-y-3.5 text-sm sm:text-base text-slate-600 leading-relaxed">
               <p>
-                <strong className="font-bold text-[#0A1E3F]">Dr Sandhya Gaur</strong> completed her <strong className="font-bold text-[#0A1E3F]">postgraduate ophthalmology</strong> residency at <strong className="font-bold text-[#0A1E3F]">AIIMS</strong> New Delhi, followed by extensive sub-specialty vitreo-retinal surgical training.
+                <strong className="font-bold text-[#0A1E3F]">{en.doctor.bio.prefix}</strong> {en.doctor.bio.part1} <strong className="font-bold text-[#0A1E3F]">{en.doctor.bio.part2}</strong> {en.doctor.bio.part3} <strong className="font-bold text-[#0A1E3F]">{en.doctor.bio.part4}</strong> {en.doctor.bio.part5}
               </p>
              
             </div>
@@ -183,7 +184,7 @@ export default function DoctorSection() {
                 {/* Bottom Subtitle Slot */}
                 <div className="h-9 sm:h-10 flex items-center justify-center w-full">
                   <span className="text-[11px] sm:text-xs text-slate-600 font-semibold leading-tight line-clamp-2">
-                    Scientific Papers
+                    {en.doctor.metrics.papers}
                   </span>
                 </div>
               </div>
@@ -195,7 +196,7 @@ export default function DoctorSection() {
                   <div className="flex items-center justify-center gap-1 sm:gap-1.5">
                     <Award className="w-4 h-4 sm:w-5 sm:h-5 text-[#C59B27] shrink-0" />
                     <span className="text-base sm:text-lg lg:text-xl font-extrabold text-[#0A1E3F] font-heading tracking-tight leading-tight">
-                      Gold Medal
+                      {en.doctor.metrics.goldMedal}
                     </span>
                   </div>
                 </div>
@@ -206,7 +207,7 @@ export default function DoctorSection() {
                 {/* Bottom Subtitle Slot */}
                 <div className="h-9 sm:h-10 flex items-center justify-center w-full">
                   <span className="text-[11px] sm:text-xs text-slate-600 font-semibold leading-tight line-clamp-2">
-                    FAICO Vitreo-Retina
+                    {en.doctor.metrics.faico}
                   </span>
                 </div>
               </div>
@@ -226,7 +227,7 @@ export default function DoctorSection() {
                 {/* Bottom Subtitle Slot */}
                 <div className="h-9 sm:h-10 flex items-center justify-center w-full">
                   <span className="text-[11px] sm:text-xs text-slate-600 font-semibold leading-tight line-clamp-2">
-                    Evaluations & Surgeries
+                    {en.doctor.metrics.surgeries}
                   </span>
                 </div>
               </div>
@@ -238,7 +239,7 @@ export default function DoctorSection() {
                 href="/doctors"
                 className="inline-flex items-center gap-2 text-sm font-bold text-[#0A1E3F] hover:text-[#C59B27] transition-colors"
               >
-                <span>View Full Academic Profile</span>
+                <span>{en.doctor.viewAcademicProfile}</span>
                 <ArrowRight className="w-4 h-4 text-[#C59B27]" />
               </SafeLink>
             </div>

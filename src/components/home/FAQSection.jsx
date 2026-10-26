@@ -14,6 +14,7 @@ import {
   ExternalLink
 } from 'lucide-react';
 import { HOMEPAGE_FAQS, ALL_FAQS } from '@/data/faqData';
+import en from '@/locales/en.json';
 
 // Backwards compatibility alias for exports
 export const CLINICAL_FAQS = ALL_FAQS.slice(0, 5);
@@ -132,12 +133,12 @@ export default function FAQSection({ currentLang = 'en' }) {
           <div className="reveal-up text-center mb-10 sm:mb-14">
             <SectionHeading
               align="center"
-              eyebrow={lang === 'hi' ? 'मरीजों के सामान्य प्रश्न' : 'Clinical Guidance & Patient FAQ'}
-              title={lang === 'hi' ? 'अक्सर पूछे जाने वाले प्रश्न' : 'Frequently Asked Questions'}
+              eyebrow={lang === 'hi' ? 'मरीजों के सामान्य प्रश्न' : en.faq.eyebrow}
+              title={lang === 'hi' ? 'अक्सर पूछे जाने वाले प्रश्न' : en.faq.title}
               description={
                 lang === 'hi'
                   ? 'अपॉइंटमेंट प्रक्रिया, पुतली फैलाने का समय, मोतियाबिंद डे-केयर सर्जरी और निर्वाया आईकेयर सेंटर में आपकी यात्रा से संबंधित स्पष्ट जानकारी।'
-                  : 'Clear, transparent answers about appointments, retina imaging, painless cataract surgery, and what to expect during your clinic visit.'
+                  : en.faq.description
               }
             />
           </div>
@@ -218,7 +219,7 @@ export default function FAQSection({ currentLang = 'en' }) {
               href="/faq"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white border border-slate-300 hover:border-[#DFBF64] text-[#0A1E3F] font-bold text-xs sm:text-sm shadow-xs hover:shadow-md transition-all group"
             >
-              <span>Explore All Questions on Dedicated FAQ Page</span>
+              <span>{en.faq.dedicatedPageCTA}</span>
               <ArrowRight className="w-4 h-4 text-[#DFBF64] group-hover:translate-x-1 transition-transform" />
             </SafeLink>
           </div>
@@ -233,23 +234,23 @@ export default function FAQSection({ currentLang = 'en' }) {
                 <h4 className="font-bold text-sm sm:text-base text-[#0A1E3F]">
                   {lang === 'hi'
                     ? 'क्या आपका कोई ऐसा प्रश्न है जिसका उत्तर यहां नहीं है?'
-                    : 'Have a specific clinical question?'}
+                    : en.faq.unansweredTitle}
                 </h4>
                 <p className="text-xs text-slate-600 mt-0.5">
                   {lang === 'hi'
                     ? 'हमारे क्लिनिक समन्वयक से +91 755 492 8200 पर बात करें या व्हाट्सएप पर पूछें।'
-                    : 'Speak directly with our clinic coordinator or message us on WhatsApp for personal guidance.'}
+                    : en.faq.unansweredDesc}
                 </p>
               </div>
             </div>
 
             <div className="flex items-center gap-2.5 shrink-0 w-full sm:w-auto">
               <SafeLink
-                href="tel:+917554928200"
+                href={`tel:${en.faq.phone.replace(/[^0-9+]/g, '')}`}
                 className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-[#0A1E3F] font-bold text-xs shadow-2xs hover:bg-slate-50 transition"
               >
                 <PhoneCall className="w-3.5 h-3.5 text-[#00aeef]" />
-                <span>+91 755 492 8200</span>
+                <span>{en.faq.phone}</span>
               </SafeLink>
               <SafeLink
                 href="https://wa.me/917554928200"
@@ -258,7 +259,7 @@ export default function FAQSection({ currentLang = 'en' }) {
                 className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-2xs transition"
               >
                 <MessageCircle className="w-3.5 h-3.5" />
-                <span>WhatsApp</span>
+                <span>{en.faq.whatsapp}</span>
               </SafeLink>
             </div>
           </div>
