@@ -10,7 +10,9 @@ const userSchema = new mongoose.Schema(
     roleId: { type: String, required: true, index: true },
     isActive: { type: Boolean, default: true },
     avatar: { type: String, default: null },
-    lastLoginAt: { type: String, default: null }
+    lastLoginAt: { type: String, default: null },
+    mustChangePassword: { type: Boolean, default: false },
+    tempPassword: { type: String, default: null }
   },
   {
     timestamps: true,
@@ -25,5 +27,8 @@ const userSchema = new mongoose.Schema(
   }
 );
 
+if (mongoose.models && mongoose.models.User) {
+  delete mongoose.models.User;
+}
 export const User = mongoose.models.User || mongoose.model('User', userSchema);
 export default User;

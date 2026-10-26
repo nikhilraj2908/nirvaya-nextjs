@@ -26,8 +26,11 @@ import {
   deleteBlog,
   getResearchPapers,
   createPaper,
-  deletePaper
+  deletePaper,
+  changePassword,
+  createStaffUser
 } from '@/services/api';
+import { PERMISSION_DEFINITIONS } from '@/lib/permissions';
 import {
   Shield,
   Calendar,
@@ -53,6 +56,7 @@ import {
   Copy,
   Sparkles,
   Eye,
+  EyeOff,
   Compass,
   Smartphone,
   Monitor,
@@ -63,7 +67,14 @@ import {
   ArrowUpRight,
   Radio,
   Layers,
-  PieChart
+  PieChart,
+  Key,
+  UserPlus,
+  ChevronDown,
+  ChevronUp,
+  Mail,
+  ArrowLeft,
+  ArrowRight
 } from 'lucide-react';
 
 function formatTimeAgo(timestamp) {
@@ -152,13 +163,55 @@ export default function AdminPage() {
 
   // Roles & RBAC State
   const [roles, setRoles] = useState([]);
-  const [catalog, setCatalog] = useState([]);
+  const [catalog, setCatalog] = useState(() => PERMISSION_DEFINITIONS.flatMap((c) => c.permissions));
+  const [permissionGroups, setPermissionGroups] = useState(() => PERMISSION_DEFINITIONS);
   const [rolesLoading, setRolesLoading] = useState(false);
   const [showRoleModal, setShowRoleModal] = useState(false);
   const [newRoleName, setNewRoleName] = useState('');
   const [newRoleDesc, setNewRoleDesc] = useState('');
   const [selectedPermissions, setSelectedPermissions] = useState([]);
   const [roleMessage, setRoleMessage] = useState('');
+  const [permissionSearch, setPermissionSearch] = useState('');
+  const [isPermissionDropdownOpen, setIsPermissionDropdownOpen] = useState(false);
+
+  // User Assignment on Role Creation
+  const [assignUserNow, setAssignUserNow] = useState(true);
+  const [newUserName, setNewUserName] = useState('');
+  const [newUserEmail, setNewUserEmail] = useState('');
+  const [newUserPhone, setNewUserPhone] = useState('');
+  const [userPasswordMode, setUserPasswordMode] = useState('otp'); // 'otp' | 'manual'
+  const [customPassword, setCustomPassword] = useState('');
+  const [generatedOtp, setGeneratedOtp] = useState(() => `Nirvaya@${Math.floor(1000 + Math.random() * 9000)}`);
+
+  // Credentials Display Modal for Created User
+  const [createdUserCredentials, setCreatedUserCredentials] = useState(null);
+  const [copiedOtp, setCopiedOtp] = useState(false);
+
+  // Role Selection on Login Screen
+  const [publicRoles, setPublicRoles] = useState([]);
+  const [selectedRoleForLogin, setSelectedRoleForLogin] = useState(null);
+  const [loginRoleUsers, setLoginRoleUsers] = useState([]);
+  const [showLoginPassText, setShowLoginPassText] = useState(false);
+
+  // Add Staff User to an Existing Role Modal State
+  const [showAddUserModal, setShowAddUserModal] = useState(false);
+  const [targetRoleIdForUser, setTargetRoleIdForUser] = useState('');
+  const [addUserName, setAddUserName] = useState('');
+  const [addUserEmail, setAddUserEmail] = useState('');
+  const [addUserPhone, setAddUserPhone] = useState('');
+  const [addUserPasswordMode, setAddUserPasswordMode] = useState('otp'); // 'otp' | 'manual'
+  const [addUserCustomPassword, setAddUserCustomPassword] = useState('');
+  const [addUserGeneratedOtp, setAddUserGeneratedOtp] = useState(() => `Nirvaya@${Math.floor(1000 + Math.random() * 9000)}`);
+  const [addUserSubmitting, setAddUserSubmitting] = useState(false);
+
+  // Forced First-Time Login Password Change State
+  const [showFirstTimePasswordModal, setShowFirstTimePasswordModal] = useState(false);
+  const [pendingUser, setPendingUser] = useState(null);
+  const [firstTimeNewPass, setFirstTimeNewPass] = useState('');
+  const [firstTimeConfirmPass, setFirstTimeConfirmPass] = useState('');
+  const [firstTimeError, setFirstTimeError] = useState('');
+  const [firstTimeLoading, setFirstTimeLoading] = useState(false);
+  const [showPassText, setShowPassText] = useState(false);
 
   // Slot Config State
   const [slotConfig, setSlotConfig] = useState(null);
@@ -199,7 +252,15 @@ export default function AdminPage() {
 
   // Check auth on mount
   useEffect(() => {
-    setUser(getCurrentUser());
+    const cur = getCurrentUser();
+    if (cur) {
+      if (cur.mustChangePassword) {
+        setPendingUser(cur);
+        setShowFirstTimePasswordModal(true);
+      } else {
+        setUser(cur);
+      }
+    }
   }, []);
 
   // Load data when authenticated or tab changes
@@ -213,6 +274,15 @@ export default function AdminPage() {
       if (activeTab === 'papers') loadPapers();
     }
   }, [user, activeTab, crpPeriod]);
+
+  // Load public roles directory for the login portal
+  useEffect(() => {
+    getRoles()
+      .then((res) => {
+        if (res?.roles) setPublicRoles(res.roles);
+      })
+      .catch((err) => console.error('Failed to load login roles:', err));
+  }, [user]);
 
   // Realtime Poller for Live Traffic & Active Visitors
   useEffect(() => {
@@ -232,14 +302,41 @@ export default function AdminPage() {
     }
   }, [user, activeTab]);
 
-  // Handle Login
+  // Handle Login Role Selection
+  const handleSelectRoleForLogin = (role) => {
+    setSelectedRoleForLogin(role);
+    const users = role.users || [];
+    setLoginRoleUsers(users);
+    if (users.length > 0) {
+      setEmail(users[0].email);
+    } else {
+      setEmail('');
+    }
+    setPassword('');
+    setAuthError('');
+  };
+
+  const handleBackToRoleSelection = () => {
+    setSelectedRoleForLogin(null);
+    setLoginRoleUsers([]);
+    setEmail('');
+    setPassword('');
+    setAuthError('');
+  };
+
+  // Handle Login Submit
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     setAuthLoading(true);
     setAuthError('');
     try {
       const res = await adminLogin(email.trim(), password.trim());
-      setUser(res.user);
+      if (res.mustChangePassword) {
+        setPendingUser(res.user);
+        setShowFirstTimePasswordModal(true);
+      } else {
+        setUser(res.user);
+      }
     } catch (err) {
       setAuthError(err.message || 'Invalid email or password.');
     } finally {
@@ -247,9 +344,96 @@ export default function AdminPage() {
     }
   };
 
+  const handleFirstTimePasswordSubmit = async (e) => {
+    e.preventDefault();
+    setFirstTimeError('');
+    if (firstTimeNewPass.length < 6) {
+      setFirstTimeError('New password must be at least 6 characters long.');
+      return;
+    }
+    if (firstTimeNewPass !== firstTimeConfirmPass) {
+      setFirstTimeError('Passwords do not match. Please verify.');
+      return;
+    }
+    setFirstTimeLoading(true);
+    try {
+      const res = await changePassword({
+        email: pendingUser?.email || email.trim(),
+        newPassword: firstTimeNewPass.trim()
+      });
+      setShowFirstTimePasswordModal(false);
+      setUser(res.user || pendingUser);
+      setFirstTimeNewPass('');
+      setFirstTimeConfirmPass('');
+      alert('Your permanent password has been set successfully! Welcome to the portal.');
+    } catch (err) {
+      setFirstTimeError(err.message || 'Failed to update password.');
+    } finally {
+      setFirstTimeLoading(false);
+    }
+  };
+
+  // Add Staff User to an Existing Role Handler
+  const handleAddStaffUserSubmit = async (e) => {
+    e.preventDefault();
+    if (!targetRoleIdForUser) {
+      alert('Please select a position/role.');
+      return;
+    }
+    if (!addUserEmail.trim()) {
+      alert('Please enter a login email address for the staff member.');
+      return;
+    }
+    if (addUserPasswordMode === 'manual' && (!addUserCustomPassword.trim() || addUserCustomPassword.trim().length < 6)) {
+      alert('Please enter a manual password of at least 6 characters.');
+      return;
+    }
+
+    setAddUserSubmitting(true);
+    try {
+      const res = await createStaffUser({
+        roleId: targetRoleIdForUser,
+        name: addUserName.trim() || 'Staff Member',
+        email: addUserEmail.trim(),
+        phone: addUserPhone.trim(),
+        passwordMode: addUserPasswordMode,
+        password: addUserPasswordMode === 'manual' ? addUserCustomPassword.trim() : addUserGeneratedOtp
+      });
+
+      setShowAddUserModal(false);
+      setAddUserName('');
+      setAddUserEmail('');
+      setAddUserPhone('');
+      setAddUserCustomPassword('');
+      const nextOtp = `Nirvaya@${Math.floor(1000 + Math.random() * 9000)}`;
+      setAddUserGeneratedOtp(nextOtp);
+
+      if (res.user) {
+        setCreatedUserCredentials(res.user);
+      } else {
+        setRoleMessage('Staff member added successfully!');
+        setTimeout(() => setRoleMessage(''), 4000);
+      }
+
+      await loadRoles();
+      getRoles().then((r) => r?.roles && setPublicRoles(r.roles)).catch(() => {});
+    } catch (err) {
+      alert(`Failed to add staff member: ${err.message}`);
+    } finally {
+      setAddUserSubmitting(false);
+    }
+  };
+
   const handleLogout = () => {
     adminLogout();
     setUser(null);
+    setSelectedRoleForLogin(null);
+    setLoginRoleUsers([]);
+    setEmail('');
+    setPassword('');
+    getRoles().then((res) => {
+      if (res?.roles) setPublicRoles(res.roles);
+    }).catch(() => {});
   };
 
   const quickFill = (demoEmail, demoPass) => {
@@ -360,10 +544,13 @@ export default function AdminPage() {
     try {
       const [rolesRes, catRes] = await Promise.all([
         getRoles(),
-        getPermissionsCatalog().catch(() => ({ catalog: [] }))
+        getPermissionsCatalog().catch(() => ({ catalog: [], definitions: PERMISSION_DEFINITIONS }))
       ]);
       setRoles(rolesRes.roles || []);
-      setCatalog(catRes.catalog || []);
+      const defs = catRes?.definitions?.length > 0 ? catRes.definitions : PERMISSION_DEFINITIONS;
+      setPermissionGroups(defs);
+      const flat = catRes?.catalog?.length > 0 ? catRes.catalog : defs.flatMap((c) => c.permissions);
+      setCatalog(flat);
     } catch (err) {
       console.error('Failed to load roles:', err);
     } finally {
@@ -377,25 +564,82 @@ export default function AdminPage() {
     );
   };
 
+  const selectAllPermissions = () => {
+    const allKeys = catalog.map((p) => p.key);
+    setSelectedPermissions(allKeys);
+  };
+
+  const clearAllPermissions = () => {
+    setSelectedPermissions([]);
+  };
+
+  const toggleCategoryPermissions = (categoryPerms) => {
+    const keys = categoryPerms.map((p) => p.key);
+    const allSelected = keys.every((k) => selectedPermissions.includes(k));
+    if (allSelected) {
+      setSelectedPermissions((prev) => prev.filter((k) => !keys.includes(k)));
+    } else {
+      setSelectedPermissions((prev) => Array.from(new Set([...prev, ...keys])));
+    }
+  };
+
   const handleCreateRole = async (e) => {
     e.preventDefault();
     if (!newRoleName.trim()) {
       alert('Please enter a position name.');
       return;
     }
+    if (selectedPermissions.length === 0) {
+      if (!window.confirm('No permissions selected for this position. Do you want to continue without permissions?')) {
+        return;
+      }
+    }
+    if (assignUserNow && !newUserEmail.trim()) {
+      alert('Please enter an email ID (Login ID) for the assigned user.');
+      return;
+    }
+    if (assignUserNow && userPasswordMode === 'manual' && (!customPassword.trim() || customPassword.trim().length < 6)) {
+      alert('Please enter a manual password of at least 6 characters.');
+      return;
+    }
+
     try {
-      await createRole({
+      const payload = {
         name: newRoleName.trim(),
         description: newRoleDesc.trim(),
-        permissions: selectedPermissions
-      });
-      setRoleMessage(`Position "${newRoleName}" created successfully!`);
+        permissions: selectedPermissions,
+        assignUser: assignUserNow
+          ? {
+              name: (newUserName.trim() || newRoleName.trim()),
+              email: newUserEmail.trim(),
+              phone: newUserPhone.trim(),
+              passwordMode: userPasswordMode,
+              password: userPasswordMode === 'manual' ? customPassword.trim() : generatedOtp
+            }
+          : null
+      };
+
+      const res = await createRole(payload);
+
       setShowRoleModal(false);
       setNewRoleName('');
       setNewRoleDesc('');
       setSelectedPermissions([]);
+      setNewUserName('');
+      setNewUserEmail('');
+      setNewUserPhone('');
+      setCustomPassword('');
+      const nextOtp = `Nirvaya@${Math.floor(1000 + Math.random() * 9000)}`;
+      setGeneratedOtp(nextOtp);
+
+      if (res.user) {
+        setCreatedUserCredentials(res.user);
+      } else {
+        setRoleMessage(`Position "${newRoleName}" created successfully!`);
+        setTimeout(() => setRoleMessage(''), 4000);
+      }
+
       loadRoles();
-      setTimeout(() => setRoleMessage(''), 4000);
     } catch (err) {
       alert(`Failed to create position: ${err.message}`);
     }
@@ -548,13 +792,120 @@ export default function AdminPage() {
   };
 
   // ---------------------------------------------------------------------------
+  // FORCED FIRST-TIME PASSWORD SETUP (When logged in with temporary OTP)
+  // ---------------------------------------------------------------------------
+  if (showFirstTimePasswordModal) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-[#061226] via-[#0A1E3F] to-[#122B55] flex flex-col justify-center items-center px-4 py-12">
+        <div className="w-full max-w-md bg-white rounded-3xl p-8 sm:p-10 shadow-2xl border border-slate-100">
+          <div className="text-center mb-6">
+            <div className="inline-flex p-3 rounded-2xl bg-[#DFBF64]/20 text-[#DFBF64] border border-[#C59B27]/40 mb-3 shadow-md">
+              <Key className="w-8 h-8 text-[#C59B27]" />
+            </div>
+            <h1 className="font-heading text-2xl font-black text-[#0A1E3F]">
+              Set Permanent Password
+            </h1>
+            <p className="text-xs text-slate-500 mt-1.5 leading-relaxed">
+              Your account was initialized with a one-time temporary password. You must set a new confidential password before continuing to the clinical dashboard.
+            </p>
+          </div>
+
+          {firstTimeError && (
+            <div className="mb-5 p-3 rounded-xl bg-red-50 border border-red-200 text-xs text-red-600 flex items-center gap-2">
+              <AlertCircle className="w-4 h-4 shrink-0" />
+              <span>{firstTimeError}</span>
+            </div>
+          )}
+
+          <form onSubmit={handleFirstTimePasswordSubmit} className="space-y-4">
+            <div>
+              <label className="block text-xs font-bold text-slate-700 mb-1">
+                Account Email (Login ID)
+              </label>
+              <input
+                type="email"
+                disabled
+                value={pendingUser?.email || email}
+                className="w-full px-3.5 py-2.5 rounded-xl bg-slate-100 border border-slate-200 text-xs font-mono text-slate-700 font-bold"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold text-slate-700 mb-1">
+                New Permanent Password *
+              </label>
+              <div className="relative">
+                <input
+                  type={showPassText ? 'text' : 'password'}
+                  required
+                  minLength={6}
+                  placeholder="Enter at least 6 characters"
+                  value={firstTimeNewPass}
+                  onChange={(e) => setFirstTimeNewPass(e.target.value)}
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-[#C59B27] focus:outline-none pr-10"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassText(!showPassText)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 cursor-pointer"
+                >
+                  {showPassText ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold text-slate-700 mb-1">
+                Confirm Permanent Password *
+              </label>
+              <input
+                type="password"
+                required
+                minLength={6}
+                placeholder="Re-type new password"
+                value={firstTimeConfirmPass}
+                onChange={(e) => setFirstTimeConfirmPass(e.target.value)}
+                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-[#C59B27] focus:outline-none"
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={firstTimeLoading}
+              className="w-full py-3 rounded-xl bg-[#0A1E3F] hover:bg-[#16325C] text-white font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer mt-2"
+            >
+              <CheckCircle2 className="w-4 h-4 text-[#DFBF64]" />
+              <span>{firstTimeLoading ? 'Saving New Password...' : 'Save Password & Enter Dashboard'}</span>
+            </button>
+          </form>
+
+          <div className="mt-6 text-center">
+            <button
+              type="button"
+              onClick={() => {
+                adminLogout();
+                setShowFirstTimePasswordModal(false);
+                setPendingUser(null);
+              }}
+              className="text-xs text-slate-400 hover:text-slate-600 underline cursor-pointer"
+            >
+              Cancel and sign in as different user
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // ---------------------------------------------------------------------------
   // IF NOT LOGGED IN: Render Login Portal
   // ---------------------------------------------------------------------------
   if (!user) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-[#061226] via-[#0A1E3F] to-[#122B55] flex flex-col justify-center items-center px-4 py-12">
-        <div className="w-full max-w-md bg-white rounded-3xl p-8 sm:p-10 shadow-2xl border border-slate-100">
-          <div className="text-center mb-8">
+        <div className="w-full max-w-xl bg-white rounded-3xl p-6 sm:p-9 shadow-2xl border border-slate-100 animate-in fade-in duration-200">
+          {/* Header */}
+          <div className="text-center mb-6">
             <div className="inline-flex p-3 rounded-2xl bg-[#0A1E3F] text-[#DFBF64] mb-3 shadow-md">
               <Shield className="w-8 h-8" />
             </div>
@@ -562,7 +913,9 @@ export default function AdminPage() {
               Nirvaya Staff Portal
             </h1>
             <p className="text-xs text-slate-500 mt-1">
-              Sign in to manage appointments, CRP analytics & clinic positions
+              {selectedRoleForLogin
+                ? `Sign in as ${selectedRoleForLogin.name}`
+                : 'Select your clinical position to access your dashboard'}
             </p>
           </div>
 
@@ -573,99 +926,268 @@ export default function AdminPage() {
             </div>
           )}
 
-          <form onSubmit={handleLoginSubmit} className="space-y-4">
-            <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">
-                Staff Email Address
-              </label>
-              <input
-                type="email"
-                required
-                placeholder="e.g. admin@nirvaya.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-[#C59B27] focus:outline-none"
-              />
-            </div>
+          {/* VIEW A: Choose Clinical Position */}
+          {!selectedRoleForLogin ? (
+            <div className="space-y-4">
+              <div className="flex items-center justify-between pb-2 border-b border-slate-100">
+                <span className="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
+                  <Users className="w-3.5 h-3.5 text-[#C59B27]" />
+                  Select Clinical Position ({publicRoles.length})
+                </span>
+                <span className="text-[10px] text-emerald-600 font-bold bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
+                  Live MongoDB Roles
+                </span>
+              </div>
 
-            <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">
-                Password
-              </label>
-              <input
-                type="password"
-                required
-                placeholder="•••••••••"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-[#C59B27] focus:outline-none"
-              />
-            </div>
+              {publicRoles.length === 0 ? (
+                <div className="p-8 text-center text-xs text-slate-400 bg-slate-50 rounded-2xl border border-dashed border-slate-200">
+                  Loading clinical positions from database...
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-h-[55vh] overflow-y-auto pr-1">
+                  {publicRoles.map((role) => {
+                    const users = role.users || [];
+                    const isSystem = role.id?.startsWith('role-admin');
+                    return (
+                      <button
+                        key={role.id || role.slug}
+                        type="button"
+                        onClick={() => handleSelectRoleForLogin(role)}
+                        className="p-3 rounded-2xl border border-slate-200 bg-slate-50/70 hover:bg-white hover:border-[#DFBF64] hover:shadow-md text-left transition-all cursor-pointer group flex flex-col justify-between"
+                      >
+                        <div className="space-y-1">
+                          <div className="flex items-center justify-between">
+                            <span className="text-[9.5px] font-bold uppercase tracking-wider text-slate-400">
+                              {isSystem ? 'System Root' : 'Clinical Position'}
+                            </span>
+                            <ArrowRight className="w-3.5 h-3.5 text-slate-300 group-hover:text-[#C59B27] group-hover:translate-x-0.5 transition-all" />
+                          </div>
+                          <strong className="block text-sm font-bold text-[#0A1E3F] group-hover:text-[#0A1E3F]">
+                            {role.name}
+                          </strong>
+                          <p className="text-[10.5px] text-slate-500 line-clamp-1">
+                            {role.description || 'Clinical staff access'}
+                          </p>
+                        </div>
 
-            <button
-              type="submit"
-              disabled={authLoading}
-              className="w-full py-3 rounded-xl bg-[#0A1E3F] hover:bg-[#16325C] text-white font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
-            >
-              <Lock className="w-4 h-4 text-[#DFBF64]" />
-              <span>{authLoading ? 'Signing in...' : 'Sign In to Portal'}</span>
-            </button>
-          </form>
+                        {/* Assigned Staff Preview */}
+                        <div className="mt-2.5 pt-2 border-t border-slate-200/60">
+                          {users.length > 0 ? (
+                            <div className="flex items-center gap-1.5">
+                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
+                              <span className="text-[10.5px] text-slate-700 font-medium truncate">
+                                {users[0].name}
+                                {users.length > 1 && ` (+${users.length - 1} more)`}
+                              </span>
+                            </div>
+                          ) : (
+                            <span className="text-[10px] text-slate-400 italic">
+                              No staff assigned yet
+                            </span>
+                          )}
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
 
-          {/* Registered Staff Accounts */}
-          <div className="mt-8 pt-6 border-t border-slate-100">
-            <div className="flex items-center justify-between mb-2.5">
-              <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
-                Registered Staff Logins
-              </span>
-              <span className="text-[10px] text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
-                Live MongoDB Auth
-              </span>
+              {/* Direct Manual Sign In Option */}
+              <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
+                <button
+                  type="button"
+                  onClick={() =>
+                    setSelectedRoleForLogin({
+                      id: null,
+                      name: 'Direct Staff Sign-In',
+                      description: 'Enter your assigned credentials manually'
+                    })
+                  }
+                  className="text-xs text-[#0A1E3F] hover:text-[#C59B27] font-semibold transition-colors cursor-pointer"
+                >
+                  Or enter credentials manually →
+                </button>
+                <SafeLink
+                  href="/"
+                  className="text-xs text-slate-400 hover:text-slate-600 transition-colors"
+                >
+                  Return to Website
+                </SafeLink>
+              </div>
             </div>
-            <div className="grid grid-cols-2 gap-2 text-xs">
-              <button
-                type="button"
-                onClick={() => quickFill('admin@nirvaya.com', 'Admin@123')}
-                className="p-2 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 text-left transition-colors cursor-pointer"
-              >
-                <strong className="text-[#0A1E3F] block">Super Admin</strong>
-                <span className="text-[10px] text-slate-500">Full Root Access</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => quickFill('manager@nirvaya.com', 'Nirvaya@123')}
-                className="p-2 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 text-left transition-colors cursor-pointer"
-              >
-                <strong className="text-[#0A1E3F] block">Clinic Manager</strong>
-                <span className="text-[10px] text-slate-500">Analytics & Slots</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => quickFill('nurse@nirvaya.com', 'Nirvaya@123')}
-                className="p-2 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 text-left transition-colors cursor-pointer"
-              >
-                <strong className="text-[#0A1E3F] block">Staff Nurse</strong>
-                <span className="text-[10px] text-slate-500">Appointments Only</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => quickFill('reception@nirvaya.com', 'Nirvaya@123')}
-                className="p-2 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 text-left transition-colors cursor-pointer"
-              >
-                <strong className="text-[#0A1E3F] block">Frontdesk</strong>
-                <span className="text-[10px] text-slate-500">Patient Desk</span>
-              </button>
-            </div>
-          </div>
+          ) : (
+            /* VIEW B: Login Form For Selected Position */
+            <div className="space-y-4">
+              {/* Back to Role Selector Button */}
+              <div className="flex items-center justify-between pb-3 border-b border-slate-100">
+                <button
+                  type="button"
+                  onClick={handleBackToRoleSelection}
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-500 hover:text-[#0A1E3F] transition-colors cursor-pointer"
+                >
+                  <ArrowLeft className="w-3.5 h-3.5" />
+                  <span>Choose Different Position</span>
+                </button>
+                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#DFBF64]/20 text-[#0A1E3F] border border-[#C59B27]/30">
+                  {selectedRoleForLogin.name}
+                </span>
+              </div>
 
-          <div className="text-center mt-6">
-            <SafeLink
-              href="/"
-              className="text-xs text-[#0A1E3F] hover:text-[#C59B27] font-semibold transition-colors"
-            >
-              ← Return to Nirvaya Website
-            </SafeLink>
-          </div>
+              {/* Selected Position Header Card */}
+              <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 space-y-1">
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">
+                    Signing in to Position:
+                  </span>
+                  <span className="text-xs font-bold text-[#0A1E3F]">
+                    {selectedRoleForLogin.name}
+                  </span>
+                </div>
+                {selectedRoleForLogin.description && (
+                  <p className="text-[11px] text-slate-500">
+                    {selectedRoleForLogin.description}
+                  </p>
+                )}
+
+                {/* Staff Account Selector */}
+                {loginRoleUsers.length > 0 && (
+                  <div className="pt-2 border-t border-slate-200/60 mt-2">
+                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">
+                      Assigned Staff User:
+                    </span>
+                    <div className="flex flex-wrap gap-1.5">
+                      {loginRoleUsers.map((u) => (
+                        <button
+                          key={u.id || u.email}
+                          type="button"
+                          onClick={() => setEmail(u.email)}
+                          className={`px-2.5 py-1 rounded-xl text-xs font-medium border transition-all cursor-pointer ${
+                            email === u.email
+                              ? 'bg-[#0A1E3F] text-white border-[#0A1E3F] shadow-xs'
+                              : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300'
+                          }`}
+                        >
+                          <span className="font-bold">{u.name}</span>
+                          <span className="font-mono text-[10px] opacity-80 block">{u.email}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Credentials Form */}
+              <form onSubmit={handleLoginSubmit} className="space-y-4 pt-1">
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">
+                    Staff Email Address (Login ID) *
+                  </label>
+                  <input
+                    type="email"
+                    required
+                    placeholder="e.g. staff@nirvaya.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-[#C59B27] focus:outline-none"
+                  />
+                </div>
+
+                <div>
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="block text-xs font-bold text-slate-700">
+                      Password or Temporary OTP *
+                    </label>
+                    <span className="text-[10.5px] text-[#C59B27] font-semibold">
+                      OTP sets permanent password
+                    </span>
+                  </div>
+                  <div className="relative">
+                    <input
+                      type={showLoginPassText ? 'text' : 'password'}
+                      required
+                      placeholder="•••••••••"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-[#C59B27] focus:outline-none pr-10"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowLoginPassText(!showLoginPassText)}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 cursor-pointer"
+                    >
+                      {showLoginPassText ? (
+                        <EyeOff className="w-4 h-4" />
+                      ) : (
+                        <Eye className="w-4 h-4" />
+                      )}
+                    </button>
+                  </div>
+                  <p className="text-[10px] text-slate-500 mt-1">
+                    If signing in with a system-generated OTP, you will be prompted to set your private permanent password immediately after authentication.
+                  </p>
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={authLoading}
+                  className="w-full py-3 rounded-xl bg-[#0A1E3F] hover:bg-[#16325C] text-white font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <Lock className="w-4 h-4 text-[#DFBF64]" />
+                  <span>
+                    {authLoading
+                      ? 'Authenticating...'
+                      : `Sign In to ${selectedRoleForLogin.name || 'Portal'}`}
+                  </span>
+                </button>
+              </form>
+
+              {/* Demo Fill Quick Helpers for Default Accounts */}
+              {selectedRoleForLogin.slug === 'admin' && (
+                <div className="text-center pt-2">
+                  <button
+                    type="button"
+                    onClick={() => quickFill('admin@nirvaya.com', 'Admin@123')}
+                    className="text-[11px] text-[#C59B27] hover:underline cursor-pointer font-semibold"
+                  >
+                    Quick fill demo credentials for Super Admin
+                  </button>
+                </div>
+              )}
+              {selectedRoleForLogin.slug === 'manager' && (
+                <div className="text-center pt-2">
+                  <button
+                    type="button"
+                    onClick={() => quickFill('manager@nirvaya.com', 'Nirvaya@123')}
+                    className="text-[11px] text-[#C59B27] hover:underline cursor-pointer font-semibold"
+                  >
+                    Quick fill demo credentials for Clinic Manager
+                  </button>
+                </div>
+              )}
+              {selectedRoleForLogin.slug === 'nurse' && (
+                <div className="text-center pt-2">
+                  <button
+                    type="button"
+                    onClick={() => quickFill('nurse@nirvaya.com', 'Nirvaya@123')}
+                    className="text-[11px] text-[#C59B27] hover:underline cursor-pointer font-semibold"
+                  >
+                    Quick fill demo credentials for Staff Nurse
+                  </button>
+                </div>
+              )}
+              {selectedRoleForLogin.slug === 'receptionist' && (
+                <div className="text-center pt-2">
+                  <button
+                    type="button"
+                    onClick={() => quickFill('reception@nirvaya.com', 'Nirvaya@123')}
+                    className="text-[11px] text-[#C59B27] hover:underline cursor-pointer font-semibold"
+                  >
+                    Quick fill demo credentials for Frontdesk
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
     );
@@ -1950,14 +2472,31 @@ export default function AdminPage() {
                 </p>
               </div>
 
-              <button
-                type="button"
-                onClick={() => setShowRoleModal(true)}
-                className="px-4 py-2.5 rounded-xl bg-[#0A1E3F] hover:bg-[#16325C] text-white font-bold text-xs flex items-center gap-1.5 shadow-sm transition-all cursor-pointer"
-              >
-                <Plus className="w-4 h-4 text-[#DFBF64]" />
-                <span>Create New Position</span>
-              </button>
+              <div className="flex items-center gap-2.5">
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (roles.length > 0) setTargetRoleIdForUser(roles[0].id);
+                    setAddUserGeneratedOtp(`Nirvaya@${Math.floor(1000 + Math.random() * 9000)}`);
+                    setShowAddUserModal(true);
+                  }}
+                  className="px-4 py-2.5 rounded-xl border border-slate-300 hover:border-[#0A1E3F] bg-white text-[#0A1E3F] font-bold text-xs flex items-center gap-1.5 shadow-2xs transition-all cursor-pointer"
+                >
+                  <UserPlus className="w-4 h-4 text-[#C59B27]" />
+                  <span>Add Staff Member</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsPermissionDropdownOpen(true);
+                    setShowRoleModal(true);
+                  }}
+                  className="px-4 py-2.5 rounded-xl bg-[#0A1E3F] hover:bg-[#16325C] text-white font-bold text-xs flex items-center gap-1.5 shadow-sm transition-all cursor-pointer"
+                >
+                  <Plus className="w-4 h-4 text-[#DFBF64]" />
+                  <span>Create New Position</span>
+                </button>
+              </div>
             </div>
 
             {roleMessage && (
@@ -1972,7 +2511,7 @@ export default function AdminPage() {
               {roles.map((role) => (
                 <div
                   key={role.id || role._id}
-                  className="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs flex flex-col justify-between hover:border-[#DFBF64] transition-all"
+                  className="bg-white rounded-2xl p-6 border border-slate-200 shadow-xs flex flex-col justify-between hover:border-[#DFBF64] transition-all space-y-4"
                 >
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
@@ -1981,16 +2520,19 @@ export default function AdminPage() {
                           ? 'Root System Role'
                           : 'Custom Position'}
                       </span>
+                      <span className="text-[10px] text-slate-400 font-mono">
+                        {role.slug}
+                      </span>
                     </div>
 
                     <h3 className="font-heading text-lg font-bold text-[#0A1E3F]">{role.name}</h3>
-                    <p className="text-xs text-slate-600 leading-relaxed">{role.description}</p>
+                    <p className="text-xs text-slate-600 leading-relaxed">{role.description || 'Clinical staff access position'}</p>
 
                     <div className="pt-2">
                       <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1.5">
                         Assigned Permissions ({role.permissions?.length || 0})
                       </span>
-                      <div className="flex flex-wrap gap-1">
+                      <div className="flex flex-wrap gap-1 max-h-20 overflow-y-auto pr-1">
                         {role.permissions?.map((p) => (
                           <span
                             key={p}
@@ -2002,6 +2544,60 @@ export default function AdminPage() {
                       </div>
                     </div>
                   </div>
+
+                  {/* Assigned Staff Members */}
+                  <div className="pt-3 border-t border-slate-100 space-y-2">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                        Assigned Staff ({role.users?.length || 0})
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setTargetRoleIdForUser(role.id);
+                          setAddUserGeneratedOtp(`Nirvaya@${Math.floor(1000 + Math.random() * 9000)}`);
+                          setShowAddUserModal(true);
+                        }}
+                        className="text-[11px] font-bold text-[#C59B27] hover:text-[#9B771A] flex items-center gap-1 cursor-pointer"
+                      >
+                        <UserPlus className="w-3.5 h-3.5" />
+                        <span>+ Add Staff</span>
+                      </button>
+                    </div>
+
+                    {role.users && role.users.length > 0 ? (
+                      <div className="space-y-1.5 max-h-32 overflow-y-auto pr-0.5">
+                        {role.users.map((u) => (
+                          <div
+                            key={u.id || u.email}
+                            className="flex items-center justify-between p-2 rounded-xl bg-slate-50 border border-slate-200/80 text-xs"
+                          >
+                            <div className="truncate pr-2">
+                              <strong className="block text-[#0A1E3F] text-[11px] truncate">
+                                {u.name}
+                              </strong>
+                              <span className="text-slate-500 font-mono text-[10px] truncate block">
+                                {u.email}
+                              </span>
+                            </div>
+                            {u.mustChangePassword ? (
+                              <span className="px-1.5 py-0.5 rounded text-[9.5px] font-bold bg-amber-100 text-amber-800 border border-amber-200 shrink-0">
+                                OTP Active
+                              </span>
+                            ) : (
+                              <span className="px-1.5 py-0.5 rounded text-[9.5px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 shrink-0">
+                                Active
+                              </span>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <p className="text-[10.5px] text-slate-400 italic">
+                        No staff assigned yet. Click &quot;+ Add Staff&quot; to assign a user.
+                      </p>
+                    )}
+                  </div>
                 </div>
               ))}
             </div>
@@ -2009,14 +2605,14 @@ export default function AdminPage() {
             {/* Modal: New Role */}
             {showRoleModal && (
               <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs">
-                <div className="bg-white rounded-3xl max-w-lg w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 shadow-2xl border border-slate-200">
+                <div className="bg-white rounded-3xl max-w-2xl w-full max-h-[92vh] overflow-y-auto p-6 sm:p-8 shadow-2xl border border-slate-200">
                   <div className="flex items-center justify-between pb-4 border-b border-slate-100 mb-6">
                     <div>
                       <h3 className="font-heading text-xl font-bold text-[#0A1E3F]">
                         Create Clinical Position
                       </h3>
                       <p className="text-xs text-slate-500">
-                        Define role name and select authorized clinical permissions
+                        Define role name, select authorized clinical permissions, and optionally provision a staff user
                       </p>
                     </div>
                     <button
@@ -2028,7 +2624,7 @@ export default function AdminPage() {
                     </button>
                   </div>
 
-                  <form onSubmit={handleCreateRole} className="space-y-4">
+                  <form onSubmit={handleCreateRole} className="space-y-5">
                     <div>
                       <label className="block text-xs font-bold text-slate-700 mb-1">
                         Position Name *
@@ -2036,7 +2632,7 @@ export default function AdminPage() {
                       <input
                         type="text"
                         required
-                        placeholder="e.g. Ophthalmic OT Coordinator"
+                        placeholder="e.g. Ophthalmic OT Coordinator or Retina Clinic Manager"
                         value={newRoleName}
                         onChange={(e) => setNewRoleName(e.target.value)}
                         className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-[#C59B27] focus:outline-none"
@@ -2049,40 +2645,393 @@ export default function AdminPage() {
                       </label>
                       <textarea
                         rows={2}
-                        placeholder="e.g. Manages vitrectomy day-care scheduling and equipment readiness..."
+                        placeholder="e.g. Manages vitrectomy day-care scheduling, equipment readiness, and OT doctor notes..."
                         value={newRoleDesc}
                         onChange={(e) => setNewRoleDesc(e.target.value)}
                         className="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-[#C59B27] focus:outline-none"
                       />
                     </div>
 
+                    {/* Permissions Dropdown Selector */}
                     <div>
-                      <label className="block text-xs font-bold text-slate-700 mb-2">
-                        Assign Granular Permissions ({selectedPermissions.length} selected)
-                      </label>
-                      <div className="space-y-2 max-h-48 overflow-y-auto p-3 bg-slate-50 rounded-xl border border-slate-200">
-                        {catalog.map((perm) => (
-                          <label
-                            key={perm.key}
-                            className="flex items-start gap-2 text-xs text-slate-700 cursor-pointer hover:text-[#0A1E3F]"
-                          >
-                            <input
-                              type="checkbox"
-                              checked={selectedPermissions.includes(perm.key)}
-                              onChange={() => togglePermission(perm.key)}
-                              className="mt-0.5 rounded text-[#0A1E3F] focus:ring-[#C59B27]"
-                            />
-                            <div>
-                              <strong className="block text-[#0A1E3F] font-mono text-[11px]">
-                                {perm.key}
-                              </strong>
-                              <span className="text-slate-500 text-[10.5px]">
-                                {perm.description}
-                              </span>
-                            </div>
-                          </label>
-                        ))}
+                      <div className="flex items-center justify-between mb-1.5">
+                        <label className="block text-xs font-bold text-slate-700">
+                          Assign Granular Permissions *
+                        </label>
+                        <span className="text-[11px] font-semibold text-[#0A1E3F] bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200">
+                          {selectedPermissions.length} of {catalog.length} selected
+                        </span>
                       </div>
+
+                      {/* Dropdown Toggle Header */}
+                      <button
+                        type="button"
+                        onClick={() => setIsPermissionDropdownOpen(!isPermissionDropdownOpen)}
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 bg-white hover:border-[#DFBF64] focus:ring-2 focus:ring-[#C59B27] focus:outline-none flex items-center justify-between text-left transition-all cursor-pointer shadow-xs"
+                      >
+                        <div className="flex-1 truncate pr-2">
+                          {selectedPermissions.length === 0 ? (
+                            <span className="text-xs text-slate-400">
+                              Click to choose clinical permissions from catalog...
+                            </span>
+                          ) : (
+                            <div className="flex flex-wrap gap-1 max-h-14 overflow-hidden">
+                              {selectedPermissions.slice(0, 4).map((permKey) => (
+                                <span
+                                  key={permKey}
+                                  className="px-2 py-0.5 rounded text-[10.5px] bg-slate-100 text-[#0A1E3F] font-mono font-medium border border-slate-200"
+                                >
+                                  {permKey}
+                                </span>
+                              ))}
+                              {selectedPermissions.length > 4 && (
+                                <span className="px-2 py-0.5 rounded text-[10.5px] bg-[#DFBF64]/20 text-[#0A1E3F] font-bold">
+                                  +{selectedPermissions.length - 4} more
+                                </span>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                        <div className="flex items-center gap-1.5 text-slate-400 shrink-0">
+                          <span className="text-[11px] font-bold text-slate-600">
+                            {isPermissionDropdownOpen ? 'Hide Catalog' : 'Browse Permissions'}
+                          </span>
+                          {isPermissionDropdownOpen ? (
+                            <ChevronUp className="w-4 h-4 text-[#0A1E3F]" />
+                          ) : (
+                            <ChevronDown className="w-4 h-4 text-[#0A1E3F]" />
+                          )}
+                        </div>
+                      </button>
+
+                      {/* Dropdown Menu Body */}
+                      {isPermissionDropdownOpen && (
+                        <div className="mt-2.5 p-3.5 sm:p-4 bg-slate-50 rounded-2xl border border-slate-200 shadow-inner space-y-3 animate-in fade-in duration-150">
+                          {/* Search bar & quick toggles */}
+                          <div className="flex flex-col sm:flex-row gap-2 items-stretch sm:items-center justify-between pb-2 border-b border-slate-200">
+                            <div className="relative flex-1">
+                              <Search className="w-3.5 h-3.5 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                              <input
+                                type="text"
+                                placeholder="Search by permission key, name or module..."
+                                value={permissionSearch}
+                                onChange={(e) => setPermissionSearch(e.target.value)}
+                                className="w-full pl-8 pr-7 py-1.5 rounded-lg bg-white border border-slate-300 text-xs focus:ring-2 focus:ring-[#C59B27] focus:outline-none"
+                              />
+                              {permissionSearch && (
+                                <button
+                                  type="button"
+                                  onClick={() => setPermissionSearch('')}
+                                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                                >
+                                  <X className="w-3 h-3" />
+                                </button>
+                              )}
+                            </div>
+                            <div className="flex items-center gap-1.5 shrink-0 text-xs">
+                              <button
+                                type="button"
+                                onClick={selectAllPermissions}
+                                className="px-2.5 py-1 rounded-lg bg-white border border-slate-200 hover:border-[#DFBF64] text-slate-700 font-bold hover:text-[#0A1E3F] transition-all cursor-pointer shadow-2xs"
+                              >
+                                Select All ({catalog.length})
+                              </button>
+                              <button
+                                type="button"
+                                onClick={clearAllPermissions}
+                                className="px-2.5 py-1 rounded-lg bg-white border border-slate-200 hover:border-red-300 text-slate-500 font-medium hover:text-red-600 transition-all cursor-pointer shadow-2xs"
+                              >
+                                Clear All
+                              </button>
+                            </div>
+                          </div>
+
+                          {/* Categorized Permissions Accordions */}
+                          <div className="max-h-64 overflow-y-auto space-y-3 pr-1">
+                            {permissionGroups.map((group) => {
+                              const filtered = group.permissions.filter(
+                                (p) =>
+                                  p.key.toLowerCase().includes(permissionSearch.toLowerCase()) ||
+                                  p.label.toLowerCase().includes(permissionSearch.toLowerCase()) ||
+                                  p.description.toLowerCase().includes(permissionSearch.toLowerCase())
+                              );
+                              if (filtered.length === 0) return null;
+
+                              const allCategoryKeys = group.permissions.map((p) => p.key);
+                              const isAllSelected = allCategoryKeys.every((k) =>
+                                selectedPermissions.includes(k)
+                              );
+
+                              return (
+                                <div
+                                  key={group.category}
+                                  className="bg-white rounded-xl border border-slate-200/80 p-3 shadow-2xs space-y-2"
+                                >
+                                  <div className="flex items-center justify-between pb-1.5 border-b border-slate-100">
+                                    <div className="flex items-center gap-2">
+                                      <span className="font-heading text-xs font-bold text-[#0A1E3F]">
+                                        {group.category}
+                                      </span>
+                                      <span className="text-[10px] text-slate-400 font-semibold">
+                                        ({filtered.length})
+                                      </span>
+                                    </div>
+                                    <button
+                                      type="button"
+                                      onClick={() => toggleCategoryPermissions(group.permissions)}
+                                      className="text-[10.5px] font-bold text-[#C59B27] hover:text-[#9B771A] hover:underline cursor-pointer"
+                                    >
+                                      {isAllSelected ? 'Deselect Category' : 'Select Category'}
+                                    </button>
+                                  </div>
+
+                                  <div className="grid grid-cols-1 gap-1.5 pt-1">
+                                    {filtered.map((perm) => {
+                                      const isChecked = selectedPermissions.includes(perm.key);
+                                      return (
+                                        <label
+                                          key={perm.key}
+                                          className={`flex items-start gap-2.5 p-2 rounded-lg cursor-pointer transition-all border ${
+                                            isChecked
+                                              ? 'bg-amber-50/50 border-[#DFBF64]/60 text-[#0A1E3F]'
+                                              : 'bg-slate-50/50 hover:bg-slate-100/60 border-slate-200/60 text-slate-700'
+                                          }`}
+                                        >
+                                          <input
+                                            type="checkbox"
+                                            checked={isChecked}
+                                            onChange={() => togglePermission(perm.key)}
+                                            className="mt-0.5 rounded text-[#0A1E3F] focus:ring-[#C59B27] cursor-pointer"
+                                          />
+                                          <div className="flex-1 min-w-0">
+                                            <div className="flex items-center gap-2 flex-wrap">
+                                              <span className="text-xs font-bold text-[#0A1E3F]">
+                                                {perm.label}
+                                              </span>
+                                              <span className="px-1.5 py-0.2 rounded text-[9.5px] font-mono bg-slate-200/80 text-slate-700">
+                                                {perm.key}
+                                              </span>
+                                            </div>
+                                            <p className="text-[10.5px] text-slate-500 leading-snug mt-0.5">
+                                              {perm.description}
+                                            </p>
+                                          </div>
+                                        </label>
+                                      );
+                                    })}
+                                  </div>
+                                </div>
+                              );
+                            })}
+
+                            {permissionGroups.every((g) =>
+                              g.permissions.every(
+                                (p) =>
+                                  !p.key.toLowerCase().includes(permissionSearch.toLowerCase()) &&
+                                  !p.label.toLowerCase().includes(permissionSearch.toLowerCase()) &&
+                                  !p.description.toLowerCase().includes(permissionSearch.toLowerCase())
+                              )
+                            ) && (
+                              <div className="p-4 text-center text-xs text-slate-400 bg-white rounded-xl border border-dashed border-slate-200">
+                                No clinical permissions match &quot;{permissionSearch}&quot;
+                              </div>
+                            )}
+                          </div>
+
+                          <div className="flex justify-end pt-1">
+                            <button
+                              type="button"
+                              onClick={() => setIsPermissionDropdownOpen(false)}
+                              className="px-3.5 py-1.5 rounded-lg bg-[#0A1E3F] text-white text-[11px] font-bold hover:bg-[#16325C] transition-all cursor-pointer shadow-xs"
+                            >
+                              Done Selecting ({selectedPermissions.length} chosen)
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Section: Assign Staff User to this Position */}
+                    <div className="p-4 sm:p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-4">
+                      <div className="flex items-center justify-between">
+                        <label className="flex items-center gap-2.5 cursor-pointer select-none">
+                          <input
+                            type="checkbox"
+                            checked={assignUserNow}
+                            onChange={(e) => setAssignUserNow(e.target.checked)}
+                            className="w-4 h-4 rounded text-[#0A1E3F] focus:ring-[#C59B27] cursor-pointer"
+                          />
+                          <div>
+                            <span className="text-xs font-bold text-[#0A1E3F] flex items-center gap-1.5">
+                              <UserPlus className="w-3.5 h-3.5 text-[#C59B27]" />
+                              Add Staff User for this Position Now
+                            </span>
+                            <span className="block text-[11px] text-slate-500">
+                              Create an account and assign login credentials for this role
+                            </span>
+                          </div>
+                        </label>
+                        <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#DFBF64]/20 text-[#0A1E3F] border border-[#C59B27]/30">
+                          Recommended
+                        </span>
+                      </div>
+
+                      {assignUserNow && (
+                        <div className="space-y-3.5 pt-3 border-t border-slate-200/80 animate-in fade-in duration-150">
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                              <label className="block text-[11px] font-bold text-slate-700 mb-1">
+                                Staff Full Name
+                              </label>
+                              <input
+                                type="text"
+                                placeholder="e.g. Dr. Rajesh Sharma or Nurse Anita"
+                                value={newUserName}
+                                onChange={(e) => setNewUserName(e.target.value)}
+                                className="w-full px-3 py-2 rounded-xl border border-slate-300 bg-white text-xs focus:ring-2 focus:ring-[#C59B27] focus:outline-none"
+                              />
+                            </div>
+
+                            <div>
+                              <label className="block text-[11px] font-bold text-slate-700 mb-1">
+                                Staff Email ID (Login ID) *
+                              </label>
+                              <input
+                                type="email"
+                                required={assignUserNow}
+                                placeholder="e.g. staff.ot@nirvaya.com"
+                                value={newUserEmail}
+                                onChange={(e) => setNewUserEmail(e.target.value)}
+                                className="w-full px-3 py-2 rounded-xl border border-slate-300 bg-white text-xs focus:ring-2 focus:ring-[#C59B27] focus:outline-none"
+                              />
+                            </div>
+                          </div>
+
+                          <div>
+                            <label className="block text-[11px] font-bold text-slate-700 mb-1">
+                              Contact Mobile (Optional)
+                            </label>
+                            <input
+                              type="tel"
+                              placeholder="e.g. 9826012345"
+                              value={newUserPhone}
+                              onChange={(e) => setNewUserPhone(e.target.value)}
+                              className="w-full px-3 py-2 rounded-xl border border-slate-300 bg-white text-xs focus:ring-2 focus:ring-[#C59B27] focus:outline-none"
+                            />
+                          </div>
+
+                          {/* Password Setup Mode */}
+                          <div>
+                            <label className="block text-[11px] font-bold text-slate-700 mb-1.5">
+                              Password Provisioning Mode
+                            </label>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                              <button
+                                type="button"
+                                onClick={() => setUserPasswordMode('otp')}
+                                className={`p-2.5 rounded-xl border text-left transition-all cursor-pointer ${
+                                  userPasswordMode === 'otp'
+                                    ? 'bg-[#0A1E3F] text-white border-[#0A1E3F] shadow-sm'
+                                    : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300'
+                                }`}
+                              >
+                                <div className="flex items-center justify-between mb-1">
+                                  <span className="text-xs font-bold">System Generated OTP</span>
+                                  {userPasswordMode === 'otp' && (
+                                    <Check className="w-3.5 h-3.5 text-[#DFBF64]" />
+                                  )}
+                                </div>
+                                <p
+                                  className={`text-[10px] leading-tight ${
+                                    userPasswordMode === 'otp' ? 'text-slate-200' : 'text-slate-500'
+                                  }`}
+                                >
+                                  System creates one-time temporary OTP; user will change it on 1st login.
+                                </p>
+                              </button>
+
+                              <button
+                                type="button"
+                                onClick={() => setUserPasswordMode('manual')}
+                                className={`p-2.5 rounded-xl border text-left transition-all cursor-pointer ${
+                                  userPasswordMode === 'manual'
+                                    ? 'bg-[#0A1E3F] text-white border-[#0A1E3F] shadow-sm'
+                                    : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300'
+                                }`}
+                              >
+                                <div className="flex items-center justify-between mb-1">
+                                  <span className="text-xs font-bold">Manual Initial Password</span>
+                                  {userPasswordMode === 'manual' && (
+                                    <Check className="w-3.5 h-3.5 text-[#DFBF64]" />
+                                  )}
+                                </div>
+                                <p
+                                  className={`text-[10px] leading-tight ${
+                                    userPasswordMode === 'manual' ? 'text-slate-200' : 'text-slate-500'
+                                  }`}
+                                >
+                                  Specify custom temporary password; user will still change it on 1st login.
+                                </p>
+                              </button>
+                            </div>
+                          </div>
+
+                          {/* OTP Display Card */}
+                          {userPasswordMode === 'otp' && (
+                            <div className="p-3 bg-white rounded-xl border border-amber-200/80 shadow-2xs space-y-2">
+                              <div className="flex items-center justify-between">
+                                <span className="text-[11px] font-bold text-slate-700 flex items-center gap-1.5">
+                                  <Key className="w-3.5 h-3.5 text-[#C59B27]" />
+                                  Generated One-Time Password (OTP):
+                                </span>
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    const next = `Nirvaya@${Math.floor(1000 + Math.random() * 9000)}`;
+                                    setGeneratedOtp(next);
+                                  }}
+                                  className="text-[10.5px] font-bold text-[#C59B27] hover:text-[#9B771A] flex items-center gap-1 cursor-pointer"
+                                >
+                                  <RefreshCw className="w-3 h-3" />
+                                  Regenerate
+                                </button>
+                              </div>
+                              <div className="flex items-center justify-between bg-slate-50 px-3 py-2 rounded-lg border border-slate-200">
+                                <span className="font-mono text-sm font-bold text-[#0A1E3F] tracking-wider">
+                                  {generatedOtp}
+                                </span>
+                                <span className="text-[10px] font-semibold text-amber-700 bg-amber-100/70 px-2 py-0.5 rounded-full">
+                                  One-Time Password
+                                </span>
+                              </div>
+                              <p className="text-[10.5px] text-slate-500 leading-relaxed">
+                                On their first login with this OTP at the staff portal, the user will be presented with a forced password change screen to set their permanent confidential password before accessing the clinical dashboard.
+                              </p>
+                            </div>
+                          )}
+
+                          {/* Manual Password Input */}
+                          {userPasswordMode === 'manual' && (
+                            <div>
+                              <label className="block text-[11px] font-bold text-slate-700 mb-1">
+                                Enter Initial Temporary Password *
+                              </label>
+                              <input
+                                type="text"
+                                required={assignUserNow && userPasswordMode === 'manual'}
+                                minLength={6}
+                                placeholder="At least 6 characters (e.g. Clinic@2026)"
+                                value={customPassword}
+                                onChange={(e) => setCustomPassword(e.target.value)}
+                                className="w-full px-3 py-2 rounded-xl border border-slate-300 bg-white text-xs font-mono focus:ring-2 focus:ring-[#C59B27] focus:outline-none"
+                              />
+                              <p className="text-[10px] text-slate-500 mt-1">
+                                Staff user will still be required to change this password on their first login.
+                              </p>
+                            </div>
+                          )}
+                        </div>
+                      )}
                     </div>
 
                     <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-100">
@@ -2095,12 +3044,328 @@ export default function AdminPage() {
                       </button>
                       <button
                         type="submit"
-                        className="px-5 py-2.5 rounded-xl bg-[#0A1E3F] hover:bg-[#16325C] text-white font-bold text-xs shadow-md transition-all cursor-pointer"
+                        className="px-5 py-2.5 rounded-xl bg-[#0A1E3F] hover:bg-[#16325C] text-white font-bold text-xs shadow-md transition-all cursor-pointer flex items-center gap-1.5"
                       >
-                        Create Position
+                        <CheckCircle2 className="w-4 h-4 text-[#DFBF64]" />
+                        <span>Create Position {assignUserNow ? '& Assign User' : ''}</span>
                       </button>
                     </div>
                   </form>
+                </div>
+              </div>
+            )}
+
+            {/* Modal: Add Staff User to an Existing Role */}
+            {showAddUserModal && (
+              <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs">
+                <div className="bg-white rounded-3xl max-w-lg w-full max-h-[92vh] overflow-y-auto p-6 sm:p-8 shadow-2xl border border-slate-200">
+                  <div className="flex items-center justify-between pb-4 border-b border-slate-100 mb-6">
+                    <div>
+                      <h3 className="font-heading text-xl font-bold text-[#0A1E3F]">
+                        Add Staff Member to Position
+                      </h3>
+                      <p className="text-xs text-slate-500">
+                        Assign a user account with login credentials to an existing clinical role
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setShowAddUserModal(false)}
+                      className="p-1 rounded-lg text-slate-400 hover:text-slate-600 cursor-pointer"
+                    >
+                      <X className="w-5 h-5" />
+                    </button>
+                  </div>
+
+                  <form onSubmit={handleAddStaffUserSubmit} className="space-y-4">
+                    {/* Target Position Selection */}
+                    <div>
+                      <label className="block text-xs font-bold text-slate-700 mb-1">
+                        Clinical Position / Role *
+                      </label>
+                      <select
+                        value={targetRoleIdForUser}
+                        onChange={(e) => setTargetRoleIdForUser(e.target.value)}
+                        required
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-[#C59B27] focus:outline-none bg-white font-medium text-slate-800"
+                      >
+                        {roles.map((r) => (
+                          <option key={r.id} value={r.id}>
+                            {r.name} ({r.slug})
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    {/* Staff Full Name */}
+                    <div>
+                      <label className="block text-xs font-bold text-slate-700 mb-1">
+                        Staff Full Name *
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        placeholder="e.g. Aman Sharma or Nurse Anita"
+                        value={addUserName}
+                        onChange={(e) => setAddUserName(e.target.value)}
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-[#C59B27] focus:outline-none"
+                      />
+                    </div>
+
+                    {/* Login Email */}
+                    <div>
+                      <label className="block text-xs font-bold text-slate-700 mb-1">
+                        Staff Email ID (Login ID) *
+                      </label>
+                      <input
+                        type="email"
+                        required
+                        placeholder="e.g. aman@nirvayaeyecare.com"
+                        value={addUserEmail}
+                        onChange={(e) => setAddUserEmail(e.target.value)}
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-[#C59B27] focus:outline-none"
+                      />
+                    </div>
+
+                    {/* Contact Phone */}
+                    <div>
+                      <label className="block text-xs font-bold text-slate-700 mb-1">
+                        Contact Mobile (Optional)
+                      </label>
+                      <input
+                        type="tel"
+                        placeholder="e.g. 9826012345"
+                        value={addUserPhone}
+                        onChange={(e) => setAddUserPhone(e.target.value)}
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-[#C59B27] focus:outline-none"
+                      />
+                    </div>
+
+                    {/* Password Setup Mode */}
+                    <div>
+                      <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                        Initial Password Provisioning
+                      </label>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <button
+                          type="button"
+                          onClick={() => setAddUserPasswordMode('otp')}
+                          className={`p-2.5 rounded-xl border text-left transition-all cursor-pointer ${
+                            addUserPasswordMode === 'otp'
+                              ? 'bg-[#0A1E3F] text-white border-[#0A1E3F] shadow-sm'
+                              : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300'
+                          }`}
+                        >
+                          <div className="flex items-center justify-between mb-1">
+                            <span className="text-xs font-bold">System Generated OTP</span>
+                            {addUserPasswordMode === 'otp' && (
+                              <Check className="w-3.5 h-3.5 text-[#DFBF64]" />
+                            )}
+                          </div>
+                          <p
+                            className={`text-[10px] leading-tight ${
+                              addUserPasswordMode === 'otp' ? 'text-slate-200' : 'text-slate-500'
+                            }`}
+                          >
+                            Temporary OTP; user is forced to create permanent password on 1st login.
+                          </p>
+                        </button>
+
+                        <button
+                          type="button"
+                          onClick={() => setAddUserPasswordMode('manual')}
+                          className={`p-2.5 rounded-xl border text-left transition-all cursor-pointer ${
+                            addUserPasswordMode === 'manual'
+                              ? 'bg-[#0A1E3F] text-white border-[#0A1E3F] shadow-sm'
+                              : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300'
+                          }`}
+                        >
+                          <div className="flex items-center justify-between mb-1">
+                            <span className="text-xs font-bold">Manual Temporary Password</span>
+                            {addUserPasswordMode === 'manual' && (
+                              <Check className="w-3.5 h-3.5 text-[#DFBF64]" />
+                            )}
+                          </div>
+                          <p
+                            className={`text-[10px] leading-tight ${
+                              addUserPasswordMode === 'manual' ? 'text-slate-200' : 'text-slate-500'
+                            }`}
+                          >
+                            Specify custom password; user still changes it on first login.
+                          </p>
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* OTP Display Card */}
+                    {addUserPasswordMode === 'otp' && (
+                      <div className="p-3 bg-white rounded-xl border border-amber-200/80 shadow-2xs space-y-2">
+                        <div className="flex items-center justify-between">
+                          <span className="text-[11px] font-bold text-slate-700 flex items-center gap-1.5">
+                            <Key className="w-3.5 h-3.5 text-[#C59B27]" />
+                            One-Time Temporary Password (OTP):
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const next = `Nirvaya@${Math.floor(1000 + Math.random() * 9000)}`;
+                              setAddUserGeneratedOtp(next);
+                            }}
+                            className="text-[10.5px] font-bold text-[#C59B27] hover:text-[#9B771A] flex items-center gap-1 cursor-pointer"
+                          >
+                            <RefreshCw className="w-3 h-3" />
+                            Regenerate
+                          </button>
+                        </div>
+                        <div className="flex items-center justify-between bg-slate-50 px-3 py-2 rounded-lg border border-slate-200">
+                          <span className="font-mono text-sm font-bold text-[#0A1E3F] tracking-wider">
+                            {addUserGeneratedOtp}
+                          </span>
+                          <span className="text-[10px] font-semibold text-amber-700 bg-amber-100/70 px-2 py-0.5 rounded-full">
+                            One-Time Password
+                          </span>
+                        </div>
+                        <p className="text-[10.5px] text-slate-500 leading-relaxed">
+                          When this staff member logs in at the portal with this OTP, they will immediately be presented with a screen to configure their private permanent password before accessing the clinical dashboard.
+                        </p>
+                      </div>
+                    )}
+
+                    {/* Manual Password Input */}
+                    {addUserPasswordMode === 'manual' && (
+                      <div>
+                        <label className="block text-xs font-bold text-slate-700 mb-1">
+                          Enter Temporary Password *
+                        </label>
+                        <input
+                          type="text"
+                          required={addUserPasswordMode === 'manual'}
+                          minLength={6}
+                          placeholder="At least 6 characters"
+                          value={addUserCustomPassword}
+                          onChange={(e) => setAddUserCustomPassword(e.target.value)}
+                          className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-xs font-mono focus:ring-2 focus:ring-[#C59B27] focus:outline-none"
+                        />
+                      </div>
+                    )}
+
+                    <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-100">
+                      <button
+                        type="button"
+                        onClick={() => setShowAddUserModal(false)}
+                        className="px-4 py-2.5 rounded-xl border border-slate-200 text-slate-600 font-semibold text-xs hover:bg-slate-50 transition-colors cursor-pointer"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        type="submit"
+                        disabled={addUserSubmitting}
+                        className="px-5 py-2.5 rounded-xl bg-[#0A1E3F] hover:bg-[#16325C] text-white font-bold text-xs shadow-md transition-all cursor-pointer flex items-center gap-1.5"
+                      >
+                        <UserPlus className="w-4 h-4 text-[#DFBF64]" />
+                        <span>{addUserSubmitting ? 'Creating Staff Account...' : 'Add Staff Member'}</span>
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            )}
+
+            {/* Modal: Created Staff User Credentials Card */}
+            {createdUserCredentials && (
+              <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs">
+                <div className="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-slate-200 animate-in fade-in duration-200">
+                  <div className="text-center mb-5">
+                    <div className="inline-flex p-3 rounded-2xl bg-emerald-50 text-emerald-600 border border-emerald-200 mb-2.5 shadow-sm">
+                      <CheckCircle2 className="w-8 h-8" />
+                    </div>
+                    <h3 className="font-heading text-xl font-bold text-[#0A1E3F]">
+                      Position &amp; Staff Account Created!
+                    </h3>
+                    <p className="text-xs text-slate-500 mt-1">
+                      The clinical position and user login credentials have been provisioned in the system.
+                    </p>
+                  </div>
+
+                  {/* Credentials Card */}
+                  <div className="bg-slate-50 rounded-2xl p-4 border border-slate-200 space-y-2.5 text-xs">
+                    <div className="flex justify-between items-center py-1 border-b border-slate-200/60">
+                      <span className="text-slate-500">Position / Role:</span>
+                      <span className="font-bold text-[#0A1E3F]">
+                        {createdUserCredentials.role || createdUserCredentials.roleName}
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center py-1 border-b border-slate-200/60">
+                      <span className="text-slate-500">Staff Member:</span>
+                      <span className="font-bold text-[#0A1E3F]">
+                        {createdUserCredentials.name}
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center py-1 border-b border-slate-200/60">
+                      <span className="text-slate-500">Login ID (Email):</span>
+                      <span className="font-mono font-bold text-[#0A1E3F]">
+                        {createdUserCredentials.email}
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center py-1.5 bg-amber-50/70 px-2.5 rounded-xl border border-amber-200/70">
+                      <span className="text-amber-900 font-medium">One-Time Password:</span>
+                      <span className="font-mono font-bold text-amber-950 text-sm tracking-wide">
+                        {createdUserCredentials.tempPassword}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-1.5 pt-1 text-[11px] text-amber-700 font-medium">
+                      <Shield className="w-3.5 h-3.5 shrink-0 text-[#C59B27]" />
+                      <span>Forced Password Change: Active on 1st login</span>
+                    </div>
+                  </div>
+
+                  {/* Instructions */}
+                  <div className="mt-4 p-3 rounded-xl bg-blue-50/70 border border-blue-200/70 text-[11px] text-blue-900 leading-relaxed flex items-start gap-2">
+                    <Mail className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
+                    <span>
+                      Share this Login ID and temporary OTP with the staff member. When they sign in at <strong className="font-mono">/admin</strong>, they will immediately be prompted with a secure window to create their permanent password before accessing the dashboard.
+                    </span>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="mt-6 flex flex-col gap-2">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const portalUrl = typeof window !== 'undefined' ? `${window.location.origin}/admin` : '/admin';
+                        const text = `Nirvaya Eyecare Centre — Staff Portal Access\nPosition: ${createdUserCredentials.role || createdUserCredentials.roleName}\nStaff Name: ${createdUserCredentials.name}\nLogin ID: ${createdUserCredentials.email}\nTemporary OTP: ${createdUserCredentials.tempPassword}\nPortal Link: ${portalUrl}\n\nNote: You will be asked to set your confidential permanent password upon first login.`;
+                        if (navigator?.clipboard) {
+                          navigator.clipboard.writeText(text);
+                          setCopiedOtp(true);
+                          setTimeout(() => setCopiedOtp(false), 3000);
+                        }
+                      }}
+                      className="w-full py-2.5 rounded-xl bg-[#0A1E3F] hover:bg-[#16325C] text-white font-bold text-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
+                    >
+                      {copiedOtp ? (
+                        <>
+                          <Check className="w-4 h-4 text-[#DFBF64]" />
+                          <span>Credentials Copied to Clipboard!</span>
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="w-4 h-4 text-[#DFBF64]" />
+                          <span>Copy Login Credentials</span>
+                        </>
+                      )}
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setCreatedUserCredentials(null);
+                        setCopiedOtp(false);
+                      }}
+                      className="w-full py-2.5 rounded-xl border border-slate-200 text-slate-600 font-semibold text-xs hover:bg-slate-50 transition-colors cursor-pointer"
+                    >
+                      Done / Close
+                    </button>
+                  </div>
                 </div>
               </div>
             )}

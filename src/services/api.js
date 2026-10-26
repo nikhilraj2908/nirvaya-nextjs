@@ -228,7 +228,8 @@ export async function adminLogin(email, password) {
   if (data.token) {
     const fullUser = {
       ...data.user,
-      role: data.role
+      role: data.role,
+      mustChangePassword: Boolean(data.mustChangePassword)
     };
     if (typeof window !== 'undefined') {
       localStorage.setItem('nirvaya_token', data.token);
@@ -257,6 +258,24 @@ export function getCurrentUser() {
 
 export async function getMe() {
   return request('/auth/me');
+}
+
+export async function changePassword(payload) {
+  const data = await request('/auth/change-password', {
+    method: 'POST',
+    body: JSON.stringify(payload)
+  });
+  if (data?.token && typeof window !== 'undefined') {
+    localStorage.setItem('nirvaya_token', data.token);
+    if (data.user) {
+      const fullUser = {
+        ...data.user,
+        role: data.role
+      };
+      localStorage.setItem('nirvaya_user', JSON.stringify(fullUser));
+    }
+  }
+  return data;
 }
 
 // -------------------------------------------------------------
@@ -323,6 +342,13 @@ export async function updateRole(id, roleData) {
 export async function deleteRole(id) {
   return request(`/roles/${id}`, {
     method: 'DELETE'
+  });
+}
+
+export async function createStaffUser(userData) {
+  return request('/staff', {
+    method: 'POST',
+    body: JSON.stringify(userData)
   });
 }
 

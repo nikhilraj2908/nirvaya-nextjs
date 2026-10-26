@@ -56,7 +56,8 @@ export async function POST(req) {
       message: 'Login successful',
       token,
       user: userObj,
-      role: role ? role.toJSON() : null
+      role: role ? role.toJSON() : null,
+      mustChangePassword: Boolean(user.mustChangePassword)
     });
   } catch (err) {
     console.error('[auth/login] Error:', err);
