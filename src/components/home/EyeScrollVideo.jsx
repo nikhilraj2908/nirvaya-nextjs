@@ -39,6 +39,20 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
   const [isReducedMotion, setIsReducedMotion] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
+  // Scroll to specific stage on indicator click
+  const scrollToStage = (stage) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const containerTop = rect.top + scrollTop;
+    const totalHeight = containerRef.current.offsetHeight - window.innerHeight;
+    const targetProgress = HERO_STAGES[stage]?.progressRange?.[0] ?? (stage / (HERO_STAGES.length - 1));
+    window.scrollTo({
+      top: containerTop + totalHeight * Math.min(Math.max(targetProgress + 0.02, 0), 1),
+      behavior: 'smooth'
+    });
+  };
+
   // Responsive screen size & desktop video shift
   useEffect(() => {
     const updateDimensions = () => {
@@ -158,12 +172,13 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
 
           // Compute active stage smoothly based on smoothed progress
           let nextStage = 0;
-          if (smoothedProg < 0.18) nextStage = 0;
-          else if (smoothedProg < 0.35) nextStage = 1;
-          else if (smoothedProg < 0.52) nextStage = 2;
-          else if (smoothedProg < 0.68) nextStage = 3;
-          else if (smoothedProg < 0.84) nextStage = 4;
-          else nextStage = 5;
+          for (let i = HERO_STAGES.length - 1; i >= 0; i--) {
+            const rangeStart = HERO_STAGES[i].progressRange?.[0] ?? (i / HERO_STAGES.length);
+            if (smoothedProg >= rangeStart) {
+              nextStage = HERO_STAGES[i].stage ?? i;
+              break;
+            }
+          }
 
           setActiveStage((prev) => (prev !== nextStage ? nextStage : prev));
 
@@ -369,10 +384,10 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
           {/* Bottom Vignette for Smooth Transition to Trust Strip */}
           <div className="absolute inset-x-0 bottom-0 h-24 pointer-events-none z-2 bg-gradient-to-t from-[#061226] via-[#061226]/60 to-transparent" />
 
-          {/* Foreground Content Container - pt-24/lg:pt-32 clears the sticky navigation header with generous margin */}
-          <div className="relative z-10 w-full h-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-between pt-20 sm:pt-24 lg:pt-28 pb-4 sm:pb-6 lg:pb-6 pointer-events-auto">
+          {/* Foreground Content Container - Balanced top/bottom clearance for optical centering */}
+          <div className="relative z-10 w-full h-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-between pt-20 sm:pt-22 lg:pt-24 pb-4 sm:pb-6 lg:pb-6 pointer-events-auto">
             {/* Top breathing space below sticky header */}
-            <div className="h-2 sm:h-4 lg:h-6 pointer-events-none shrink-0" />
+            <div className="h-2 sm:h-3 lg:h-3 pointer-events-none shrink-0" />
 
             {/* ============================================================== */}
             {/* 1. MOBILE CAROUSEL VIEW (< 1024px)                             */}
@@ -521,7 +536,7 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
             {/* ============================================================== */}
             {/* 2. DESKTOP VIEW (>= 1024px): Smooth crossfaded stage copy      */}
             {/* ============================================================== */}
-            <div className="hidden lg:grid grid-cols-1 grid-rows-1 my-auto max-w-xl lg:max-w-lg xl:max-w-xl pointer-events-auto mt-2 lg:mt-4">
+            <div className="hidden lg:grid grid-cols-1 grid-rows-1 my-auto max-w-xl lg:max-w-lg xl:max-w-xl pointer-events-auto items-center">
               {/* STAGE 0: Initial Hero Entry (Crossfades smoothly on scroll) */}
               <div
                 className={`col-start-1 row-start-1 space-y-6 transition-all duration-500 ease-out ${activeStage === 0
@@ -586,17 +601,16 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
                 </div>
               </div>
 
-              {/* STAGES 1 TO 5: Smooth Independent Animated Stage Cards (drsandhyagaur.com style) */}
-              <div className="col-start-1 row-start-1 relative w-full min-h-[420px] pointer-events-none">
+              {/* STAGES 1 TO 6: Clean, Perfectly Centered Stage Cards */}
+              <div className="col-start-1 row-start-1 grid grid-cols-1 grid-rows-1 w-full items-center pointer-events-none">
                 {HERO_STAGES.slice(1).map((stageItem) => {
                   const isActive = activeStage === stageItem.stage;
                   return (
                     <article
                       key={stageItem.stage}
-                      className={`hero-stage-card bg-[#061226]/85 backdrop-blur-2xl p-5 sm:p-6 lg:p-6 xl:p-7 rounded-3xl border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.65),0_0_30px_rgba(197,155,39,0.15)] flex flex-col justify-between ${
-                        isActive ? 'is-active' : ''
+                      className={`col-start-1 row-start-1 hero-stage-card bg-[#061226]/85 backdrop-blur-2xl p-6 sm:p-7 lg:p-7 xl:p-8 rounded-3xl border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.65),0_0_30px_rgba(197,155,39,0.15)] flex flex-col gap-4 ${
+                        isActive ? 'is-active pointer-events-auto' : 'pointer-events-none'
                       }`}
-                      style={{ minHeight: '410px' }}
                     >
                       {/* Top Header: Eyebrow + Stage Index Badge */}
                       <div className="hero-stagger-item hero-stagger-1 flex items-center justify-between gap-3 border-b border-white/10 pb-3">
@@ -605,12 +619,12 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
                           <span>{stageItem.eyebrow}</span>
                         </div>
                         <span className="text-xs font-mono font-bold text-amber-200/80 bg-white/5 border border-amber-300/20 px-2.5 py-0.5 rounded-full">
-                          Stage 0{stageItem.stage} / 05
+                          Stage 0{stageItem.stage} / 0{HERO_STAGES.length - 1}
                         </span>
                       </div>
 
                       {/* Main Title & Clinical Headline */}
-                      <div className="space-y-3 py-2">
+                      <div className="space-y-2 py-0.5">
                         <h2 className="hero-stagger-item hero-stagger-2 font-heading text-2xl xl:text-3xl font-extrabold text-white tracking-tight leading-snug drop-shadow-md">
                           {stageItem.headline}
                         </h2>
@@ -620,23 +634,8 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
                         </p>
                       </div>
 
-                      {/* Clinical Capabilities / Feature Tags */}
-                      {stageItem.tags && stageItem.tags.length > 0 && (
-                        <div className="hero-stagger-item hero-stagger-4 flex flex-wrap gap-2 py-1">
-                          {stageItem.tags.map((tag, tIdx) => (
-                            <span
-                              key={tIdx}
-                              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium bg-white/10 text-slate-100 border border-white/15 backdrop-blur-xs"
-                            >
-                              <CheckCircle2 className="w-3 h-3 text-[#DFBF64]" />
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-                      )}
-
                       {/* Sub-Detail Highlight Box with Key Clinical Stat */}
-                      <div className="hero-stagger-item hero-stagger-5 p-3.5 rounded-xl bg-gradient-to-r from-amber-500/15 via-white/5 to-transparent border border-amber-400/30 text-xs text-amber-100 flex items-center justify-between gap-3">
+                      <div className="hero-stagger-item hero-stagger-4 p-3.5 rounded-xl bg-gradient-to-r from-amber-500/15 via-white/5 to-transparent border border-amber-400/30 text-xs text-amber-100 flex items-center justify-between gap-3">
                         <div className="flex items-center gap-2">
                           <ShieldCheck className="w-4 h-4 shrink-0 text-[#DFBF64]" />
                           <span className="font-medium text-slate-200">{stageItem.subDetail}</span>
@@ -650,7 +649,7 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
                       </div>
 
                       {/* Action CTAs & Attribution */}
-                      <div className="hero-stagger-item hero-stagger-6 pt-4 border-t border-white/10 flex items-center justify-between gap-3">
+                      <div className="hero-stagger-item hero-stagger-5 pt-3.5 border-t border-white/10 flex items-center justify-between gap-3">
                         <div className="flex items-center gap-3">
                           <Button
                             variant="gold"
@@ -685,15 +684,15 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
               {!isReducedMotion ? (
                 <button
                   type="button"
-                  onClick={() => scrollToStage(activeStage < 5 ? activeStage + 1 : 0)}
+                  onClick={() => scrollToStage(activeStage < HERO_STAGES.length - 1 ? activeStage + 1 : 0)}
                   className="inline-flex items-center gap-2 bg-slate-950/70 hover:bg-slate-900/90 backdrop-blur-xs px-3.5 py-1.5 rounded-full border border-slate-800 hover:border-slate-700 transition-all cursor-pointer text-xs text-slate-300"
-                  title={activeStage < 5 ? `Scroll to Stage 0${activeStage + 1}` : 'Return to top'}
+                  title={activeStage < HERO_STAGES.length - 1 ? `Scroll to Stage 0${activeStage + 1}` : 'Return to top'}
                 >
                   <span className="w-2 h-2 rounded-full bg-[#DFBF64] animate-ping" />
                   <span className="transition-opacity duration-300">
                     {activeStage === 0
                       ? 'Scroll down to explore interactive eye anatomy'
-                      : `Viewing Stage 0${activeStage} of 05 • Keep scrolling to reveal deeper retinal layers`}
+                      : `Viewing Stage 0${activeStage} of 0${HERO_STAGES.length - 1} • Keep scrolling to reveal deeper retinal layers`}
                   </span>
                   <ChevronDown className="w-4 h-4 text-[#DFBF64] animate-bounce ml-1" />
                 </button>
@@ -706,20 +705,20 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
               {/* Desktop Stage Progress Indicator Pills */}
               <div className="flex items-center gap-1.5 bg-slate-950/60 backdrop-blur-xs px-3 py-1.5 rounded-full border border-slate-800/80">
                 <span className="text-[10px] uppercase tracking-wider text-slate-400 mr-1 font-semibold">Anatomy Depth</span>
-                {[1, 2, 3, 4, 5].map((stg) => (
+                {HERO_STAGES.slice(1).map((s) => (
                   <button
-                    key={stg}
+                    key={s.stage}
                     type="button"
-                    onClick={() => scrollToStage(stg)}
+                    onClick={() => scrollToStage(s.stage)}
                     className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
-                      activeStage === stg
+                      activeStage === s.stage
                         ? 'w-6 bg-[#DFBF64] shadow-[0_0_8px_rgba(223,191,100,0.8)]'
-                        : activeStage > stg
+                        : activeStage > s.stage
                           ? 'w-2 bg-[#DFBF64]/60 hover:bg-[#DFBF64]'
                           : 'w-2 bg-white/20 hover:bg-white/50'
                     }`}
-                    title={`Jump to Stage 0${stg}: ${HERO_STAGES[stg]?.headline || ''}`}
-                    aria-label={`Jump to Stage 0${stg}`}
+                    title={`Jump to Stage 0${s.stage}: ${s.headline || ''}`}
+                    aria-label={`Jump to Stage 0${s.stage}`}
                   />
                 ))}
               </div>

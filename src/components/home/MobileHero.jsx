@@ -243,7 +243,7 @@ export default function MobileHero({ onOpenPreBook, currentLang = 'en' }) {
                     {slide.description}
                   </p>
 
-                  {/* Feature Grid (Stage 0) OR SubDetail Badge (Stages 1-5) */}
+                  {/* Feature Grid (Stage 0) OR SubDetail Badge (Stages 1-6) */}
                   {slide.isHero ? (
                     <div className="pt-2 border-t border-slate-100 grid grid-cols-2 gap-x-2 gap-y-1.5 text-[11px] sm:text-xs text-slate-700 font-medium">
                       {slide.features.map((feat, fIdx) => (
@@ -254,20 +254,7 @@ export default function MobileHero({ onOpenPreBook, currentLang = 'en' }) {
                       ))}
                     </div>
                   ) : (
-                    <div className="pt-2 space-y-2">
-                      {slide.tags && slide.tags.length > 0 && (
-                        <div className="flex flex-wrap gap-1.5">
-                          {slide.tags.map((tag, tIdx) => (
-                            <span
-                              key={tIdx}
-                              className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-medium bg-[#0A1E3F]/5 text-[#0A1E3F] border border-slate-200"
-                            >
-                              <CheckCircle2 className="w-2.5 h-2.5 text-[#C59B27]" />
-                              {tag}
-                            </span>
-                          ))}
-                        </div>
-                      )}
+                    <div className="pt-2">
                       <div className="p-2 sm:p-2.5 rounded-xl bg-slate-50/90 border border-slate-200/80 text-[11px] sm:text-xs text-slate-700 font-medium flex items-center justify-between gap-2">
                         <div className="flex items-center gap-2">
                           <ShieldCheck className="w-4 h-4 text-[#C59B27] shrink-0" />

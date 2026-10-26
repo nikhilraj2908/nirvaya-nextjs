@@ -61,9 +61,21 @@ async function request(endpoint, options = {}) {
       throw error;
     }
 
-    return data;
   } catch (err) {
-    console.error(`[API Service] ${endpoint} Error:`, err.message);
+    const isAborted =
+      err.name === 'AbortError' ||
+      err.name === 'CanceledError' ||
+      err.code === 20 ||
+      options?.signal?.aborted ||
+      (typeof err.message === 'string' && (
+        err.message.includes('aborted') ||
+        err.message.includes('abort') ||
+        err.message.includes('canceled')
+      ));
+
+    if (!isAborted) {
+      console.error(`[API Service] ${endpoint} Error:`, err.message);
+    }
     throw err;
   }
 }

@@ -71,12 +71,13 @@ export const NAVIGATION_ITEMS = [
 ];
 
 const STAGE_PROGRESS_RANGES = [
-  [0, 0.18],
-  [0.18, 0.35],
-  [0.35, 0.52],
-  [0.52, 0.68],
-  [0.68, 0.84],
-  [0.84, 1.0]
+  [0, 0.15],
+  [0.15, 0.29],
+  [0.29, 0.43],
+  [0.43, 0.57],
+  [0.57, 0.71],
+  [0.71, 0.85],
+  [0.85, 1.0]
 ];
 
 export const HERO_STAGES = en.heroStages.map((stageItem, idx) => ({
@@ -86,34 +87,34 @@ export const HERO_STAGES = en.heroStages.map((stageItem, idx) => ({
 
 export const SPECIALTIES = [
   {
-    id: "services-retina",
-    title: "Retina & Vitreoretinal Surgery",
+    id: "services-vitreoretinal",
+    title: "Vitreoretinal Surgery (Vitrectomy)",
     category: "Surgical Retina",
-    badge: "Core Specialty",
+    badge: "Core Surgical Specialty",
     image: "/images/specialties/retina-vitre.jpg",
-    shortDescription: "Specialist management of retinal detachments, macular holes, vitreous hemorrhage and epiretinal membranes using sutureless micro-incision vitrectomy.",
+    shortDescription: "Sutureless vitrectomy for retinal detachment, macular hole, epiretinal membrane, vitreous haemorrhage and dislocated lens — fellowship-trained surgical retina care in Bhopal.",
     symptoms: ["Sudden flashes or shower of floaters", "Curtain falling over visual field", "Distorted or wavy central vision"],
     badgeColor: "gold"
   },
   {
-    id: "services-injections",
-    title: "Intravitreal Injections (Anti-VEGF)",
+    "id": "services-lasers",
+    title: "Retinal Laser Procedures",
     category: "Medical Retina",
-    badge: "Outpatient Day-Care",
-    image: "/images/specialties/anti-vegf.jpg",
-    shortDescription: "Painless, precise intravitreal injections for Age-related Macular Degeneration (AMD), Diabetic Macular Edema, and Retinal Vein Occlusion (RVO).",
-    symptoms: ["Blurry central reading vision", "Dark spot in center of vision", "Sudden painless drop in vision in one eye"],
-    badgeColor: "blue"
+    badge: "Outpatient Laser",
+    image: "/images/specialties/diabetic-eyecare.jpg",
+    shortDescription: "Laser photocoagulation for diabetic retinopathy, retinal tears, and retinal vein occlusion; barrage laser for lattice degeneration.",
+    symptoms: ["Peripheral retinal thinning (lattice)", "Retinal tears with light flashes", "Proliferative diabetic retinopathy"],
+    badgeColor: "navy"
   },
   {
-    id: "services-diabetic",
-    title: "Diabetic Eye Care & Retinopathy",
-    category: "Systemic Retina",
-    badge: "Preventive & Laser",
-    image: "/images/specialties/diabetic-eyecare.jpg",
-    shortDescription: "Comprehensive screening, high-definition fundus photography, green laser photocoagulation and anti-VEGF protocols to safeguard vision against diabetes.",
-    symptoms: ["Fluctuating vision with blood sugar", "Spots or dark strings (floaters)", "Empty or dark areas in field"],
-    badgeColor: "navy"
+    id: "services-injections",
+    title: "Intravitreal Injections",
+    category: "Medical Retina",
+    badge: "Targeted Pharmacotherapy",
+    image: "/images/specialties/anti-vegf.jpg",
+    shortDescription: "Anti-VEGF and steroid injections for wet AMD, diabetic macular oedema and vein occlusion, delivered under strict aseptic protocol.",
+    symptoms: ["Blurry central reading vision", "Dark spot in center of vision", "Sudden painless drop in vision in one eye"],
+    badgeColor: "blue"
   },
   {
     id: "services-rop",
@@ -121,74 +122,91 @@ export const SPECIALTIES = [
     category: "Pediatric Retina",
     badge: "Neonatal Care",
     image: "/images/specialties/rop-screening.jpg",
-    shortDescription: "Timely bedside screening for premature and low-birth-weight neonates to detect and treat Retinopathy of Prematurity before irreversible vision loss.",
+    shortDescription: "Retinopathy of Prematurity screening for premature babies with timely laser and injection treatment — a critical, time-sensitive service for newborns.",
     symptoms: ["Infants born <34 weeks or <1750g", "Requirement of prolonged oxygen support", "Pediatrician / Neonatologist referral"],
     badgeColor: "gold"
   },
   {
-    id: "services-cataract",
-    title: "Cataract Surgery (Phaco)",
-    category: "Anterior Segment",
-    badge: "Micro-Incision",
-    shortDescription: "Stitchless, injection-free phacoemulsification with bespoke intraocular lenses (Toric, Extended Depth of Focus, Multifocal) for clear visual freedom.",
-    symptoms: ["Cloudy or foggy eyesight", "Glare and halos around lights at night", "Faded or yellowish colour perception"],
-    badgeColor: "blue"
-  },
-  {
     id: "services-uveitis",
-    title: "Uveitis & Ocular Immunology",
-    category: "Medical Retina",
+    title: "Uveitis Care",
+    category: "Ocular Immunology",
     badge: "Complex Diagnostics",
-    shortDescription: "Meticulous clinical evaluation, systemic workups and targeted immunotherapy for anterior, intermediate, and posterior uveitis and vasculitis.",
+    shortDescription: "Diagnosis and management of uveitis and inflammatory eye disease in adults and children, including immune-mediated and infective causes.",
     symptoms: ["Painful red eye with light sensitivity", "Floaters with dull ache", "Recurrent episodes of eye redness"],
     badgeColor: "navy"
   },
   {
-    id: "services-comprehensive",
-    title: "Comprehensive Eye Check-up",
-    category: "Preventive Care",
-    badge: "General Ophthalmology",
-    shortDescription: "Detailed slit-lamp examination, applanation tonometry (eye pressure), dilated indirect ophthalmoscopy, and computerized refraction.",
-    symptoms: ["Routine annual screening", "Eyestrain, headache from screen work", "Family history of glaucoma or retina issues"],
+    id: "services-cataract",
+    title: "Cataract Surgery (Phaco & SICS)",
+    category: "Anterior Segment",
+    badge: "Micro-Incision",
+    shortDescription: "Phacoemulsification and small-incision cataract surgery (SICS) with premium IOL options and research-backed IOL power planning.",
+    symptoms: ["Cloudy or foggy eyesight", "Glare and halos around lights at night", "Faded or yellowish colour perception"],
     badgeColor: "blue"
   },
   {
-    id: "services-optical",
-    title: "Optical & Visual Diagnostics",
-    category: "Clinical Support",
-    badge: "Precision Optics",
-    shortDescription: "Precision ophthalmic lens dispensing, corrective prism assessments, and high-definition anterior-posterior optical coherence tomography.",
-    symptoms: ["Difficulty with reading small print", "Requirement of progressive lenses", "Post-operative optical fine-tuning"],
-    badgeColor: "navy"
+    id: "services-comprehensive",
+    title: "Comprehensive Ophthalmology",
+    category: "Diagnostic & Preventive",
+    badge: "General Ophthalmology",
+    shortDescription: "Complete eye evaluation with dilated retinal examination and modern imaging — for routine check-ups, referrals and second opinions.",
+    symptoms: ["Routine annual screening", "Eyestrain, headache from screen work", "Family history of glaucoma or retina issues"],
+    badgeColor: "blue"
   }
+];
+
+export const CONDITIONS_TREATED = [
+  { name: "Diabetic Retinopathy", blurb: "Diabetes can silently damage the retina. Regular retina check-ups, lasers and injections protect vision — essential for every diabetic." },
+  { name: "Age-related Macular Degeneration (AMD)", blurb: "A leading cause of central vision loss after 50. Wet AMD is treatable with anti-VEGF intravitreal injections when caught early." },
+  { name: "Retinal Detachment & Retinal Tears", blurb: "Sudden floaters, flashes or a curtain over vision is an emergency. Timely laser or vitrectomy surgery can save sight." },
+  { name: "Macular Hole", blurb: "A small gap in the central retina causing distorted reading vision — repaired with modern vitrectomy and ILM-flap techniques." },
+  { name: "Retinopathy of Prematurity (ROP)", blurb: "Premature and low-birth-weight babies need retina screening in the first weeks of life. Timely treatment prevents lifelong blindness." },
+  { name: "Uveitis (Eye Inflammation)", blurb: "Redness, pain and light sensitivity from inflammation inside the eye — needs specialist work-up to find and treat the cause." },
+  { name: "Cataract", blurb: "Clouding of the natural lens causing blur and glare — restored with quick, safe phacoemulsification surgery and lens implants." },
+  { name: "Retinal Vein Occlusion", blurb: "A 'stroke' of the eye's veins causing sudden blurred vision — managed with injections and laser to control swelling." },
+  { name: "Vitreous Haemorrhage", blurb: "Bleeding inside the eye from diabetes, trauma or retinal tears — evaluated urgently and cleared surgically when needed." },
+  { name: "Epiretinal Membrane", blurb: "A fine scar tissue film over the macula causing distortion — peeled surgically to improve vision quality." }
 ];
 
 export const DOCTOR_PROFILE = {
   name: "Dr Sandhya Gaur",
-  designation: "Medical Director & Senior Vitreo-Retina & Cataract Specialist",
+  designation: "Medical Director & Chief Vitreoretinal Surgeon",
+  degrees: "MD Ophthalmology (AIIMS, New Delhi) · DNB · FVRS (Vitreoretina & Uvea) · FAICO (Retina & Vitreous) – Gold Medalist",
   qualifications: [
-    { title: "MD (Ophthalmology)", institution: "AIIMS, New Delhi", note: "Apex National Institute" },
-    { title: "DNB (Ophthalmology)", institution: "National Board of Examinations", note: "New Delhi" },
-    { title: "Fellowship in Vitreo-Retinal Surgery (FVRS)", institution: "Premier Tertiary Eye Institute", note: "Advanced Surgical Training" },
-    { title: "FAICO (Retina)", institution: "All India Ophthalmological Society", note: "Gold Medalist" }
+    { title: "MD (Ophthalmology)", institution: "All India Institute of Medical Sciences (AIIMS), New Delhi", note: "Dr. R.P. Centre for Ophthalmic Sciences" },
+    { title: "DNB (Ophthalmology)", institution: "National Board of Examinations (NBE)", note: "New Delhi" },
+    { title: "Fellowship in Vitreoretina & Uvea (FVRS)", institution: "Sadguru Netra Chikitsalaya, Chitrakoot", note: "2-Year Long-Term Surgical Fellowship" },
+    { title: "FAICO (Retina & Vitreous)", institution: "All India Ophthalmological Society (AIOS)", note: "Gold Medalist" }
   ],
   awards: [
-    "FAICO (Retina) Gold Medalist – Highest National Honours in Vitreo-Retinal Examination",
-    "Over 18 peer-reviewed research papers published in indexed national & international ophthalmic journals",
-    "Keynote speaker & instructor at National Vitreo-Retina & Cataract conferences"
+    "FAICO (Retina & Vitreous) — Gold Medalist (All India Ophthalmological Society)",
+    "Associate Editor — Haryana Journal of Ophthalmology",
+    "Author of 18+ Peer-Reviewed Publications in Indexed National and International Journals",
+    "Life Member — All India Ophthalmological Society (AIOS)",
+    "Life Member — Vitreo Retina Society of India (VRSI)",
+    "Member — European Society of Retina Specialists (EURETINA)",
+    "Life Member — Young Ophthalmologists Society of India (YOSI)",
+    "Life Member — Delhi Ophthalmological Society (DOS)",
+    "Life Member — Haryana Ophthalmological Society (HOS)"
   ],
   expertiseAreas: [
-    "Micro-Incision Vitrectomy Surgery (MIVS 25G/27G)",
-    "Surgical Repair of Retinal Detachment & Macular Holes",
-    "Diabetic Vitrectomy, Laser Photocoagulation & Macular Edema",
+    "Vitreoretinal Surgery (Vitrectomy 25G/27G)",
+    "Retinal Laser Procedures & Barrage Laser",
+    "Intravitreal Injections (Anti-VEGF & Steroids)",
     "Retinopathy of Prematurity (ROP) Screening & Laser",
-    "Micro-Incision Cataract Surgery (Phaco) with Premium IOLs",
-    "Complex Secondary IOL Fixation (Scleral-Fixated IOL)",
-    "Uveitis and Ocular Inflammatory Diseases"
+    "Uveitis & Ocular Inflammation",
+    "Cataract Surgery (Phacoemulsification & SICS)",
+    "Comprehensive Ophthalmology & Retinal Diagnostics"
   ],
   languages: ["Hindi", "English"],
-  opdDays: "Monday to Saturday (By Prior Appointment / Slot Pre-booking)",
-  philosophy: "Eye care demands patient-focused honesty, delicate surgical precision, and unhurried clinical listening. Our aim at Nirvaya is to provide ethical, transparent, world-class retina and cataract care directly to families in central India."
+  opdDays: "Monday to Saturday: 9:30 AM – 7:30 PM",
+  philosophy: "Eye care demands patient-focused honesty, delicate surgical precision, and unhurried clinical listening. Our aim at Nirvaya is to provide ethical, transparent, world-class retina and cataract care directly to families in central India.",
+  social: {
+    googleScholar: "https://scholar.google.com/citations?hl=en&user=_4PoQfIAAAAJ",
+    linkedin: "https://www.linkedin.com/in/dr-sandhya-gaur-593802206",
+    instagram: "https://www.instagram.com/surgeon_in_heels/",
+    googleReviews: "https://share.google/VmrWZpduI5fiBXcYK"
+  }
 };
 
 export const TECHNOLOGY_FACILITIES = [

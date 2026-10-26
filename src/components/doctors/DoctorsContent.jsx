@@ -89,10 +89,10 @@ export default function DoctorsContent() {
   ];
 
   const publicationsSample = [
-    'Surgical outcomes of 27-gauge micro-incision vitrectomy in complex tractional retinal detachments.',
-    'Comparative evaluation of anti-VEGF agents in refractory diabetic macular edema in Central Indian cohort.',
-    'Screening protocols and structural outcomes of bedside laser photocoagulation in Retinopathy of Prematurity (ROP).',
-    'Macular hole closure dynamics following inverted ILM flap technique in high myopia.'
+    'Gaur S, Singh DV, Sharma A. Spontaneous resolution of parafoveal macular hole post YAG hyaloidotomy in a case of Valsalva retinopathy. European Journal of Ophthalmology, 2023.',
+    'Gaur S, Dhull C, Khokhar SK. Intra-operative aberrometry versus conventional biometry for intraocular lens power calculation: a prospective observational study. Indian Journal of Ophthalmology, 2023.',
+    'Singh DV, Reddy RR, Sharma A, Gaur S, Sharma YR. Impact of inverted internal limiting membrane-flap technique on structural restoration of macular holes. Indian Journal of Ophthalmology, 2023.',
+    'Gaur S, Singh DV, Reddy RR, Sharma A. Bilateral neovascular age-related macular degeneration: unilateral regression following endophthalmitis. BMJ Case Reports, 2022.'
   ];
 
   const secondaryDoctors = doctorsList.filter(

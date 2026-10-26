@@ -28,6 +28,20 @@ import {
   Building2
 } from 'lucide-react';
 
+const isAbortError = (err) => {
+  if (!err) return false;
+  return (
+    err.name === 'AbortError' ||
+    err.name === 'CanceledError' ||
+    err.code === 20 ||
+    (typeof err.message === 'string' && (
+      err.message.includes('aborted') ||
+      err.message.includes('abort') ||
+      err.message.includes('canceled')
+    ))
+  );
+};
+
 export default function PreBookContent() {
   const searchParams = useSearchParams();
   const queryDoctorId = searchParams.get('doctorId');
@@ -77,6 +91,14 @@ export default function PreBookContent() {
   const availabilityAbortRef = useRef(null);
   const slotsAbortRef = useRef(null);
 
+  // Abort pending requests on unmount
+  useEffect(() => {
+    return () => {
+      if (availabilityAbortRef.current) availabilityAbortRef.current.abort();
+      if (slotsAbortRef.current) slotsAbortRef.current.abort();
+    };
+  }, []);
+
   // Track page intent on mount
   useEffect(() => {
     trackEvent('booking_intent', {
@@ -94,18 +116,18 @@ export default function PreBookContent() {
         const res = await getDoctors();
         if (isMounted && res && res.doctors && res.doctors.length > 0) {
           setDoctors(res.doctors);
+          let targetId = res.doctors[0].id;
           if (queryDoctorId && res.doctors.some((d) => d.id === queryDoctorId)) {
-            setSelectedDoctorId(queryDoctorId);
+            targetId = queryDoctorId;
           } else if (querySpecialty) {
             const match = res.doctors.find((d) =>
               (d.specialties || []).some((s) =>
                 s.toLowerCase().includes(querySpecialty.toLowerCase())
               )
             );
-            if (match) setSelectedDoctorId(match.id);
-          } else {
-            setSelectedDoctorId(res.doctors[0].id);
+            if (match) targetId = match.id;
           }
+          setSelectedDoctorId((prev) => (prev === targetId ? prev : targetId));
         }
       } catch (err) {
         console.warn('[PreBookPage] Doctor load fallback:', err.message);
@@ -142,12 +164,14 @@ export default function PreBookContent() {
           setMonthAvailability(res.days);
         }
       } catch (err) {
-        if (err.name !== 'AbortError') {
+        if (!isAbortError(err)) {
           console.error('[PreBookPage] Month availability failed:', err.message);
           setAvailabilityError(err.message || 'Failed to load doctor calendar');
         }
       } finally {
-        setLoadingAvailability(false);
+        if (!controller.signal.aborted) {
+          setLoadingAvailability(false);
+        }
       }
     },
     []
@@ -188,12 +212,14 @@ export default function PreBookContent() {
           setGroupedSlots(res.groupedSlots || {});
         }
       } catch (err) {
-        if (err.name !== 'AbortError') {
+        if (!isAbortError(err)) {
           console.error('[PreBookPage] Slots query failed:', err.message);
           setSlotsError(err.message || 'Unable to retrieve consultation slots');
         }
       } finally {
-        setLoadingSlots(false);
+        if (!controller.signal.aborted) {
+          setLoadingSlots(false);
+        }
       }
     },
     []
