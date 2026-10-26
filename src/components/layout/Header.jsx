@@ -70,7 +70,7 @@ export default function Header({
   }, []);
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-white">
+    <header className="sticky top-0 z-40 w-full bg-transparent">
       {/* Upper Utility Header (Location, Lang, Font Scale, Admin Portal): Collapses on scroll down, reappears on scroll up */}
       <div
         className={`grid transition-[grid-template-rows,opacity] duration-250 ease-in-out ${

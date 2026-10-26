@@ -10,7 +10,7 @@ export default function StickyMobileActionBar() {
   return (
     <nav
       aria-label="Mobile Quick Clinical and Booking Actions"
-      className="fixed bottom-0 inset-x-0 z-40 bg-[#0A1E3F]/95 backdrop-blur-xl border-t border-[#C59B27]/30 shadow-[0_-8px_24px_rgba(10,30,63,0.35)] py-2.5 px-3.5 lg:hidden"
+      className="fixed bottom-0 inset-x-0 z-40 bg-[#0A1E3F]/88 backdrop-blur-2xl supports-[backdrop-filter]:bg-[#0A1E3F]/80 border-t border-white/15 shadow-[0_-8px_32px_rgba(6,18,38,0.45)] py-2.5 px-3.5 lg:hidden"
       style={{ paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 0.6rem)' }}
     >
       <div className="grid grid-cols-3 gap-2.5 max-w-md mx-auto items-center">

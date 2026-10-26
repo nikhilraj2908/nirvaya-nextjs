@@ -75,8 +75,54 @@ export default function DoctorSection() {
   }, [hasAnimated]);
 
   return (
-    <section id="doctor" className="py-16 lg:py-24 bg-white border-t border-slate-200/80 scroll-mt-24">
-      <Container>
+    <section id="doctor" className="relative py-16 lg:py-24 bg-gradient-to-b from-[#FAFBFD] via-[#F4F7FC] to-[#FAFBFD] border-t border-slate-200/80 scroll-mt-24 overflow-hidden">
+      {/* Decorative Optical Vector Background */}
+      <div className="absolute inset-0 pointer-events-none select-none z-0 overflow-hidden">
+        <svg
+          className="absolute w-full h-full"
+          xmlns="http://www.w3.org/2000/svg"
+          preserveAspectRatio="none"
+          viewBox="0 0 1440 900"
+        >
+          <defs>
+            {/* Tone A Dot Matrix */}
+            <pattern id="doc-dots" width="28" height="28" patternUnits="userSpaceOnUse">
+              <circle cx="2" cy="2" r="1.2" fill="#0A1E3F" fillOpacity="0.065" />
+            </pattern>
+            {/* Soft Retinal Radial Glows */}
+            <radialGradient id="doc-gold-glow" cx="22%" cy="45%" r="40%">
+              <stop offset="0%" stopColor="#DFBF64" stopOpacity="0.12" />
+              <stop offset="60%" stopColor="#C59B27" stopOpacity="0.03" />
+              <stop offset="100%" stopColor="#FAFBFD" stopOpacity="0" />
+            </radialGradient>
+            <radialGradient id="doc-sky-glow" cx="80%" cy="50%" r="45%">
+              <stop offset="0%" stopColor="#00aeef" stopOpacity="0.08" />
+              <stop offset="70%" stopColor="#0284c7" stopOpacity="0.01" />
+              <stop offset="100%" stopColor="#FAFBFD" stopOpacity="0" />
+            </radialGradient>
+          </defs>
+
+          {/* Background dot grid fill */}
+          <rect width="100%" height="100%" fill="url(#doc-dots)" />
+
+          {/* Luminous Glow Spots */}
+          <rect width="100%" height="100%" fill="url(#doc-gold-glow)" />
+          <rect width="100%" height="100%" fill="url(#doc-sky-glow)" />
+
+          {/* Concentric Precision Retinal Circles around Doctor Profile Card */}
+          <g transform="translate(320, 460)" stroke="#C59B27" strokeOpacity="0.15" fill="none">
+            <circle r="180" strokeWidth="1" strokeDasharray="3 4" />
+            <circle r="260" strokeWidth="1" strokeOpacity="0.1" />
+            <circle r="340" strokeWidth="1" strokeDasharray="6 8" strokeOpacity="0.08" />
+            <circle r="420" strokeWidth="1.2" strokeOpacity="0.06" />
+            {/* Crosshairs */}
+            <line x1="-440" y1="0" x2="440" y2="0" strokeWidth="1" strokeOpacity="0.08" strokeDasharray="4 6" />
+            <line x1="0" y1="-440" x2="0" y2="440" strokeWidth="1" strokeOpacity="0.08" strokeDasharray="4 6" />
+          </g>
+        </svg>
+      </div>
+
+      <Container className="relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
           {/* Left Column: Doctor Profile Card */}
           <div className="lg:col-span-5 reveal-up">

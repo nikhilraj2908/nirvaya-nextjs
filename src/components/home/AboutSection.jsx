@@ -9,8 +9,33 @@ import en from '@/locales/en.json';
 
 export default function AboutSection() {
   return (
-    <section id="about" className="py-16 lg:py-24 bg-white border-b border-slate-200/80">
-      <Container>
+    <section id="about" className="relative py-16 lg:py-24 bg-gradient-to-b from-[#FAFBFD] via-[#F3F7FC] to-[#FAFBFD] border-b border-slate-200/80 overflow-hidden">
+      {/* Background Pattern: Optical Dotted Grid & Gentle Ambient Glows */}
+      <div aria-hidden="true" className="absolute inset-0 pointer-events-none select-none overflow-hidden z-0">
+        <div className="absolute -top-24 -left-24 w-96 h-96 bg-[#DFBF64]/[0.08] rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-1/2 -right-24 w-96 h-96 bg-sky-400/[0.08] rounded-full blur-3xl pointer-events-none" />
+        <svg className="w-full h-full object-cover" viewBox="0 0 1440 800" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+          <defs>
+            <radialGradient id="about-dot-fade" cx="20%" cy="30%" r="65%">
+              <stop offset="0%" stopColor="#ffffff" stopOpacity="1" />
+              <stop offset="60%" stopColor="#ffffff" stopOpacity="0.45" />
+              <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
+            </radialGradient>
+            <mask id="about-dot-mask">
+              <rect width="100%" height="100%" fill="url(#about-dot-fade)" />
+            </mask>
+            <pattern id="about-dot-grid" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse">
+              <circle cx="2" cy="2" r="1.15" fill="#0A1E3F" fillOpacity="0.085" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#about-dot-grid)" mask="url(#about-dot-mask)" />
+          {/* Subtle flowing contour ribbon */}
+          <path d="M-100,200 C300,100 600,350 1000,180 C1250,80 1400,220 1540,160" stroke="#00aeef" strokeWidth="1" strokeOpacity="0.18" fill="none" />
+          <path d="M-100,230 C320,130 620,380 1020,210 C1270,110 1420,250 1540,190" stroke="#DFBF64" strokeWidth="0.8" strokeOpacity="0.22" fill="none" />
+        </svg>
+      </div>
+
+      <Container className="relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
           {/* Narrative Column */}
           <div className="lg:col-span-7 space-y-6">
@@ -31,7 +56,7 @@ export default function AboutSection() {
 
             {/* Concise Highlight Badges */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 pt-1 reveal-up">
-              <div className="p-3.5 rounded-xl bg-[#F8FAFC] border border-slate-200/80 flex items-center gap-3">
+              <div className="p-3.5 rounded-xl bg-white/80 backdrop-blur-xs border border-slate-200/90 shadow-2xs flex items-center gap-3">
                 <div className="w-8 h-8 rounded-lg bg-[#0A1E3F]/5 text-[#C59B27] flex items-center justify-center shrink-0">
                   <Award className="w-4 h-4" />
                 </div>
@@ -41,7 +66,7 @@ export default function AboutSection() {
                 </div>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-[#F8FAFC] border border-slate-200/80 flex items-center gap-3">
+              <div className="p-3.5 rounded-xl bg-white/80 backdrop-blur-xs border border-slate-200/90 shadow-2xs flex items-center gap-3">
                 <div className="w-8 h-8 rounded-lg bg-[#0A1E3F]/5 text-[#C59B27] flex items-center justify-center shrink-0">
                   <ShieldCheck className="w-4 h-4" />
                 </div>
@@ -51,7 +76,7 @@ export default function AboutSection() {
                 </div>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-[#F8FAFC] border border-slate-200/80 flex items-center gap-3">
+              <div className="p-3.5 rounded-xl bg-white/80 backdrop-blur-xs border border-slate-200/90 shadow-2xs flex items-center gap-3">
                 <div className="w-8 h-8 rounded-lg bg-[#0A1E3F]/5 text-[#C59B27] flex items-center justify-center shrink-0">
                   <Microscope className="w-4 h-4" />
                 </div>

@@ -36,11 +36,66 @@ export default function KnowledgeHubSection() {
   const subOptions = hubData?.subOptions || defaultSubOptions;
 
   return (
-    <section className="py-20 lg:py-28 bg-[#F8FAFC] border-t border-slate-200/80 relative overflow-hidden">
-      <div className="absolute top-0 right-0 -mr-24 -mt-24 w-96 h-96 bg-[#C59B27]/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 left-0 -ml-24 -mb-24 w-96 h-96 bg-[#0A1E3F]/5 rounded-full blur-3xl pointer-events-none" />
+    <section className="relative py-20 lg:py-28 bg-gradient-to-b from-[#FAFBFD] via-[#F3F7FC] to-[#FAFBFD] border-t border-slate-200/80 overflow-hidden">
+      {/* Decorative Optical Vector Background */}
+      <div className="absolute inset-0 pointer-events-none select-none z-0 overflow-hidden">
+        <svg
+          className="absolute w-full h-full"
+          xmlns="http://www.w3.org/2000/svg"
+          preserveAspectRatio="none"
+          viewBox="0 0 1440 800"
+        >
+          <defs>
+            {/* Tone A Dot Matrix */}
+            <pattern id="kh-dots" width="28" height="28" patternUnits="userSpaceOnUse">
+              <circle cx="2" cy="2" r="1.2" fill="#0A1E3F" fillOpacity="0.065" />
+            </pattern>
+            {/* Ambient Radial Gradients */}
+            <radialGradient id="kh-gold" cx="15%" cy="30%" r="45%">
+              <stop offset="0%" stopColor="#DFBF64" stopOpacity="0.12" />
+              <stop offset="60%" stopColor="#C59B27" stopOpacity="0.02" />
+              <stop offset="100%" stopColor="#FAFBFD" stopOpacity="0" />
+            </radialGradient>
+            <radialGradient id="kh-sky" cx="85%" cy="75%" r="50%">
+              <stop offset="0%" stopColor="#00aeef" stopOpacity="0.09" />
+              <stop offset="65%" stopColor="#0284c7" stopOpacity="0.02" />
+              <stop offset="100%" stopColor="#FAFBFD" stopOpacity="0" />
+            </radialGradient>
+          </defs>
 
-      <Container>
+          {/* Dot Grid */}
+          <rect width="100%" height="100%" fill="url(#kh-dots)" />
+          {/* Ambient Glows */}
+          <rect width="100%" height="100%" fill="url(#kh-gold)" />
+          <rect width="100%" height="100%" fill="url(#kh-sky)" />
+
+          {/* Flowing Research / Waveform Contours */}
+          <path
+            d="M-50,220 C280,320 620,120 1020,260 C1240,340 1380,280 1500,240"
+            fill="none"
+            stroke="#00aeef"
+            strokeWidth="1.2"
+            strokeOpacity="0.18"
+            strokeDasharray="4 6"
+          />
+          <path
+            d="M-50,260 C320,380 680,180 1060,300 C1280,370 1410,320 1500,280"
+            fill="none"
+            stroke="#C59B27"
+            strokeWidth="1.2"
+            strokeOpacity="0.16"
+          />
+          <path
+            d="M-50,620 C360,520 740,700 1120,580 C1300,520 1420,560 1500,590"
+            fill="none"
+            stroke="#0A1E3F"
+            strokeWidth="1"
+            strokeOpacity="0.08"
+          />
+        </svg>
+      </div>
+
+      <Container className="relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-14">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0A1E3F]/5 text-[#0A1E3F] text-xs font-bold uppercase tracking-wider mb-4 border border-[#0A1E3F]/10">
             <BookOpen className="w-3.5 h-3.5 text-[#C59B27]" />

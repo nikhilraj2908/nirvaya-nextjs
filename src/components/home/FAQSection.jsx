@@ -33,7 +33,7 @@ export default function FAQSection({ currentLang = 'en' }) {
   return (
     <section
       id="faq"
-      className="relative py-16 lg:py-24 bg-gradient-to-b from-[#FAFBFD] via-[#F6F9FD] to-[#FAFBFD] border-t border-slate-200/70 scroll-mt-24 overflow-hidden"
+      className="relative py-16 lg:py-24 bg-gradient-to-b from-[#EEF4FA] via-[#E4ECF5] to-[#EDF3F9] border-t border-slate-200/80 scroll-mt-24 overflow-hidden"
     >
       {/* ============================================================== */}
       {/* MINIMALIST BRAND BACKGROUND: Optical Vector Waves & Dot Matrix  */}

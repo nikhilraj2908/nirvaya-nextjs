@@ -7,8 +7,38 @@ import en from '@/locales/en.json';
 
 export default function FinalCTA({ onOpenPreBook, currentLang = 'en' }) {
   return (
-    <section className="py-20 lg:py-24 bg-gradient-to-b from-slate-50 to-white relative overflow-hidden">
-      <Container>
+    <section className="relative py-20 lg:py-24 bg-gradient-to-b from-[#FAFBFD] via-[#F4F8FC] to-[#FAFBFD] border-t border-slate-200/80 overflow-hidden">
+      {/* Decorative Optical Vector Background (Tone A: Dot Matrix & Ambient Glow) */}
+      <div className="absolute inset-0 pointer-events-none select-none z-0 overflow-hidden">
+        <svg
+          className="absolute w-full h-full"
+          xmlns="http://www.w3.org/2000/svg"
+          preserveAspectRatio="none"
+          viewBox="0 0 1440 600"
+        >
+          <defs>
+            <pattern id="cta-dots" width="28" height="28" patternUnits="userSpaceOnUse">
+              <circle cx="2" cy="2" r="1.2" fill="#0A1E3F" fillOpacity="0.065" />
+            </pattern>
+            <radialGradient id="cta-gold-glow" cx="80%" cy="20%" r="50%">
+              <stop offset="0%" stopColor="#DFBF64" stopOpacity="0.12" />
+              <stop offset="65%" stopColor="#C59B27" stopOpacity="0.02" />
+              <stop offset="100%" stopColor="#FAFBFD" stopOpacity="0" />
+            </radialGradient>
+            <radialGradient id="cta-sky-glow" cx="15%" cy="80%" r="50%">
+              <stop offset="0%" stopColor="#00aeef" stopOpacity="0.09" />
+              <stop offset="65%" stopColor="#0284c7" stopOpacity="0.02" />
+              <stop offset="100%" stopColor="#FAFBFD" stopOpacity="0" />
+            </radialGradient>
+          </defs>
+
+          <rect width="100%" height="100%" fill="url(#cta-dots)" />
+          <rect width="100%" height="100%" fill="url(#cta-gold-glow)" />
+          <rect width="100%" height="100%" fill="url(#cta-sky-glow)" />
+        </svg>
+      </div>
+
+      <Container className="relative z-10">
         <div className="relative rounded-3xl bg-gradient-to-r from-[#0A1E3F] via-[#0D2852] to-[#061226] p-8 sm:p-12 lg:p-14 xl:p-16 text-white overflow-hidden shadow-2xl border border-slate-700/60 reveal-up">
           {/* Left-Side Blended Clinical Image (img2.webp) with Seamless Fade Mask & Gradients */}
           <div className="absolute inset-y-0 left-0 w-full lg:w-[56%] pointer-events-none overflow-hidden z-0">

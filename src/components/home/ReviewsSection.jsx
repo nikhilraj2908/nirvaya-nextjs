@@ -46,8 +46,66 @@ export default function ReviewsSection() {
   const approvedReviews = DOCTOR_REVIEWS.filter((item) => item.approved);
 
   return (
-    <section id="reviews" className="py-20 lg:py-28 bg-slate-50 border-t border-slate-200/80 scroll-mt-24">
-      <Container>
+    <section id="reviews" className="relative py-20 lg:py-28 bg-gradient-to-b from-[#EEF3F8] via-[#E5EDF6] to-[#EEF3F8] border-t border-slate-200/80 scroll-mt-24 overflow-hidden">
+      {/* Decorative Optical Vector Background (Tone B: Architectural Clinical Grid) */}
+      <div className="absolute inset-0 pointer-events-none select-none z-0 overflow-hidden">
+        <svg
+          className="absolute w-full h-full"
+          xmlns="http://www.w3.org/2000/svg"
+          preserveAspectRatio="none"
+          viewBox="0 0 1440 900"
+        >
+          <defs>
+            {/* Tone B Clinical Micro-grid Pattern */}
+            <pattern id="rev-grid" width="44" height="44" patternUnits="userSpaceOnUse">
+              <path
+                d="M 44 0 L 0 0 0 44"
+                fill="none"
+                stroke="#0A1E3F"
+                strokeWidth="0.8"
+                strokeOpacity="0.04"
+              />
+              <circle cx="0" cy="0" r="1.2" fill="#0A1E3F" fillOpacity="0.08" />
+            </pattern>
+            {/* Tone B Radial Glows */}
+            <radialGradient id="rev-sky-glow" cx="20%" cy="40%" r="45%">
+              <stop offset="0%" stopColor="#00aeef" stopOpacity="0.1" />
+              <stop offset="70%" stopColor="#0284c7" stopOpacity="0.01" />
+              <stop offset="100%" stopColor="#EEF3F8" stopOpacity="0" />
+            </radialGradient>
+            <radialGradient id="rev-gold-glow" cx="80%" cy="60%" r="40%">
+              <stop offset="0%" stopColor="#DFBF64" stopOpacity="0.1" />
+              <stop offset="65%" stopColor="#C59B27" stopOpacity="0.02" />
+              <stop offset="100%" stopColor="#EEF3F8" stopOpacity="0" />
+            </radialGradient>
+          </defs>
+
+          {/* Grid pattern fill */}
+          <rect width="100%" height="100%" fill="url(#rev-grid)" />
+          {/* Ambient Glows */}
+          <rect width="100%" height="100%" fill="url(#rev-sky-glow)" />
+          <rect width="100%" height="100%" fill="url(#rev-gold-glow)" />
+
+          {/* Clinical Sine Contour Ribbon */}
+          <path
+            d="M-50,300 C300,180 650,420 1020,240 C1220,140 1380,220 1500,260"
+            fill="none"
+            stroke="#00aeef"
+            strokeWidth="1.2"
+            strokeOpacity="0.18"
+            strokeDasharray="4 6"
+          />
+          <path
+            d="M-50,340 C340,220 690,460 1060,280 C1260,180 1420,260 1500,300"
+            fill="none"
+            stroke="#C59B27"
+            strokeWidth="1.2"
+            strokeOpacity="0.14"
+          />
+        </svg>
+      </div>
+
+      <Container className="relative z-10">
         {/* Symmetrically Centered Section Heading */}
         <div className="max-w-3xl mx-auto text-center mb-12 sm:mb-14">
           <SectionHeading

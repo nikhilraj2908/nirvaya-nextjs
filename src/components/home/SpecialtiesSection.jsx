@@ -15,8 +15,26 @@ export default function SpecialtiesSection({ currentLang = 'en' }) {
   const flagshipSpecialties = SPECIALTIES.slice(0, 4);
 
   return (
-    <section id="services" className="py-16 lg:py-24 bg-slate-50 border-t border-slate-200/80 scroll-mt-24">
-      <Container>
+    <section id="services" className="relative py-16 lg:py-24 bg-gradient-to-b from-[#EEF3F8] via-[#E5EDF6] to-[#EEF3F8] border-t border-slate-200/90 scroll-mt-24 overflow-hidden">
+      {/* Background Pattern: Precision Clinical Blueprint Lattice Grid & Ambient Lighting */}
+      <div aria-hidden="true" className="absolute inset-0 pointer-events-none select-none overflow-hidden z-0">
+        <div className="absolute -top-32 right-1/4 w-[500px] h-[500px] bg-sky-200/40 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-32 left-10 w-[450px] h-[450px] bg-[#DFBF64]/10 rounded-full blur-3xl pointer-events-none" />
+        <svg className="w-full h-full object-cover" viewBox="0 0 1440 850" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+          <defs>
+            <pattern id="spec-grid" x="0" y="0" width="36" height="36" patternUnits="userSpaceOnUse">
+              <path d="M 36 0 L 0 0 0 36" fill="none" stroke="#0A1E3F" strokeWidth="0.75" strokeOpacity="0.05" />
+              <circle cx="0" cy="0" r="1.1" fill="#0284c7" fillOpacity="0.12" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#spec-grid)" />
+          {/* Subtle curved dynamic boundary lines */}
+          <path d="M0,450 C350,380 750,560 1150,420 C1300,370 1400,410 1440,390" stroke="#00aeef" strokeWidth="1" strokeOpacity="0.2" fill="none" />
+          <path d="M0,480 C360,410 760,590 1160,450 C1310,400 1410,430 1440,415" stroke="#DFBF64" strokeWidth="0.8" strokeOpacity="0.18" strokeDasharray="6 8" fill="none" />
+        </svg>
+      </div>
+
+      <Container className="relative z-10">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
           <SectionHeading

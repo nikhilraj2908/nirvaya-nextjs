@@ -17,8 +17,66 @@ import en from '@/locales/en.json';
 
 export default function LocationSection() {
   return (
-    <section id="contact" className="py-20 lg:py-28 bg-white border-t border-slate-200/80 scroll-mt-24">
-      <Container>
+    <section id="contact" className="relative py-20 lg:py-28 bg-gradient-to-b from-[#FAFBFD] via-[#F4F8FC] to-[#FAFBFD] border-t border-slate-200/80 scroll-mt-24 overflow-hidden">
+      {/* Decorative Optical Vector Background (Tone A: Geographic Transit Waveforms & Dot Matrix) */}
+      <div className="absolute inset-0 pointer-events-none select-none z-0 overflow-hidden">
+        <svg
+          className="absolute w-full h-full"
+          xmlns="http://www.w3.org/2000/svg"
+          preserveAspectRatio="none"
+          viewBox="0 0 1440 900"
+        >
+          <defs>
+            {/* Tone A Dot Matrix */}
+            <pattern id="loc-dots" width="28" height="28" patternUnits="userSpaceOnUse">
+              <circle cx="2" cy="2" r="1.2" fill="#0A1E3F" fillOpacity="0.065" />
+            </pattern>
+            {/* Ambient Radial Gradients */}
+            <radialGradient id="loc-gold-glow" cx="80%" cy="30%" r="45%">
+              <stop offset="0%" stopColor="#DFBF64" stopOpacity="0.12" />
+              <stop offset="60%" stopColor="#C59B27" stopOpacity="0.02" />
+              <stop offset="100%" stopColor="#FAFBFD" stopOpacity="0" />
+            </radialGradient>
+            <radialGradient id="loc-sky-glow" cx="15%" cy="60%" r="50%">
+              <stop offset="0%" stopColor="#00aeef" stopOpacity="0.09" />
+              <stop offset="65%" stopColor="#0284c7" stopOpacity="0.02" />
+              <stop offset="100%" stopColor="#FAFBFD" stopOpacity="0" />
+            </radialGradient>
+          </defs>
+
+          {/* Dot Grid */}
+          <rect width="100%" height="100%" fill="url(#loc-dots)" />
+          {/* Ambient Glows */}
+          <rect width="100%" height="100%" fill="url(#loc-gold-glow)" />
+          <rect width="100%" height="100%" fill="url(#loc-sky-glow)" />
+
+          {/* Arterial Transit & Navigation Vector Lines */}
+          <path
+            d="M-50,180 C320,120 720,380 1150,220 C1320,160 1420,200 1500,240"
+            fill="none"
+            stroke="#00aeef"
+            strokeWidth="1.2"
+            strokeOpacity="0.16"
+            strokeDasharray="5 7"
+          />
+          <path
+            d="M-50,220 C360,160 760,420 1190,260 C1360,200 1450,240 1500,270"
+            fill="none"
+            stroke="#C59B27"
+            strokeWidth="1.2"
+            strokeOpacity="0.14"
+          />
+
+          {/* Concentric Destination Beacon Rings behind Right Map Column */}
+          <g transform="translate(1080, 480)" stroke="#00aeef" strokeOpacity="0.12" fill="none">
+            <circle r="120" strokeWidth="1" strokeDasharray="4 4" />
+            <circle r="200" strokeWidth="1" strokeOpacity="0.08" />
+            <circle r="300" strokeWidth="1.2" strokeOpacity="0.05" strokeDasharray="6 8" />
+          </g>
+        </svg>
+      </div>
+
+      <Container className="relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start reveal-up">
           {/* Left Column: Heading + Consultation Timings + Arterial Connectivity */}
           <div className="lg:col-span-6 space-y-6">
