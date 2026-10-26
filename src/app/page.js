@@ -1,6 +1,5 @@
 import React from 'react';
 import EyeScrollVideo from '@/components/home/EyeScrollVideo';
-import TrustStrip from '@/components/home/TrustStrip';
 import AboutSection from '@/components/home/AboutSection';
 import SpecialtiesSection from '@/components/home/SpecialtiesSection';
 import DoctorSection from '@/components/home/DoctorSection';
@@ -23,8 +22,6 @@ export default function HomePage() {
       {/* 1. Interactive Scroll-controlled Eye Disassembly Hero (GSAP ScrollTrigger) */}
       <EyeScrollVideo />
 
-      {/* 2. Clinical Credentials & Trust Strip */}
-      <TrustStrip />
 
       {/* 3. About Nirvaya & Clinical Story */}
       <AboutSection />

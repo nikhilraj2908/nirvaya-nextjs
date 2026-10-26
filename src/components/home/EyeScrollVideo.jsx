@@ -233,7 +233,7 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
     {
       stage: 0,
       eyebrow: currentLang === 'hi' ? 'विशेषज्ञ नेत्र देखभाल' : 'SPECIALIST EYE CARE IN BHOPAL',
-      headline: currentLang === 'hi' ? 'विशेषज्ञ-नेतृत्व रेटिना और मोतियाबिंद' : 'Specialist-led Retina & Cataract Eye Care',
+      headline: currentLang === 'hi' ? 'विशेषज्ञ-नेतृत्व रेटिना और मोतियाबिंद आईकेयर सेंटर' : 'Specialist-led Retina & Cataract Eye Care Center',
       description: currentLang === 'hi'
         ? 'रेटिना, मोतियाबिंद, डायबिटिक नेत्र रोग, ROP और समग्र नेत्र स्वास्थ्य के लिए उच्च गुणवत्ता और विशेषज्ञ परामर्श।'
         : 'Expert evaluation and personalised eye care for retina, cataract, diabetic eye disease, ROP and comprehensive ophthalmology in Bhopal.',
@@ -427,16 +427,7 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
                     </p>
 
                     {/* Stage Details */}
-                    {currentMobileSlide.isHero ? (
-                      <div className="mt-3.5 pt-3 border-t border-white/15 grid grid-cols-2 gap-2 text-[11px] text-slate-200 font-medium drop-shadow-xs">
-                        {currentMobileSlide.features.map((feat, i) => (
-                          <div key={i} className="flex items-center gap-1.5">
-                            <CheckCircle2 className="w-3.5 h-3.5 text-[#DFBF64] shrink-0" />
-                            <span className="truncate">{feat}</span>
-                          </div>
-                        ))}
-                      </div>
-                    ) : (
+                    {!currentMobileSlide.isHero && (
                       <div className="mt-3.5 p-2.5 rounded-lg bg-white/10 backdrop-blur-md border border-white/15 text-xs text-[#DFBF64] font-medium flex items-center gap-2">
                         <ShieldCheck className="w-4 h-4 shrink-0 text-[#DFBF64]" />
                         <span className="leading-tight">{currentMobileSlide.subDetail}</span>
@@ -547,7 +538,7 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
                 <h1 className="font-heading text-4xl lg:text-5xl xl:text-6xl font-extrabold text-white tracking-tight leading-[1.12]">
                   {currentLang === 'hi' ? (
                     <span className="font-hindi">
-                      विशेषज्ञ-नेतृत्व <span className="text-[#DFBF64]">रेटिना और मोतियाबिंद</span> नेत्र देखभाल
+                      विशेषज्ञ-नेतृत्व <span className="text-[#DFBF64]">रेटिना और मोतियाबिंद</span> नेत्र देखभाल केंद्र
                     </span>
                   ) : (
                     <>
@@ -555,7 +546,7 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
                       <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-[#DFBF64]">
                         Retina & Cataract
                       </span>{' '}
-                      Eye Care
+                      Eye Care Center
                     </>
                   )}
                 </h1>
@@ -591,14 +582,7 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
                   </Button>
                 </div>
 
-                <div className="pt-4 border-t border-slate-700/60 flex flex-wrap gap-4 text-xs text-slate-300 font-medium">
-                  {en.mobileHero.features.map((feat, fIdx) => (
-                    <div key={fIdx} className="flex items-center gap-1.5">
-                      <CheckCircle2 className="w-4 h-4 text-[#DFBF64] shrink-0" />
-                      <span>{feat}</span>
-                    </div>
-                  ))}
-                </div>
+
               </div>
 
               {/* STAGES 1 TO 6: Clean, Perfectly Centered Stage Cards */}
@@ -669,8 +653,8 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
                           </SafeLink>
                         </div>
 
-                        <span className="text-[11px] text-slate-400 font-medium hidden sm:inline">
-                          Dr. Sandhya Gaur • Vitreoretinal Care
+                        <span className="text-sm sm:text-base font-bold text-[#DFBF64] tracking-wide hidden sm:inline">
+                          Dr. Sandhya Gaur
                         </span>
                       </div>
                     </article>
@@ -679,32 +663,10 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
               </div>
             </div>
 
-            {/* Bottom Desktop Controls / Scroll Cue & Progress Indicator */}
-            <div className="hidden lg:flex items-center justify-between text-xs text-slate-400 pointer-events-auto pt-2">
-              {!isReducedMotion ? (
-                <button
-                  type="button"
-                  onClick={() => scrollToStage(activeStage < HERO_STAGES.length - 1 ? activeStage + 1 : 0)}
-                  className="inline-flex items-center gap-2 bg-slate-950/70 hover:bg-slate-900/90 backdrop-blur-xs px-3.5 py-1.5 rounded-full border border-slate-800 hover:border-slate-700 transition-all cursor-pointer text-xs text-slate-300"
-                  title={activeStage < HERO_STAGES.length - 1 ? `Scroll to Stage 0${activeStage + 1}` : 'Return to top'}
-                >
-                  <span className="w-2 h-2 rounded-full bg-[#DFBF64] animate-ping" />
-                  <span className="transition-opacity duration-300">
-                    {activeStage === 0
-                      ? 'Scroll down to explore interactive eye anatomy'
-                      : `Viewing Stage 0${activeStage} of 0${HERO_STAGES.length - 1} • Keep scrolling to reveal deeper retinal layers`}
-                  </span>
-                  <ChevronDown className="w-4 h-4 text-[#DFBF64] animate-bounce ml-1" />
-                </button>
-              ) : (
-                <div className="text-xs text-slate-400">
-                  Reduced motion active • Static anatomical view
-                </div>
-              )}
-
-              {/* Desktop Stage Progress Indicator Pills */}
+            {/* Bottom Desktop Controls / Progress Indicator */}
+            <div className="relative hidden lg:flex items-center justify-center text-xs text-slate-400 pointer-events-auto pt-2">
+              {/* Desktop Stage Progress Indicator Pills (Centered) */}
               <div className="flex items-center gap-1.5 bg-slate-950/60 backdrop-blur-xs px-3 py-1.5 rounded-full border border-slate-800/80">
-                <span className="text-[10px] uppercase tracking-wider text-slate-400 mr-1 font-semibold">Anatomy Depth</span>
                 {HERO_STAGES.slice(1).map((s) => (
                   <button
                     key={s.stage}
@@ -723,7 +685,8 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
                 ))}
               </div>
 
-              <div className="text-slate-400 text-[11px]">
+              {/* Right Address Marker */}
+              <div className="absolute right-0 text-slate-400 text-[11px]">
                 Ayodhya Bypass Road, Bhopal • M/s Nirvaya Health
               </div>
             </div>
