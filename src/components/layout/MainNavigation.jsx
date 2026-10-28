@@ -6,6 +6,7 @@ import { ChevronDown, Menu } from 'lucide-react';
 import { NAVIGATION_ITEMS } from '@/data/siteData';
 import Logo from '@/components/common/Logo';
 import EyeTrackingButton from '@/components/common/EyeTrackingButton';
+import EyeLogo from '../EyeLogo';
 
 export default function MainNavigation({
   isScrolled = false,
@@ -40,7 +41,8 @@ export default function MainNavigation({
       }`}
     >
       <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-3 lg:gap-4 xl:gap-6">
-        <Logo className="shrink-0 mr-1 xl:mr-3" />
+        {/* <Logo className="shrink-0 mr-1 xl:mr-3" /> */}
+           <EyeLogo className="h-12 w-auto" />
 
         <nav
           className="hidden lg:flex items-center justify-center gap-1 xl:gap-2 2xl:gap-3 text-[12.5px] xl:text-[13.5px] 2xl:text-[14px] font-semibold text-[#0A1E3F] whitespace-nowrap min-w-0"
