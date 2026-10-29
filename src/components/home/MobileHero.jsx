@@ -9,13 +9,14 @@ import {
   ShieldCheck,
   ChevronLeft,
   ChevronRight,
-  Layers
+  Layers,
+  Eye
 } from 'lucide-react';
 import Button from '@/components/common/Button';
 import { HERO_STAGES } from '@/data/siteData';
 import en from '@/locales/en.json';
 
-export default function MobileHero({ onOpenPreBook, currentLang = 'en' }) {
+export default function MobileHero({ onOpenPreBook, onOpenEyeTest, currentLang = 'en' }) {
   const scrollContainerRef = useRef(null);
   const cardMeasureRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -264,30 +265,81 @@ export default function MobileHero({ onOpenPreBook, currentLang = 'en' }) {
                 {/* Lower Card Area: CTAs + Navigation Controls */}
                 <div className="mt-3 pt-2.5 border-t border-slate-100/90 space-y-2.5">
                   {/* Action CTAs */}
-                  <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
-                    <Button
-                      variant="gold"
-                      size="md"
-                      href={slide.primaryCta.href}
-                      to={slide.primaryCta.href}
-                      icon={Calendar}
-                      className="w-full sm:w-auto font-bold text-xs sm:text-sm shadow-md justify-center py-2.5"
-                    >
-                      {slide.primaryCta.text}
-                    </Button>
+                  {slide.isHero ? (
+                    <div className="flex flex-col gap-2">
+                      <div className="grid grid-cols-2 gap-2">
+                        <Button
+                          variant="gold"
+                          size="sm"
+                          href={slide.primaryCta.href}
+                          to={slide.primaryCta.href}
+                          icon={Calendar}
+                          className="w-full font-bold text-xs shadow-md justify-center py-2.5"
+                        >
+                          {slide.primaryCta.text}
+                        </Button>
 
-                    <Button
-                      variant="secondary"
-                      size="md"
-                      href={slide.secondaryCta.href}
-                      to={slide.secondaryCta.href}
-                      icon={ArrowRight}
-                      iconPosition="right"
-                      className="w-full sm:w-auto text-xs sm:text-sm font-semibold bg-slate-100 hover:bg-slate-200 text-[#0A1E3F] border border-slate-200 justify-center py-2.5"
-                    >
-                      {slide.secondaryCta.text}
-                    </Button>
-                  </div>
+                        <Button
+                          variant="secondary"
+                          size="sm"
+                          href={slide.secondaryCta.href}
+                          to={slide.secondaryCta.href}
+                          icon={ArrowRight}
+                          iconPosition="right"
+                          className="w-full text-xs font-semibold bg-slate-100 hover:bg-slate-200 text-[#0A1E3F] border border-slate-200 justify-center py-2.5"
+                        >
+                          {slide.secondaryCta.text}
+                        </Button>
+                      </div>
+
+                      <button
+                        type="button"
+                        id="mobile-hero-online-eye-test-btn"
+                        data-open-eye-test="true"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          if (typeof onOpenEyeTest === 'function') {
+                            onOpenEyeTest();
+                          }
+                          if (typeof window !== 'undefined') {
+                            window.dispatchEvent(new CustomEvent('open-eye-test'));
+                          }
+                        }}
+                        className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-md text-xs font-bold bg-amber-50 hover:bg-[#0A1E3F] text-[#0A1E3F] hover:text-white border-2 border-[#C59B27] shadow-xs active:scale-95 transition-all duration-150 cursor-pointer pointer-events-auto relative z-30 select-none group"
+                        aria-haspopup="dialog"
+                        aria-label="Test Your Eyes Online vision screening"
+                      >
+                        <Eye className="w-4 h-4 text-[#C59B27] group-hover:text-white transition-colors shrink-0" aria-hidden="true" />
+                        <span>Test Your Eyes Online</span>
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+                      <Button
+                        variant="gold"
+                        size="md"
+                        href={slide.primaryCta.href}
+                        to={slide.primaryCta.href}
+                        icon={Calendar}
+                        className="w-full sm:w-auto font-bold text-xs sm:text-sm shadow-md justify-center py-2.5"
+                      >
+                        {slide.primaryCta.text}
+                      </Button>
+
+                      <Button
+                        variant="secondary"
+                        size="md"
+                        href={slide.secondaryCta.href}
+                        to={slide.secondaryCta.href}
+                        icon={ArrowRight}
+                        iconPosition="right"
+                        className="w-full sm:w-auto text-xs sm:text-sm font-semibold bg-slate-100 hover:bg-slate-200 text-[#0A1E3F] border border-slate-200 justify-center py-2.5"
+                      >
+                        {slide.secondaryCta.text}
+                      </Button>
+                    </div>
+                  )}
 
                   {/* Carousel Navigation Bar (Prev / 6 Dots / Next) */}
                   <div className="pt-2 border-t border-slate-100 flex items-center justify-between">

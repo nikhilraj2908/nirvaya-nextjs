@@ -18,6 +18,7 @@ import {
 import { CLINIC_INFO, HERO_STAGES } from '@/data/siteData';
 import Button from '@/components/common/Button';
 import MobileHero from './MobileHero';
+import EyeTestModal from '@/components/eye-test/EyeTestModal';
 import en from '@/locales/en.json';
 
 // Register GSAP ScrollTrigger plugin safely
@@ -38,6 +39,39 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
   const [videoShiftX, setVideoShiftX] = useState(0);
   const [isReducedMotion, setIsReducedMotion] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [isEyeTestOpen, setIsEyeTestOpen] = useState(false);
+
+  // Global event listener to open eye test from any component/navigation or button click
+  useEffect(() => {
+    const handleOpen = () => setIsEyeTestOpen(true);
+    window.addEventListener('open-eye-test', handleOpen);
+
+    // Capture phase document click listener ensures no child or overlay blocks the button
+    const handleDocumentClick = (e) => {
+      const target = e.target.closest('#hero-online-eye-test-btn, #mobile-hero-online-eye-test-btn, [data-open-eye-test], a[href="#online-eye-test"]');
+      if (target) {
+        e.preventDefault();
+        setIsEyeTestOpen(true);
+      }
+    };
+    document.addEventListener('click', handleDocumentClick, true);
+
+    const handleHash = () => {
+      if (window.location.hash === '#online-eye-test') {
+        setIsEyeTestOpen(true);
+      }
+    };
+    if (window.location.hash === '#online-eye-test') {
+      setIsEyeTestOpen(true);
+    }
+    window.addEventListener('hashchange', handleHash);
+
+    return () => {
+      window.removeEventListener('open-eye-test', handleOpen);
+      document.removeEventListener('click', handleDocumentClick, true);
+      window.removeEventListener('hashchange', handleHash);
+    };
+  }, []);
 
   // Scroll to specific stage on indicator click
   const scrollToStage = (stage) => {
@@ -318,7 +352,11 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
     <>
       {/* 1. Mobile & Tablet Hero (< 1024px) - Clean Luxury Editorial Landing with Live Countdown & Lead Capture */}
       <div className="block lg:hidden w-full">
-        <MobileHero onOpenPreBook={onOpenPreBook} currentLang={currentLang} />
+        <MobileHero
+          onOpenPreBook={onOpenPreBook}
+          onOpenEyeTest={() => setIsEyeTestOpen(true)}
+          currentLang={currentLang}
+        />
       </div>
 
       {/* 2. Desktop Hero (>= 1024px) - Interactive Eye Disassembly Scroll Video */}
@@ -527,66 +565,122 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
             {/* ============================================================== */}
             {/* 2. DESKTOP VIEW (>= 1024px): Smooth crossfaded stage copy      */}
             {/* ============================================================== */}
-            <div className="hidden lg:grid grid-cols-1 grid-rows-1 my-auto max-w-xl lg:max-w-lg xl:max-w-xl pointer-events-auto items-center">
-              {/* STAGE 0: Initial Hero Entry (Crossfades smoothly on scroll) */}
+            <div className="hidden lg:block my-auto w-full pointer-events-auto">
+              {/* STAGE 0: Full-Width Initial Hero Entry with "Test Your Eyes Online" near the glass */}
               <div
-                className={`col-start-1 row-start-1 space-y-6 transition-all duration-500 ease-out ${activeStage === 0
-                    ? 'opacity-100 translate-y-0 pointer-events-auto z-10'
-                    : 'opacity-0 -translate-y-4 pointer-events-none invisible z-0'
-                  }`}
+                className={`w-full transition-all duration-500 ease-out ${
+                  activeStage === 0
+                    ? 'opacity-100 translate-y-0 pointer-events-auto relative z-20'
+                    : 'opacity-0 -translate-y-4 pointer-events-none invisible absolute inset-0 z-0'
+                }`}
               >
-                <h1 className="font-heading text-4xl lg:text-5xl xl:text-6xl font-extrabold text-white tracking-tight leading-[1.12]">
-                  {currentLang === 'hi' ? (
-                    <span className="font-hindi">
-                      विशेषज्ञ-नेतृत्व <span className="text-[#DFBF64]">रेटिना और मोतियाबिंद</span> नेत्र देखभाल केंद्र
-                    </span>
-                  ) : (
-                    <>
-                      Specialist-led{' '}
-                      <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-[#DFBF64]">
-                        Retina & Cataract
-                      </span>{' '}
-                      Eye Care Center
-                    </>
-                  )}
-                </h1>
+                <div className="w-full flex flex-col lg:flex-row lg:items-center justify-between gap-6 xl:gap-8">
+                  {/* Left Column: Heading, description & Primary booking CTAs */}
+                  <div className="max-w-xl xl:max-w-2xl space-y-6">
+                    <h1 className="font-heading text-4xl lg:text-5xl xl:text-6xl font-extrabold text-white tracking-tight leading-[1.12]">
+                      {currentLang === 'hi' ? (
+                        <span className="font-hindi">
+                          विशेषज्ञ-नेतृत्व <span className="text-[#DFBF64]">रेटिना और मोतियाबिंद</span> नेत्र देखभाल केंद्र
+                        </span>
+                      ) : (
+                        <>
+                          Specialist-led{' '}
+                          <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-100 to-[#DFBF64]">
+                            Retina & Cataract
+                          </span>{' '}
+                          Eye Care Center
+                        </>
+                      )}
+                    </h1>
 
-                <p className="text-base lg:text-lg text-slate-200 leading-relaxed max-w-xl font-normal">
-                  {currentLang === 'hi'
-                    ? 'रेटिना, मोतियाबिंद, डायबिटिक नेत्र रोग, ROP और समग्र नेत्र स्वास्थ्य के लिए उच्च गुणवत्ता और विशेषज्ञ परामर्श।'
-                    : en.mobileHero.description}
-                </p>
+                    <p className="text-base lg:text-lg text-slate-200 leading-relaxed max-w-xl font-normal">
+                      {currentLang === 'hi'
+                        ? 'रेटिना, मोतियाबिंद, डायबिटिक नेत्र रोग, ROP और समग्र नेत्र स्वास्थ्य के लिए उच्च गुणवत्ता और विशेषज्ञ परामर्श।'
+                        : en.mobileHero.description}
+                    </p>
 
-                <div className="flex flex-wrap items-center gap-4 pt-1">
-                  <Button
-                    variant="gold"
-                    size="lg"
-                    href="/pre-book"
-                    to="/pre-book"
-                    icon={Calendar}
-                    className="shadow-lg hover:shadow-xl font-bold"
-                  >
-                    {currentLang === 'hi' ? 'परामर्श स्लॉट प्री-बुक करें' : en.common.preBookSlot}
-                  </Button>
+                    <div className="flex flex-wrap items-center gap-3 pt-1">
+                      <Button
+                        variant="gold"
+                        size="lg"
+                        href="/pre-book"
+                        to="/pre-book"
+                        icon={Calendar}
+                        className="shadow-lg hover:shadow-xl font-bold cursor-pointer"
+                      >
+                        {currentLang === 'hi' ? 'परामर्श स्लॉट प्री-बुक करें' : en.common.preBookSlot}
+                      </Button>
 
-                  <Button
-                    variant="secondary"
-                    size="lg"
-                    href="/services"
-                    to="/services"
-                    icon={ArrowRight}
-                    iconPosition="right"
-                    className="bg-white/10 hover:bg-white text-white hover:text-[#0A1E3F] border-white/30 backdrop-blur-xs font-semibold shadow-md transition-all duration-200"
-                  >
-                    {currentLang === 'hi' ? 'हमारी सेवाएं देखें' : en.common.exploreServices}
-                  </Button>
+                      <Button
+                        variant="secondary"
+                        size="lg"
+                        href="/services"
+                        to="/services"
+                        icon={ArrowRight}
+                        iconPosition="right"
+                        className="bg-white/80 hover:bg-white text-[#0A1E3F] hover:text-[#0A1E3F] border border-slate-300/80 hover:border-[#DFBF64] backdrop-blur-xs font-semibold shadow-xs hover:shadow-md transition-all duration-200 cursor-pointer"
+                      >
+                        {currentLang === 'hi' ? 'हमारी सेवाएं देखें' : en.common.exploreServices}
+                      </Button>
+                    </div>
+                  </div>
+
+                  {/* Right Column / Placed to the side of main headings, near the phoropter glass! */}
+                  <div className="shrink-0 pointer-events-auto z-30 lg:mr-4 xl:mr-10 flex flex-col items-start">
+                    <button
+                      type="button"
+                      id="hero-online-eye-test-btn"
+                      data-open-eye-test="true"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setIsEyeTestOpen(true);
+                      }}
+                      className="group relative flex items-center gap-3.5 px-5 py-4 sm:px-6 sm:py-4.5 rounded-2xl bg-[#061226]/90 hover:bg-[#0A1E3F] border-2 border-[#DFBF64] hover:border-amber-300 text-white shadow-[0_16px_45px_rgba(0,0,0,0.65),0_0_28px_rgba(223,191,100,0.4)] hover:shadow-[0_20px_55px_rgba(0,0,0,0.75),0_0_40px_rgba(223,191,100,0.6)] active:scale-95 transition-all duration-300 cursor-pointer pointer-events-auto backdrop-blur-xl text-left select-none"
+                      aria-haspopup="dialog"
+                      aria-label="Test Your Eyes Online vision screening"
+                    >
+                      {/* Tumbling E / Glowing Icon Badge */}
+                      <div className="relative shrink-0">
+                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#DFBF64] via-[#C59B27] to-[#8C6D1F] flex items-center justify-center text-[#061226] shadow-md group-hover:scale-105 transition-transform">
+                          <Eye className="w-6 h-6 text-[#061226]" aria-hidden="true" />
+                        </div>
+                        <span className="absolute -top-1 -right-1 flex h-3 w-3">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                          <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500" />
+                        </span>
+                      </div>
+
+                      {/* Text info */}
+                      <div className="space-y-0.5 pr-2">
+                        <div className="flex items-center gap-2">
+                          <span className="text-[10px] font-mono uppercase tracking-widest font-extrabold text-[#DFBF64]">
+                            Online Screening
+                          </span>
+                          <span className="text-white/40 text-[10px]">•</span>
+                          <span className="text-slate-300 text-[10px]">Free 2-Min</span>
+                        </div>
+                        <div className="text-base lg:text-lg font-extrabold text-white group-hover:text-[#DFBF64] transition-colors tracking-tight flex items-center gap-2">
+                          <span>Test Your Eyes Online</span>
+                          <ArrowRight className="w-4 h-4 text-[#DFBF64] group-hover:translate-x-1 transition-transform" />
+                        </div>
+                        <p className="text-[11px] text-slate-300 font-normal">
+                          Check clarity at one hand distance
+                        </p>
+                      </div>
+                    </button>
+                  </div>
                 </div>
-
-
               </div>
 
-              {/* STAGES 1 TO 6: Clean, Perfectly Centered Stage Cards */}
-              <div className="col-start-1 row-start-1 grid grid-cols-1 grid-rows-1 w-full items-center pointer-events-none">
+              {/* STAGES 1 TO 6: Clean, Perfectly Centered Stage Cards (only when scrolled past stage 0) */}
+              <div
+                className={`grid grid-cols-1 grid-rows-1 max-w-xl lg:max-w-lg xl:max-w-xl items-center transition-all duration-500 ${
+                  activeStage > 0
+                    ? 'opacity-100 translate-y-0 pointer-events-auto relative z-10'
+                    : 'opacity-0 pointer-events-none invisible absolute inset-0 z-0'
+                }`}
+              >
                 {HERO_STAGES.slice(1).map((stageItem) => {
                   const isActive = activeStage === stageItem.stage;
                   return (
@@ -693,6 +787,20 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
           </div>
         </div>
       </section>
+
+      {/* 3. Interactive Online Vision Screening Modal (Directly in Homepage via Portal) */}
+      <EyeTestModal
+        isOpen={isEyeTestOpen}
+        onClose={() => {
+          setIsEyeTestOpen(false);
+          if (typeof window !== 'undefined' && window.location.hash === '#online-eye-test') {
+            try {
+              history.replaceState(null, '', window.location.pathname + window.location.search);
+            } catch (_) {}
+          }
+        }}
+        onOpenPreBook={onOpenPreBook}
+      />
     </>
   );
 }

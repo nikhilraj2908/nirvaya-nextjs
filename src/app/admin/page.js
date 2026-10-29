@@ -2107,6 +2107,7 @@ export default function AdminPage() {
                   className="px-3 py-1.5 rounded-lg bg-white border border-slate-300 text-xs font-semibold text-[#0A1E3F] shadow-xs cursor-pointer focus:outline-none"
                 >
                   <option value="all">All Statuses</option>
+                  <option value="new">New (Eye Test / Inquiries)</option>
                   <option value="pending">Pending</option>
                   <option value="confirmed">Confirmed</option>
                   <option value="completed">Completed</option>
@@ -2194,6 +2195,14 @@ export default function AdminPage() {
                               {appt.city && <span>• {appt.city}</span>}
                               {appt.age && <span>• Age {appt.age}</span>}
                             </div>
+                            {appt.source === 'online_eye_test' && (
+                              <div className="mt-1">
+                                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-[#0A1E3F]/10 text-[#0A1E3F] text-[10px] font-bold border border-[#0A1E3F]/20">
+                                  <Eye className="w-3 h-3 text-[#C59B27]" />
+                                  Online Eye Test Lead
+                                </span>
+                              </div>
+                            )}
                             {appt.reason && (
                               <p className="text-[11px] text-slate-400 italic line-clamp-1 mt-0.5">
                                 &ldquo;{appt.reason}&rdquo;
@@ -2216,6 +2225,8 @@ export default function AdminPage() {
                                   ? 'bg-sky-50 text-sky-700 border border-sky-200'
                                   : appt.status === 'cancelled'
                                   ? 'bg-rose-50 text-rose-700 border border-rose-200'
+                                  : appt.status === 'new'
+                                  ? 'bg-blue-50 text-blue-700 border border-blue-300 font-extrabold shadow-2xs'
                                   : 'bg-amber-50 text-amber-700 border border-amber-200'
                               }`}
                             >

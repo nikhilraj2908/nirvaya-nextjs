@@ -60,15 +60,15 @@ export async function POST(req) {
       age: body.age ? parseInt(body.age, 10) : null,
       city: body.city || 'Bhopal',
       specialty: body.specialty || 'Retina & Vitreoretinal Surgery',
-      preferredDate: body.preferredDate,
-      preferredSlot: body.preferredSlot,
+      preferredDate: body.preferredDate || new Date().toISOString().split('T')[0],
+      preferredSlot: body.preferredSlot || 'Flexible Callback',
       doctorId: body.doctorId || 'doc-sandhya-01',
       slotId: body.slotId || null,
       reason: body.reason || '',
-      status: body.status || 'pending',
+      status: body.status || 'new',
       internalNotes: body.internalNotes || '',
       assignedDoctor: body.assignedDoctor || 'Dr Sandhya Gaur (MD AIIMS)',
-      source: body.source || 'admin',
+      source: body.source || 'website',
       sessionId: body.sessionId || null
     });
 

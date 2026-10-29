@@ -19,7 +19,7 @@ const appointmentSchema = new mongoose.Schema(
     reason: { type: String, default: '' },
     status: {
       type: String,
-      enum: ['pending', 'confirmed', 'in_consultation', 'completed', 'cancelled', 'no_show'],
+      enum: ['new', 'pending', 'confirmed', 'in_consultation', 'completed', 'cancelled', 'no_show'],
       default: 'confirmed',
       index: true
     },
@@ -43,5 +43,8 @@ const appointmentSchema = new mongoose.Schema(
 
 appointmentSchema.index({ doctorId: 1, preferredDate: 1, slotId: 1, status: 1 });
 
-export const Appointment = mongoose.models.Appointment || mongoose.model('Appointment', appointmentSchema);
+if (mongoose.models.Appointment) {
+  delete mongoose.models.Appointment;
+}
+export const Appointment = mongoose.model('Appointment', appointmentSchema);
 export default Appointment;
