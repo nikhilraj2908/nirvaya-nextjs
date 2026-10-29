@@ -13,6 +13,11 @@ import EyeTestWelcome from './EyeTestWelcome';
 import EyeTestInstructions from './EyeTestInstructions';
 import EyeSelection from './EyeSelection';
 import VisualAcuityTest from './VisualAcuityTest';
+import ContrastVisionTest from './ContrastVisionTest';
+import AstigmatismIntro from './AstigmatismIntro';
+import AstigmatismTest from './AstigmatismTest';
+import ColorBlindnessTest from './ColorBlindnessTest';
+import OptionalLeadGate from './OptionalLeadGate';
 import EyeTestCompletion from './EyeTestCompletion';
 
 export default function EyeTestModal({
@@ -25,6 +30,10 @@ export default function EyeTestModal({
   const [pixelsPerMm, setPixelsPerMm] = useState(() => getDefaultPixelsPerMm());
   const [rightEyeState, setRightEyeState] = useState(() => createEyeState());
   const [leftEyeState, setLeftEyeState] = useState(() => createEyeState());
+  const [contrastResult, setContrastResult] = useState(null);
+  const [astigmatismResult, setAstigmatismResult] = useState(null);
+  const [colorResult, setColorResult] = useState(null);
+  const [leadData, setLeadData] = useState(null);
   const [showExitConfirm, setShowExitConfirm] = useState(false);
 
   const modalRef = useRef(null);
@@ -39,12 +48,15 @@ export default function EyeTestModal({
       setStep(EYE_TEST_STEPS.WELCOME);
       setRightEyeState(createEyeState());
       setLeftEyeState(createEyeState());
+      setContrastResult(null);
+      setAstigmatismResult(null);
+      setColorResult(null);
+      setLeadData(null);
       setShowExitConfirm(false);
 
       // Lock background scrolling
       document.body.style.overflow = 'hidden';
 
-      // Analytics: eye test opened
       trackEvent('eye_test_opened', {
         event_category: 'Vision Screening',
         event_label: 'Modal Opened'
@@ -60,7 +72,6 @@ export default function EyeTestModal({
 
   // Handle Safe Close request
   const requestClose = useCallback(() => {
-    // If the test is actively in progress (between setup and completion), confirm first
     if (
       step > EYE_TEST_STEPS.WELCOME &&
       step < EYE_TEST_STEPS.COMPLETION
@@ -87,7 +98,7 @@ export default function EyeTestModal({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, showExitConfirm, requestClose]);
 
-  // 1. Start from Welcome
+  // 1. Welcome -> Instructions
   const handleStart = () => {
     trackEvent('eye_test_started', {
       event_category: 'Vision Screening',
@@ -96,7 +107,7 @@ export default function EyeTestModal({
     setStep(EYE_TEST_STEPS.INSTRUCTIONS);
   };
 
-  // 2. Instructions -> Right Eye Setup (One hand distance accepted)
+  // 2. Instructions -> Right Eye Setup
   const handleInstructionsContinue = () => {
     trackEvent('eye_test_instructions_completed', {
       event_category: 'Vision Screening',
@@ -110,15 +121,14 @@ export default function EyeTestModal({
     setStep(EYE_TEST_STEPS.TEST_RIGHT);
   };
 
-  // 4. Answer for Right Eye
+  // 4. Answer for Right Eye Acuity
   const handleRightAnswer = (chosenDirection) => {
     setRightEyeState((prev) => {
       const updated = evaluateTrialAnswer(prev, chosenDirection);
       if (updated.isComplete) {
-        // Automatically transition to Left Eye Setup
         setTimeout(() => {
           setStep(EYE_TEST_STEPS.PREPARE_LEFT);
-        }, 400);
+        }, 350);
       }
       return updated;
     });
@@ -129,22 +139,67 @@ export default function EyeTestModal({
     setStep(EYE_TEST_STEPS.TEST_LEFT);
   };
 
-  // 6. Answer for Left Eye
+  // 6. Answer for Left Eye Acuity -> Advances to Contrast Vision Test
   const handleLeftAnswer = (chosenDirection) => {
     setLeftEyeState((prev) => {
       const updated = evaluateTrialAnswer(prev, chosenDirection);
       if (updated.isComplete) {
-        // Automatically transition to Completion
         setTimeout(() => {
-          trackEvent('eye_test_completed', {
-            event_category: 'Vision Screening',
-            event_label: 'All Eyes Completed'
-          });
-          setStep(EYE_TEST_STEPS.COMPLETION);
-        }, 400);
+          setStep(EYE_TEST_STEPS.CONTRAST_TEST);
+        }, 350);
       }
       return updated;
     });
+  };
+
+  // 7. Contrast Vision Complete -> Advances to Astigmatism Intro
+  const handleContrastComplete = (result) => {
+    setContrastResult(result);
+    setTimeout(() => {
+      setStep(EYE_TEST_STEPS.ASTIGMATISM_INTRO);
+    }, 350);
+  };
+
+  // 8. Astigmatism Intro Proceed -> Advances to Astigmatism Test
+  const handleAstigmatismProceed = () => {
+    setStep(EYE_TEST_STEPS.ASTIGMATISM_TEST);
+  };
+
+  // 9. Astigmatism Test Complete -> Advances to Color Blindness Test
+  const handleAstigmatismComplete = (result) => {
+    setAstigmatismResult(result);
+    setTimeout(() => {
+      setStep(EYE_TEST_STEPS.COLOR_BLINDNESS_TEST);
+    }, 350);
+  };
+
+  // 10. Color Blindness Test Complete -> Advances to Optional Lead Gate
+  const handleColorBlindnessComplete = (result) => {
+    setColorResult(result);
+    setTimeout(() => {
+      setStep(EYE_TEST_STEPS.OPTIONAL_LEAD);
+    }, 350);
+  };
+
+  // 11. Optional Lead Gate Continue (Saved or Skipped) -> Advances to Completion
+  const handleLeadContinue = (lead) => {
+    setLeadData(lead);
+    trackEvent('eye_test_completed', {
+      event_category: 'Vision Screening',
+      event_label: 'All Tests Completed'
+    });
+    setStep(EYE_TEST_STEPS.COMPLETION);
+  };
+
+  // Retake all tests
+  const handleRetake = () => {
+    setStep(EYE_TEST_STEPS.WELCOME);
+    setRightEyeState(createEyeState());
+    setLeftEyeState(createEyeState());
+    setContrastResult(null);
+    setAstigmatismResult(null);
+    setColorResult(null);
+    setLeadData(null);
   };
 
   if (!isOpen || !mounted) return null;
@@ -238,10 +293,52 @@ export default function EyeTestModal({
             />
           )}
 
+          {step === EYE_TEST_STEPS.CONTRAST_TEST && (
+            <ContrastVisionTest
+              onComplete={handleContrastComplete}
+            />
+          )}
+
+          {step === EYE_TEST_STEPS.ASTIGMATISM_INTRO && (
+            <AstigmatismIntro
+              onProceed={handleAstigmatismProceed}
+            />
+          )}
+
+          {step === EYE_TEST_STEPS.ASTIGMATISM_TEST && (
+            <AstigmatismTest
+              onComplete={handleAstigmatismComplete}
+            />
+          )}
+
+          {step === EYE_TEST_STEPS.COLOR_BLINDNESS_TEST && (
+            <ColorBlindnessTest
+              onComplete={handleColorBlindnessComplete}
+            />
+          )}
+
+          {step === EYE_TEST_STEPS.OPTIONAL_LEAD && (
+            <OptionalLeadGate
+              screeningSummary={{
+                rightAcuity: rightEyeState?.achievedAcuity?.snellenUS,
+                leftAcuity: leftEyeState?.achievedAcuity?.snellenUS,
+                contrast: contrastResult?.contrastScore >= 2 ? 'Normal' : 'Reduced',
+                astigmatism: astigmatismResult?.isUniform ? 'Normal' : 'Possible',
+                colorVision: colorResult?.isNormal ? 'Normal' : 'Variance'
+              }}
+              onContinue={handleLeadContinue}
+            />
+          )}
+
           {step === EYE_TEST_STEPS.COMPLETION && (
             <EyeTestCompletion
               rightEyeResult={rightEyeState}
               leftEyeResult={leftEyeState}
+              contrastResult={contrastResult}
+              astigmatismResult={astigmatismResult}
+              colorResult={colorResult}
+              leadData={leadData}
+              onRetake={handleRetake}
               onBookAppointment={() => {
                 onClose();
                 if (onOpenPreBook) {

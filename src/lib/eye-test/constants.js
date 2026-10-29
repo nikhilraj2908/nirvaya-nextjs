@@ -15,16 +15,26 @@ export const EYE_TEST_STEPS = {
   TEST_RIGHT: 3,
   PREPARE_LEFT: 4,
   TEST_LEFT: 5,
-  COMPLETION: 6
+  CONTRAST_TEST: 6,
+  ASTIGMATISM_INTRO: 7,
+  ASTIGMATISM_TEST: 8,
+  COLOR_BLINDNESS_TEST: 9,
+  OPTIONAL_LEAD: 10,
+  COMPLETION: 11
 };
 
 export const STEP_NAMES = [
   'Welcome',
   'Instructions',
   'Right Eye Setup',
-  'Right Eye Test',
+  'Right Eye Acuity',
   'Left Eye Setup',
-  'Left Eye Test',
+  'Left Eye Acuity',
+  'Contrast Vision',
+  'Astigmatism Guide',
+  'Astigmatism Test',
+  'Color Blindness',
+  'Patient Details',
   'Results & Consultation'
 ];
 
@@ -120,5 +130,51 @@ export const ACUITY_LEVELS = [
 export const TRIALS_PER_LEVEL = 3;
 export const PASS_THRESHOLD = 2; // At least 2 correct out of 3 to advance
 
+// Stepped contrast levels for Contrast Vision Test
+export const CONTRAST_LEVELS = [
+  {
+    step: 1,
+    contrastPct: '100%',
+    color: '#0A1E3F',
+    label: 'High Contrast (100%)',
+    desktopPx: 22,
+    mobilePx: 18
+  },
+  {
+    step: 2,
+    contrastPct: '40%',
+    color: '#64748B',
+    label: 'Medium Contrast (40%)',
+    desktopPx: 20,
+    mobilePx: 16
+  },
+  {
+    step: 3,
+    contrastPct: '15%',
+    color: '#94A3B8',
+    label: 'Low Contrast (15%)',
+    desktopPx: 18,
+    mobilePx: 14
+  }
+];
+
+// Ishihara-style pseudoisochromatic color plates
+export const COLOR_PLATES = [
+  {
+    id: 'plate-12',
+    correctAnswer: '12',
+    options: ['12', '72', '21', 'Nothing'],
+    title: 'Plate 1: Introductory Screening',
+    description: 'What number do you see inside the colored circle?'
+  },
+  {
+    id: 'plate-74',
+    correctAnswer: '74',
+    options: ['74', '21', '71', 'Nothing'],
+    title: 'Plate 2: Red-Green Perception',
+    description: 'What number do you see inside the colored circle?'
+  }
+];
+
 export const CLINICAL_DISCLAIMER =
-  'This online vision screening provides a preliminary computer-assisted acuity check for informational purposes only. It is not a diagnostic medical device and cannot replace a comprehensive dilated eye examination by an eye specialist (ophthalmologist). Many serious conditions such as retinal detachment, glaucoma, diabetic retinopathy, and macular degeneration can develop without early visual symptoms.';
+  'This online vision screening provides a preliminary computer-assisted visual function check for informational purposes only. It is not a diagnostic medical device and cannot replace a comprehensive dilated eye examination by an eye specialist (ophthalmologist). Many serious conditions such as retinal detachment, glaucoma, diabetic retinopathy, and macular degeneration can develop without early visual symptoms.';
