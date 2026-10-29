@@ -17,7 +17,7 @@ export default function TopHeader({
       aria-label="Clinic utility and accessibility bar"
       className="w-full bg-[#061226] text-slate-300 text-xs border-b border-slate-800/80 transition-colors overflow-hidden"
     >
-      <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 h-8 sm:h-9 lg:h-10 flex items-center justify-between gap-2">
+      <div className="w-full max-w-[1400px] mx-auto px-2.5 xs:px-3.5 sm:px-6 lg:px-8 h-8 sm:h-9 lg:h-10 flex items-center justify-between gap-2">
         <div className="flex items-center gap-3 sm:gap-6 min-w-0">
           <div className="flex items-center gap-1 sm:gap-1.5 text-slate-300 font-medium text-[11px] sm:text-xs truncate">
             <MapPin className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#DFBF64] shrink-0" aria-hidden="true" />

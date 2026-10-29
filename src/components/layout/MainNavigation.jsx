@@ -42,7 +42,7 @@ export default function MainNavigation({
           : 'border-b border-slate-200/60 shadow-[0_4px_20px_-4px_rgba(10,30,63,0.03)] py-2.5 sm:py-3.5'
       }`}
     >
-      <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-3 lg:gap-4 xl:gap-6">
+      <div className="w-full max-w-[1400px] mx-auto px-2.5 xs:px-3.5 sm:px-6 lg:px-8 flex items-center justify-between gap-1.5 xs:gap-2 sm:gap-4 lg:gap-6">
         <SafeLink
           href="/"
           onClick={(e) => {
@@ -52,9 +52,9 @@ export default function MainNavigation({
             }
           }}
           aria-label="Nirvaya Eyecare Centre Home"
-          className="shrink-0 cursor-pointer inline-flex items-center rounded-xl focus:outline-none focus:ring-2 focus:ring-[#C59B27] transition-transform active:scale-[0.98]"
+          className="shrink min-w-0 cursor-pointer inline-flex items-center rounded-xl focus:outline-none focus:ring-2 focus:ring-[#C59B27] transition-transform active:scale-[0.98]"
         >
-          <EyeLogo className="h-11 sm:h-12 w-auto" />
+          <EyeLogo className="h-7 xs:h-8 sm:h-10 lg:h-12 w-auto max-w-[135px] xs:max-w-[160px] sm:max-w-none" />
         </SafeLink>
 
         <nav
@@ -136,7 +136,7 @@ export default function MainNavigation({
           })}
         </nav>
 
-        <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0 ml-auto lg:ml-0">
+        <div className="flex items-center gap-1 xs:gap-1.5 sm:gap-2.5 shrink-0 ml-auto lg:ml-0">
           {/* Pre-book Page Redirect Button with Interactive Eye Tracking (Always visible on mobile & desktop) */}
           <EyeTrackingButton
             href="/pre-book"
@@ -148,14 +148,14 @@ export default function MainNavigation({
             ariaLabel="Pre-book an appointment slot"
           />
 
-          {/* Minimalist Mobile Hamburger Menu Button */}
+          {/* Minimalist Mobile Hamburger Menu Button - Always visible and prominently touchable */}
           <button
             type="button"
             onClick={onOpenMobileMenu}
             aria-label="Open mobile navigation menu"
-            className="lg:hidden flex items-center justify-center w-10 h-10 text-[#0A1E3F] hover:text-[#C59B27] transition-colors cursor-pointer shrink-0"
+            className="lg:hidden flex items-center justify-center w-8.5 h-8.5 xs:w-9 xs:h-9 sm:w-10 sm:h-10 text-[#0A1E3F] hover:text-[#C59B27] hover:bg-slate-100/80 active:bg-slate-200/80 rounded-lg transition-colors cursor-pointer shrink-0"
           >
-            <Menu className="w-6 h-6" strokeWidth={2} />
+            <Menu className="w-5 h-5 sm:w-6 sm:h-6" strokeWidth={2.2} />
           </button>
         </div>
       </div>

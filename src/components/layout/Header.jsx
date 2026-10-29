@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import { usePathname } from 'next/navigation';
 import TopHeader from './TopHeader';
 import MainNavigation from './MainNavigation';
 import MobileNavigation from './MobileNavigation';
@@ -11,6 +12,8 @@ export default function Header({
   currentFontScale = 'md',
   onFontScaleChange
 }) {
+  const pathname = usePathname();
+  const isHomePage = pathname === '/';
   const [showTopHeader, setShowTopHeader] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -70,7 +73,11 @@ export default function Header({
   }, []);
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-transparent">
+    <header
+      className={`z-40 w-full bg-transparent ${
+        isHomePage ? 'lg:fixed lg:top-0 lg:left-0 lg:right-0 sticky top-0' : 'sticky top-0'
+      }`}
+    >
       {/* Upper Utility Header (Location, Lang, Font Scale, Admin Portal): Collapses on scroll down, reappears on scroll up */}
       <div
         className={`grid transition-[grid-template-rows,opacity] duration-250 ease-in-out ${

@@ -203,10 +203,10 @@ export default function EyeTrackingButton({
       catchlight: 'w-[1.8px] h-[1.8px]'
     },
     md: {
-      button: 'px-2.5 xs:px-3 sm:px-5 py-1.5 sm:py-2.5 text-xs sm:text-sm min-h-[38px] sm:min-h-[46px] gap-1.5 sm:gap-2.5',
-      eye: 'w-[17px] h-[17px] sm:w-[21px] sm:h-[21px]',
-      pupil: 'w-[6.5px] h-[6.5px] sm:w-[8.5px] sm:h-[8.5px]',
-      catchlight: 'w-[1.8px] h-[1.8px] sm:w-[2px] sm:h-[2px]'
+      button: 'px-2 xs:px-2.5 sm:px-5 py-1 sm:py-2 text-[11px] xs:text-xs sm:text-sm min-h-[32px] sm:min-h-[44px] gap-1 xs:gap-1.5 sm:gap-2.5',
+      eye: 'w-[15px] h-[15px] xs:w-[17px] xs:h-[17px] sm:w-[21px] sm:h-[21px]',
+      pupil: 'w-[5.5px] h-[5.5px] xs:w-[6.5px] xs:h-[6.5px] sm:w-[8.5px] sm:h-[8.5px]',
+      catchlight: 'w-[1.6px] h-[1.6px] xs:w-[1.8px] xs:h-[1.8px] sm:w-[2px] sm:h-[2px]'
     },
     lg: {
       button: 'px-6 py-3.5 text-sm sm:text-base min-h-[52px] sm:min-h-[56px] gap-3',

@@ -372,7 +372,7 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
         {/* Desktop Sticky Viewport */}
         <div
           ref={stickyRef}
-          className="sticky top-0 h-[100svh] min-h-[580px] max-h-[100svh] w-full overflow-hidden bg-[#061226] flex flex-col justify-between"
+          className="sticky top-0 h-[100svh] max-h-[100svh] w-full overflow-hidden bg-[#061226] flex flex-col justify-between"
         >
           {/* Ambient Dark Canvas Base */}
           <div className="absolute inset-0 bg-[#061226] z-0 pointer-events-none" />
@@ -423,7 +423,7 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
           <div className="absolute inset-x-0 bottom-0 h-24 pointer-events-none z-2 bg-gradient-to-t from-[#061226] via-[#061226]/60 to-transparent" />
 
           {/* Foreground Content Container - Balanced top/bottom clearance for optical centering */}
-          <div className="relative z-10 w-full h-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-between pt-20 sm:pt-22 lg:pt-24 pb-4 sm:pb-6 lg:pb-6 pointer-events-auto">
+          <div className="relative z-10 w-full h-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-between pt-16 sm:pt-18 lg:pt-20 xl:pt-24 pb-3 sm:pb-4 lg:pb-5 pointer-events-auto">
             {/* Top breathing space below sticky header */}
             <div className="h-2 sm:h-3 lg:h-3 pointer-events-none shrink-0" />
 
