@@ -1,62 +1,104 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Palette, Eye, Hand } from 'lucide-react';
-import { COLOR_PLATES } from '@/lib/eye-test/constants';
+import { getRandomColorPlates } from '@/lib/eye-test/constants';
 
-// Renders an Ishihara-style pseudoisochromatic plate with dots forming a number
-function IshiharaPlateSVG({ plateId }) {
-  const isPlate12 = plateId === 'plate-12';
+// Precise digit stroke dot coordinates (5 columns x 7 rows)
+const DIGIT_PATTERNS = {
+  '0': [[1,0],[2,0],[3,0],[0,1],[4,1],[0,2],[4,2],[0,3],[4,3],[0,4],[4,4],[0,5],[4,5],[1,6],[2,6],[3,6]],
+  '1': [[1,1],[2,0],[2,1],[2,2],[2,3],[2,4],[2,5],[2,6],[1,6],[3,6]],
+  '2': [[0,1],[1,0],[2,0],[3,0],[4,1],[4,2],[3,3],[2,4],[1,5],[0,6],[1,6],[2,6],[3,6],[4,6]],
+  '3': [[1,0],[2,0],[3,0],[0,1],[4,1],[4,2],[2,3],[3,3],[4,4],[4,5],[0,5],[1,6],[2,6],[3,6]],
+  '4': [[3,0],[2,1],[1,2],[0,3],[0,4],[1,4],[2,4],[3,4],[4,4],[3,1],[3,2],[3,3],[3,5],[3,6]],
+  '5': [[4,0],[3,0],[2,0],[1,0],[0,0],[0,1],[0,2],[1,2],[2,2],[3,2],[4,3],[4,4],[4,5],[3,6],[2,6],[1,6],[0,5]],
+  '6': [[2,0],[1,0],[0,1],[0,2],[0,3],[1,3],[2,3],[3,3],[4,3],[0,4],[4,4],[0,5],[4,5],[1,6],[2,6],[3,6]],
+  '7': [[0,0],[1,0],[2,0],[3,0],[4,0],[4,1],[3,2],[2,3],[2,4],[2,5],[2,6]],
+  '8': [[1,0],[2,0],[3,0],[0,1],[4,1],[0,2],[4,2],[1,3],[2,3],[3,3],[0,4],[4,4],[0,5],[4,5],[1,6],[2,6],[3,6]],
+  '9': [[1,0],[2,0],[3,0],[0,1],[4,1],[0,2],[4,2],[1,3],[2,3],[3,3],[4,3],[4,4],[4,5],[3,6],[2,6],[1,6]]
+};
 
-  // Seeded coordinates for a 200x200 circular plate (radius 90)
-  // Number dots: for "12" or "74"
-  // Background dots: randomly scattered inside circle
-  const numberColor1 = isPlate12 ? '#E76F51' : '#2A9D8F'; // Orange/Red for 12, Teal/Green for 74
-  const numberColor2 = isPlate12 ? '#F4A261' : '#48CAE4';
-  const bgColor1 = isPlate12 ? '#588157' : '#E07A5F';     // Green/Sage for 12, Terracotta for 74
-  const bgColor2 = isPlate12 ? '#83A598' : '#D4A373';
+/**
+ * Procedurally generates authentic, non-overlapping Ishihara stipple dots for any number
+ */
+function generatePlateDots(numStr) {
+  const cx = 100;
+  const cy = 100;
+  const R = 86;
+  const digits = String(numStr).split('');
+  const isSingle = digits.length === 1;
 
-  // Number 12 dot coordinates (digit '1' and digit '2')
-  const dots12 = [
-    // Digit 1
-    { x: 75, y: 70 }, { x: 75, y: 85 }, { x: 75, y: 100 }, { x: 75, y: 115 }, { x: 75, y: 130 },
-    { x: 65, y: 80 }, { x: 65, y: 130 }, { x: 85, y: 130 },
-    // Digit 2
-    { x: 105, y: 75 }, { x: 115, y: 70 }, { x: 125, y: 75 }, { x: 130, y: 85 },
-    { x: 125, y: 100 }, { x: 115, y: 112 }, { x: 105, y: 122 },
-    { x: 105, y: 130 }, { x: 115, y: 130 }, { x: 125, y: 130 }, { x: 135, y: 130 }
-  ];
+  const colSpacing = isSingle ? 11 : 8.5;
+  const rowSpacing = isSingle ? 13 : 10.5;
+  const digitWidth = 4 * colSpacing;
+  const spacingBetweenDigits = 14;
 
-  // Number 74 dot coordinates (digit '7' and digit '4')
-  const dots74 = [
-    // Digit 7
-    { x: 65, y: 70 }, { x: 75, y: 70 }, { x: 85, y: 70 }, { x: 95, y: 70 },
-    { x: 90, y: 85 }, { x: 85, y: 100 }, { x: 80, y: 115 }, { x: 75, y: 130 },
-    // Digit 4
-    { x: 130, y: 70 }, { x: 125, y: 85 }, { x: 120, y: 100 },
-    { x: 110, y: 110 }, { x: 120, y: 110 }, { x: 130, y: 110 }, { x: 140, y: 110 },
-    { x: 130, y: 120 }, { x: 130, y: 130 }
-  ];
+  const totalWidth = isSingle ? digitWidth : (digitWidth * 2 + spacingBetweenDigits);
+  const startX = cx - (totalWidth / 2);
+  const startY = cy - ((6 * rowSpacing) / 2);
 
-  const targetDots = isPlate12 ? dots12 : dots74;
+  const numDots = [];
+  digits.forEach((digit, dIdx) => {
+    const coords = DIGIT_PATTERNS[digit] || [];
+    const digitStartX = startX + (dIdx * (digitWidth + spacingBetweenDigits));
+    coords.forEach(([col, row]) => {
+      // Subtle organic jitter
+      const x = digitStartX + (col * colSpacing) + (Math.random() - 0.5) * 1.5;
+      const y = startY + (row * rowSpacing) + (Math.random() - 0.5) * 1.5;
+      const r = isSingle ? (7 + Math.random() * 2) : (6 + Math.random() * 2);
+      numDots.push({
+        x: Math.round(x * 10) / 10,
+        y: Math.round(y * 10) / 10,
+        r: Math.round(r * 10) / 10
+      });
+    });
+  });
 
-  // Background dots filler
-  const bgDots = [
-    { x: 45, y: 55, r: 7 }, { x: 65, y: 45, r: 8 }, { x: 95, y: 40, r: 7 }, { x: 125, y: 45, r: 8 },
-    { x: 150, y: 60, r: 7 }, { x: 165, y: 85, r: 8 }, { x: 160, y: 115, r: 7 }, { x: 155, y: 140, r: 8 },
-    { x: 135, y: 155, r: 7 }, { x: 105, y: 165, r: 8 }, { x: 75, y: 160, r: 7 }, { x: 50, y: 145, r: 8 },
-    { x: 35, y: 120, r: 7 }, { x: 35, y: 90, r: 8 }, { x: 45, y: 75, r: 7 }, { x: 85, y: 55, r: 6 },
-    { x: 115, y: 55, r: 7 }, { x: 140, y: 75, r: 6 }, { x: 150, y: 100, r: 7 }, { x: 145, y: 125, r: 6 },
-    { x: 120, y: 145, r: 7 }, { x: 95, y: 150, r: 6 }, { x: 65, y: 145, r: 7 }, { x: 45, y: 105, r: 6 },
-    { x: 55, y: 125, r: 7 }, { x: 55, y: 95, r: 6 }, { x: 100, y: 90, r: 7 }, { x: 100, y: 125, r: 6 }
-  ];
+  // Background dots filling the circle with collision avoidance
+  const bgDots = [];
+  const minDistance = isSingle ? 13 : 11.5;
+
+  for (let y = cy - R + 4; y <= cy + R - 4; y += 13) {
+    const rowOffset = (Math.floor(y / 13) % 2 === 0) ? 0 : 6.5;
+    for (let x = cx - R + 4 + rowOffset; x <= cx + R - 4; x += 13) {
+      const jx = x + (Math.random() - 0.5) * 3;
+      const jy = y + (Math.random() - 0.5) * 3;
+      const distFromCenter = Math.hypot(jx - cx, jy - cy);
+
+      if (distFromCenter <= R - 2) {
+        const tooClose = numDots.some((nd) => Math.hypot(nd.x - jx, nd.y - jy) < minDistance);
+        if (!tooClose) {
+          const r = 5.5 + (Math.random() * 2.5);
+          bgDots.push({
+            x: Math.round(jx * 10) / 10,
+            y: Math.round(jy * 10) / 10,
+            r: Math.round(r * 10) / 10
+          });
+        }
+      }
+    }
+  }
+
+  return { numDots, bgDots };
+}
+
+// Renders an Ishihara pseudoisochromatic plate with procedural randomized dots
+function IshiharaPlateSVG({ plate }) {
+  const numberStr = plate.number || '12';
+  const targetColors = plate.targetColors || ['#E76F51', '#F4A261'];
+  const bgColors = plate.bgColors || ['#588157', '#83A598', '#6A994E'];
+
+  // Memoize dots so they remain stable across re-renders of the same plate
+  const { numDots, bgDots } = useMemo(() => {
+    return generatePlateDots(numberStr);
+  }, [plate.id, numberStr]);
 
   return (
     <svg
       viewBox="0 0 200 200"
-      className="w-full max-w-[220px] aspect-square mx-auto rounded-full shadow-inner bg-slate-50"
+      className="w-full max-w-[220px] aspect-square mx-auto rounded-full shadow-inner bg-slate-50 select-none"
       shapeRendering="geometricPrecision"
-      aria-label={`Ishihara Plate ${plateId}`}
+      aria-label={`Ishihara Plate ${plate.id}`}
     >
       {/* Base circular disc */}
       <circle cx="100" cy="100" r="92" fill="#FAFAFA" stroke="#E2E8F0" strokeWidth="2" />
@@ -68,21 +110,21 @@ function IshiharaPlateSVG({ plateId }) {
           cx={d.x}
           cy={d.y}
           r={d.r || 6.5}
-          fill={i % 2 === 0 ? bgColor1 : bgColor2}
-          opacity="0.85"
+          fill={bgColors[i % bgColors.length]}
+          opacity="0.88"
         />
       ))}
 
       {/* Target Number Dots */}
-      {targetDots.map((d, i) => (
+      {numDots.map((d, i) => (
         <circle
           key={`num-${i}`}
           cx={d.x}
           cy={d.y}
-          r={i % 3 === 0 ? 8 : 7}
-          fill={i % 2 === 0 ? numberColor1 : numberColor2}
+          r={d.r || 7}
+          fill={targetColors[i % targetColors.length]}
           stroke="#FFFFFF"
-          strokeWidth="0.8"
+          strokeWidth="0.75"
         />
       ))}
     </svg>
@@ -90,11 +132,13 @@ function IshiharaPlateSVG({ plateId }) {
 }
 
 export default function ColorBlindnessTest({ onComplete }) {
+  // Randomly select 3 distinct plates per test session
+  const [plates] = useState(() => getRandomColorPlates(3));
   const [currentPlateIndex, setCurrentPlateIndex] = useState(0);
   const [answers, setAnswers] = useState([]);
   const [selectedOption, setSelectedOption] = useState(null);
 
-  const activePlate = COLOR_PLATES[currentPlateIndex] || COLOR_PLATES[0];
+  const activePlate = plates[currentPlateIndex] || plates[0];
 
   const handleSelect = (option) => {
     setSelectedOption(option);
@@ -104,7 +148,7 @@ export default function ColorBlindnessTest({ onComplete }) {
 
     setTimeout(() => {
       setSelectedOption(null);
-      if (currentPlateIndex + 1 < COLOR_PLATES.length) {
+      if (currentPlateIndex + 1 < plates.length) {
         setCurrentPlateIndex((prev) => prev + 1);
       } else {
         // Completed all color plates
@@ -112,8 +156,8 @@ export default function ColorBlindnessTest({ onComplete }) {
         if (onComplete) {
           onComplete({
             colorScore: correctCount,
-            totalPlates: COLOR_PLATES.length,
-            isNormal: correctCount >= 2
+            totalPlates: plates.length,
+            isNormal: correctCount >= plates.length
           });
         }
       }
@@ -131,7 +175,7 @@ export default function ColorBlindnessTest({ onComplete }) {
 
         <div className="flex items-center gap-2">
           <span className="text-xs font-bold text-[#8C6D1F] bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200/80">
-            Ishihara Plate {currentPlateIndex + 1}/{COLOR_PLATES.length}
+            Ishihara Plate {currentPlateIndex + 1}/{plates.length}
           </span>
         </div>
       </div>
@@ -173,7 +217,7 @@ export default function ColorBlindnessTest({ onComplete }) {
 
       {/* Ishihara Plate Display */}
       <div className="p-2 sm:p-4 rounded-3xl bg-white border border-slate-200 shadow-md">
-        <IshiharaPlateSVG plateId={activePlate.id} />
+        <IshiharaPlateSVG plate={activePlate} />
       </div>
 
       {/* Multiple Choice Options */}

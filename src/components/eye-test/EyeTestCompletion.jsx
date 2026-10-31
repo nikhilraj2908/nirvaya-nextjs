@@ -225,15 +225,29 @@ export default function EyeTestCompletion({
         </div>
       </div>
 
-      {/* 4. Outlined Retake Button */}
-      <button
-        type="button"
-        onClick={onRetake}
-        className="w-full py-3.5 px-4 rounded-xl sm:rounded-2xl border-2 border-[#0A1E3F] bg-white hover:bg-slate-50 text-[#0A1E3F] font-bold text-sm sm:text-base flex items-center justify-center gap-2.5 transition-all active:scale-[0.99] cursor-pointer shadow-2xs"
-      >
-        <RotateCcw className="w-4 h-4 text-[#C59B27]" />
-        <span>Retake the test</span>
-      </button>
+      {/* 4. Action Buttons: Book Consultation first, then Retake */}
+      <div className="space-y-2.5">
+        <Button
+          variant="gold"
+          size="lg"
+          onClick={handleBookClick}
+          icon={Calendar}
+          className={`w-full font-bold text-sm sm:text-base py-3.5 sm:py-4 justify-center shadow-md hover:shadow-lg cursor-pointer ${
+            !scores.isHealthy ? 'ring-2 ring-[#C59B27] animate-pulse' : ''
+          }`}
+        >
+          Book an Eye Consultation
+        </Button>
+
+        <button
+          type="button"
+          onClick={onRetake}
+          className="w-full py-3 px-4 rounded-xl sm:rounded-2xl border-2 border-[#0A1E3F] bg-white hover:bg-slate-50 text-[#0A1E3F] font-bold text-sm sm:text-base flex items-center justify-center gap-2.5 transition-all active:scale-[0.99] cursor-pointer shadow-2xs"
+        >
+          <RotateCcw className="w-4 h-4 text-[#C59B27]" />
+          <span>Retake the test</span>
+        </button>
+      </div>
 
       {/* 5. Detailed 4-Pillar Analysis Accordion */}
       <div className="space-y-2.5 text-left pt-1">
@@ -286,11 +300,11 @@ export default function EyeTestCompletion({
             <div className="px-4 pb-4 pt-1 border-t border-slate-100 bg-slate-50/50 space-y-2 text-xs text-slate-700 animate-in fade-in duration-150">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2">
                 <div className="bg-white p-2.5 rounded-xl border border-slate-200">
-                  <strong className="text-[#0A1E3F]">Right Eye:</strong> {rightEyeResult?.achievedAcuity?.snellenUS || '20/20'}
+                  <strong className="text-[#0A1E3F]">Right Eye:</strong> {rightEyeResult?.achievedAcuity?.snellenUS || 'Not Completed'}
                   <p className="text-[11px] text-slate-600 mt-0.5">{rightInterpretation.title}</p>
                 </div>
                 <div className="bg-white p-2.5 rounded-xl border border-slate-200">
-                  <strong className="text-[#0A1E3F]">Left Eye:</strong> {leftEyeResult?.achievedAcuity?.snellenUS || '20/20'}
+                  <strong className="text-[#0A1E3F]">Left Eye:</strong> {leftEyeResult?.achievedAcuity?.snellenUS || 'Not Completed'}
                   <p className="text-[11px] text-slate-600 mt-0.5">{leftInterpretation.title}</p>
                 </div>
               </div>

@@ -51,6 +51,15 @@ export function interpretEyeResult(achievedAcuity) {
     };
   }
 
+  if (id === '< 20/100') {
+    return {
+      grade: 'severe',
+      badgeColor: 'bg-rose-50 text-rose-900 border-rose-300',
+      title: 'Severe Acuity Reduction (< 20/100)',
+      summary: 'Visual acuity was below standard preliminary baseline (< 20/100). An in-person ophthalmic evaluation with Dr. Sandhya Gaur is strongly advised.'
+    };
+  }
+
   return {
     grade: 'attention',
     badgeColor: 'bg-rose-50 text-rose-900 border-rose-300',
@@ -59,8 +68,9 @@ export function interpretEyeResult(achievedAcuity) {
   };
 }
 
-export function interpretContrastResult(score = 3, total = 3) {
-  if (score >= 2) {
+export function interpretContrastResult(score = 5, total = 5) {
+  const normalThreshold = Math.ceil(total * 0.7); // 4 out of 5
+  if (score >= normalThreshold) {
     return {
       status: 'Normal Contrast Vision',
       badgeColor: 'bg-emerald-50 text-emerald-800 border-emerald-300',
@@ -69,7 +79,7 @@ export function interpretContrastResult(score = 3, total = 3) {
     };
   }
   return {
-    status: 'Mild Reduction in Contrast',
+    status: score === 0 ? 'Severe Reduction in Contrast' : 'Mild Reduction in Contrast',
     badgeColor: 'bg-amber-50 text-amber-900 border-amber-300',
     isNormal: false,
     summary: 'Subtle contrast reduction noted. Contrast sensitivity can vary due to dry eyes, screen fatigue, early cataract changes, or ambient room lighting.'
@@ -86,24 +96,24 @@ export function interpretAstigmatismResult(isUniform = true) {
     };
   }
   return {
-    status: 'Possible Astigmatism Indicated',
+    status: 'Astigmatism Indicated',
     badgeColor: 'bg-amber-50 text-amber-900 border-amber-300',
     isNormal: false,
     summary: 'Variations in line darkness or thickness observed across clock meridians. An in-person refraction can measure any cylindrical correction needed.'
   };
 }
 
-export function interpretColorVisionResult(correctCount = 2, total = 2) {
-  if (correctCount >= 2) {
+export function interpretColorVisionResult(correctCount = 3, total = 3) {
+  if (total > 0 && correctCount >= total) {
     return {
       status: 'Normal Color Vision',
       badgeColor: 'bg-emerald-50 text-emerald-800 border-emerald-300',
       isNormal: true,
-      summary: 'Accurately identified Ishihara pseudoisochromatic screening plates, indicating intact red-green and general color discrimination.'
+      summary: 'Accurately identified all Ishihara pseudoisochromatic screening plates, indicating intact red-green and general color discrimination.'
     };
   }
   return {
-    status: 'Color Perception Variance',
+    status: correctCount === 0 ? 'Significant Color Perception Variance' : 'Color Perception Variance',
     badgeColor: 'bg-amber-50 text-amber-900 border-amber-300',
     isNormal: false,
     summary: 'One or more screening plates were perceived differently. Display color calibration or congenital/acquired color discrimination variations may be present.'
@@ -131,41 +141,57 @@ export function calculatePillarScores({
     if (id === '20/40') return 2;
     if (id === '20/60') return 1;
     if (id === '20/100') return 0.5;
-    return 3;
+    // Failed 20/100 or below baseline gives 0 points
+    return 0;
   };
 
   const rightAcuityPts = getAcuityPoints(rightEyeResult);
   const leftAcuityPts = getAcuityPoints(leftEyeResult);
 
-  let contrastPts = 3;
+  // Contrast Vision: 5 tests total, scaled proportionally to 3.0 max points
+  let contrastPts = 0;
   if (contrastResult?.contrastScore !== undefined) {
-    if (contrastResult.contrastScore >= 2) contrastPts = 3;
-    else if (contrastResult.contrastScore === 1) contrastPts = 1.5;
-    else contrastPts = 1;
+    const totalTrials = contrastResult.totalTrials || 5;
+    contrastPts = totalTrials > 0 ? (contrastResult.contrastScore / totalTrials) * 3 : 0;
   }
 
-  let astigmatismPts = 3;
-  if (astigmatismResult?.isUniform !== undefined) {
-    astigmatismPts = astigmatismResult.isUniform ? 3 : 1.5;
+  // Astigmatism: 3.0 pts if uniform, 0 pts if irregular/indicated
+  let astigmatismPts = 0;
+  if (astigmatismResult?.isUniform === true) {
+    astigmatismPts = 3;
+  } else if (astigmatismResult?.isUniform === false) {
+    astigmatismPts = 0;
   }
 
-  let colorPts = 3;
+  // Color Vision: scaled proportionally to 3.0 max points
+  let colorPts = 0;
   if (colorResult?.colorScore !== undefined) {
-    if (colorResult.colorScore >= 2) colorPts = 3;
-    else if (colorResult.colorScore === 1) colorPts = 2;
-    else colorPts = 1;
+    const totalPlates = colorResult.totalPlates || 3;
+    colorPts = totalPlates > 0 ? (colorResult.colorScore / totalPlates) * 3 : 0;
   }
 
   // Identify specific detected issues for patient summary
   const issues = [];
-  const hasLeftIssue = leftAcuityPts < 3 || contrastPts < 3 || astigmatismPts < 3 || colorPts < 3;
-  const hasRightIssue = rightAcuityPts < 3 || contrastPts < 3 || astigmatismPts < 3 || colorPts < 3;
+  const hasLeftIssue = leftAcuityPts < 3 || contrastPts < 2.4 || astigmatismPts < 3 || colorPts < 3;
+  const hasRightIssue = rightAcuityPts < 3 || contrastPts < 2.4 || astigmatismPts < 3 || colorPts < 3;
 
-  if (leftAcuityPts < 3) issues.push(`Left Eye: ${leftEyeResult?.achievedAcuity?.snellenUS || 'Reduced Acuity'}`);
-  if (rightAcuityPts < 3) issues.push(`Right Eye: ${rightEyeResult?.achievedAcuity?.snellenUS || 'Reduced Acuity'}`);
-  if (contrastPts < 3) issues.push('Reduced Contrast Vision');
-  if (astigmatismPts < 3) issues.push('Astigmatism Indicated');
-  if (colorPts < 3) issues.push('Color Perception Variance');
+  if (leftAcuityPts < 3) {
+    const snellen = leftEyeResult?.achievedAcuity?.snellenUS || '< 20/100';
+    issues.push(`Left Eye Acuity: ${snellen}`);
+  }
+  if (rightAcuityPts < 3) {
+    const snellen = rightEyeResult?.achievedAcuity?.snellenUS || '< 20/100';
+    issues.push(`Right Eye Acuity: ${snellen}`);
+  }
+  if (contrastPts < 2.4) {
+    issues.push('Reduced Contrast Vision');
+  }
+  if (astigmatismPts < 3) {
+    issues.push('Astigmatism Indicated');
+  }
+  if (colorPts < 3) {
+    issues.push('Color Perception Variance');
+  }
 
   const issueSummary = issues.length > 0 ? issues.join(' • ') : null;
 
