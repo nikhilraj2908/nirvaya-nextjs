@@ -14,6 +14,7 @@ import {
   formatToHospitalMonthStr,
   generateIdempotencyKey
 } from '@/utils/bookingDateHelpers';
+import { DOCTOR_SCHEDULES } from '@/lib/scheduleConfig';
 
 import DoctorSelector from '@/components/booking/DoctorSelector';
 import AppointmentCalendar from '@/components/booking/AppointmentCalendar';
@@ -354,7 +355,13 @@ export default function PreBookContent() {
     window.scrollTo({ top: 80, behavior: 'smooth' });
   };
 
-  const selectedDoctor = doctors.find((d) => d.id === selectedDoctorId) || doctors[0];
+  const defaultDocFallback = DOCTOR_SCHEDULES[selectedDoctorId] || DOCTOR_SCHEDULES['doc-sandhya-01'];
+  const selectedDoctor = doctors.find((d) => d.id === selectedDoctorId) || doctors[0] || {
+    id: selectedDoctorId || 'doc-sandhya-01',
+    name: defaultDocFallback?.name || 'Dr. Sandhya Gaur',
+    specialty: defaultDocFallback?.specialty || 'Retina & Vitreoretinal Surgery',
+    qualification: 'MD (Ophthalmology) AIIMS New Delhi'
+  };
 
   return (
     <div className="bg-slate-50/60 min-h-screen py-8 sm:py-12">

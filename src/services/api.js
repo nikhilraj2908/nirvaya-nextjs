@@ -61,6 +61,7 @@ async function request(endpoint, options = {}) {
       throw error;
     }
 
+    return data;
   } catch (err) {
     const isAborted =
       err.name === 'AbortError' ||
