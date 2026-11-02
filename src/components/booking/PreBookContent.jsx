@@ -382,14 +382,14 @@ export default function PreBookContent() {
           </p>
 
           {/* Stepper Indicator */}
-          <div className="mt-5 flex items-center space-x-3 text-xs font-bold animate-fade-in-up stagger-4">
+          <div className="mt-5 flex items-center gap-2 sm:gap-3 text-[11px] sm:text-xs font-bold animate-fade-in-up stagger-4 overflow-x-auto no-scrollbar pb-1">
             <div
-              className={`flex items-center space-x-1.5 ${
+              className={`flex items-center space-x-1.5 shrink-0 ${
                 currentStep === 'SELECT' ? 'text-[#0A1E3F]' : 'text-emerald-700'
               }`}
             >
               <span
-                className={`w-5 h-5 rounded-full flex items-center justify-center text-[11px] font-bold ${
+                className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] sm:text-[11px] font-bold ${
                   currentStep === 'SELECT'
                     ? 'bg-[#0A1E3F] text-[#DFBF64]'
                     : 'bg-emerald-100 text-emerald-800'
@@ -400,10 +400,10 @@ export default function PreBookContent() {
               <span>Doctor, Date & Slot</span>
             </div>
 
-            <span className="text-slate-300">→</span>
+            <span className="text-slate-300 shrink-0">→</span>
 
             <div
-              className={`flex items-center space-x-1.5 ${
+              className={`flex items-center space-x-1.5 shrink-0 ${
                 currentStep === 'DETAILS'
                   ? 'text-[#0A1E3F]'
                   : currentStep === 'CONFIRMED'
@@ -412,7 +412,7 @@ export default function PreBookContent() {
               }`}
             >
               <span
-                className={`w-5 h-5 rounded-full flex items-center justify-center text-[11px] font-bold ${
+                className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] sm:text-[11px] font-bold ${
                   currentStep === 'DETAILS'
                     ? 'bg-[#0A1E3F] text-[#DFBF64]'
                     : currentStep === 'CONFIRMED'
@@ -425,15 +425,15 @@ export default function PreBookContent() {
               <span>Patient Details</span>
             </div>
 
-            <span className="text-slate-300">→</span>
+            <span className="text-slate-300 shrink-0">→</span>
 
             <div
-              className={`flex items-center space-x-1.5 ${
+              className={`flex items-center space-x-1.5 shrink-0 ${
                 currentStep === 'CONFIRMED' ? 'text-emerald-700' : 'text-slate-400'
               }`}
             >
               <span
-                className={`w-5 h-5 rounded-full flex items-center justify-center text-[11px] font-bold ${
+                className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] sm:text-[11px] font-bold ${
                   currentStep === 'CONFIRMED'
                     ? 'bg-emerald-500 text-white'
                     : 'bg-slate-200 text-slate-500'

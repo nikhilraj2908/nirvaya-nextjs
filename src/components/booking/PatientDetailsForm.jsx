@@ -71,20 +71,22 @@ export default function PatientDetailsForm({
   };
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200/80 p-5 sm:p-7 shadow-xs">
+    <div className="bg-white rounded-2xl border border-slate-200/80 p-4 sm:p-7 shadow-xs">
       {/* Top Navigation */}
-      <div className="flex items-center justify-between pb-4 mb-6 border-b border-slate-100">
+      <div className="flex flex-wrap sm:flex-nowrap items-center justify-between gap-2.5 pb-3.5 mb-5 sm:mb-6 border-b border-slate-100">
         <button
           type="button"
           onClick={onBackToSlots}
-          className="inline-flex items-center space-x-1.5 text-xs font-bold text-slate-600 hover:text-[#0A1E3F] transition-colors cursor-pointer"
+          className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-600 hover:text-[#0A1E3F] transition-colors cursor-pointer py-1 shrink-0 active:scale-95"
         >
-          <ArrowLeft className="w-4 h-4" />
+          <ArrowLeft className="w-4 h-4 text-[#C59B27] shrink-0" />
           <span>Change Slot / Date</span>
         </button>
 
-        <span className="text-xs font-bold uppercase tracking-wider text-[#DFBF64] bg-[#0A1E3F] px-3 py-1 rounded-full">
-          Step 4 of 4 • Patient Details
+        <span className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-[#DFBF64] bg-[#0A1E3F] px-3 py-1 rounded-full shrink-0 whitespace-nowrap self-start sm:self-auto shadow-2xs">
+          <span className="hidden sm:inline">Step 4 of 4 • </span>
+          <span className="sm:hidden">Step 4 • </span>
+          Patient Details
         </span>
       </div>
 
