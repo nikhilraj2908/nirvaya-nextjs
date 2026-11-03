@@ -626,17 +626,22 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
                   </div>
 
                   {/* Right Column / Placed to the side of main headings, near the phoropter glass! */}
-                  <div className="shrink-0 pointer-events-auto z-30 lg:mr-4 xl:mr-10 flex flex-col items-start">
+                  {/* Temporarily hidden for client demo - do not remove */}
+                  <div
+                    className="hidden shrink-0 pointer-events-auto z-30 lg:mr-4 xl:mr-10 flex-col items-start"
+                    style={{ display: 'none' }}
+                  >
                     <button
                       type="button"
                       id="hero-online-eye-test-btn"
                       data-open-eye-test="true"
+                      style={{ display: 'none' }}
                       onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
                         setIsEyeTestOpen(true);
                       }}
-                      className="group relative flex items-center gap-3.5 px-5 py-4 sm:px-6 sm:py-4.5 rounded-2xl bg-[#061226]/90 hover:bg-[#0A1E3F] border-2 border-[#DFBF64] hover:border-amber-300 text-white shadow-[0_16px_45px_rgba(0,0,0,0.65),0_0_28px_rgba(223,191,100,0.4)] hover:shadow-[0_20px_55px_rgba(0,0,0,0.75),0_0_40px_rgba(223,191,100,0.6)] active:scale-95 transition-all duration-300 cursor-pointer pointer-events-auto backdrop-blur-xl text-left select-none"
+                      className="hidden group relative items-center gap-3.5 px-5 py-4 sm:px-6 sm:py-4.5 rounded-2xl bg-[#061226]/90 hover:bg-[#0A1E3F] border-2 border-[#DFBF64] hover:border-amber-300 text-white shadow-[0_16px_45px_rgba(0,0,0,0.65),0_0_28px_rgba(223,191,100,0.4)] hover:shadow-[0_20px_55px_rgba(0,0,0,0.75),0_0_40px_rgba(223,191,100,0.6)] active:scale-95 transition-all duration-300 cursor-pointer pointer-events-auto backdrop-blur-xl text-left select-none"
                       aria-haspopup="dialog"
                       aria-label="Test Your Eyes Online vision screening"
                     >

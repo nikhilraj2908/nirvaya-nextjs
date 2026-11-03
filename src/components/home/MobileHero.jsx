@@ -292,10 +292,12 @@ export default function MobileHero({ onOpenPreBook, onOpenEyeTest, currentLang =
                         </Button>
                       </div>
 
+                      {/* Temporarily hidden for client demo - do not remove */}
                       <button
                         type="button"
                         id="mobile-hero-online-eye-test-btn"
                         data-open-eye-test="true"
+                        style={{ display: 'none' }}
                         onClick={(e) => {
                           e.preventDefault();
                           e.stopPropagation();
@@ -306,7 +308,7 @@ export default function MobileHero({ onOpenPreBook, onOpenEyeTest, currentLang =
                             window.dispatchEvent(new CustomEvent('open-eye-test'));
                           }
                         }}
-                        className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-md text-xs font-bold bg-amber-50 hover:bg-[#0A1E3F] text-[#0A1E3F] hover:text-white border-2 border-[#C59B27] shadow-xs active:scale-95 transition-all duration-150 cursor-pointer pointer-events-auto relative z-30 select-none group"
+                        className="hidden w-full items-center justify-center gap-2 px-4 py-2.5 rounded-md text-xs font-bold bg-amber-50 hover:bg-[#0A1E3F] text-[#0A1E3F] hover:text-white border-2 border-[#C59B27] shadow-xs active:scale-95 transition-all duration-150 cursor-pointer pointer-events-auto relative z-30 select-none group"
                         aria-haspopup="dialog"
                         aria-label="Test Your Eyes Online vision screening"
                       >
