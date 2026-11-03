@@ -216,16 +216,25 @@ export default function AboutPage() {
                     <span>Clinical Leadership</span>
                   </div>
 
-                  <div>
-                    <h3 className="font-heading text-2xl font-bold text-white">
-                      Dr Sandhya Gaur
-                    </h3>
-                    <p className="text-xs text-[#DFBF64] font-medium mt-1 leading-snug">
-                      MD (AIIMS New Delhi) • DNB • FVRS • FAICO (Retina Gold Medalist)
-                    </p>
-                    <p className="text-xs text-slate-400 mt-0.5">
-                      Consultant Vitreo-Retinal Surgeon & Medical Director
-                    </p>
+                  <div className="flex items-center gap-4">
+                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-[#C59B27] to-[#DFBF64] p-0.5 shadow-lg shrink-0 overflow-hidden">
+                      <img
+                        src="/assets/dr-sandhya-gaur-portrait.jpg"
+                        alt="Dr Sandhya Gaur"
+                        className="w-full h-full object-cover object-top rounded-[14px]"
+                      />
+                    </div>
+                    <div>
+                      <h3 className="font-heading text-2xl font-bold text-white">
+                        Dr Sandhya Gaur
+                      </h3>
+                      <p className="text-xs text-[#DFBF64] font-medium mt-1 leading-snug">
+                        MD (AIIMS New Delhi) • DNB • FVRS • FAICO (Retina Gold Medalist)
+                      </p>
+                      <p className="text-xs text-slate-400 mt-0.5">
+                        Consultant Vitreo-Retinal Surgeon & Medical Director
+                      </p>
+                    </div>
                   </div>
 
                   <blockquote className="border-l-2 border-[#C59B27] pl-4 text-xs sm:text-sm italic text-slate-300 leading-relaxed">

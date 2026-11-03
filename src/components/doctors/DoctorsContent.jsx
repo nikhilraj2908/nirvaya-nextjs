@@ -118,13 +118,23 @@ export default function DoctorsContent() {
               <span>Medical Leadership & Specialist Faculty</span>
             </div>
 
-            <h1 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight animate-fade-in-up stagger-2">
-              Dr Sandhya Gaur
-            </h1>
-
-            <p className="text-base sm:text-lg text-[#DFBF64] font-medium leading-relaxed animate-fade-in-up stagger-3">
-              MD (AIIMS New Delhi) • DNB • FVRS • FAICO (Retina Gold Medalist)
-            </p>
+            <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 animate-fade-in-up stagger-2">
+              <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-gradient-to-tr from-[#C59B27] to-[#DFBF64] p-1 shadow-xl shrink-0 overflow-hidden">
+                <img
+                  src="/assets/dr-sandhya-gaur-portrait.jpg"
+                  alt="Dr Sandhya Gaur"
+                  className="w-full h-full object-cover object-top rounded-xl"
+                />
+              </div>
+              <div>
+                <h1 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight">
+                  Dr Sandhya Gaur
+                </h1>
+                <p className="text-base sm:text-lg text-[#DFBF64] font-medium leading-relaxed mt-1">
+                  MD (AIIMS New Delhi) • DNB • FVRS • FAICO (Retina Gold Medalist)
+                </p>
+              </div>
+            </div>
 
             <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-normal animate-fade-in-up stagger-4">
               Senior Consultant Vitreo-Retinal Surgeon & Medical Director at Nirvaya Eyecare Centre, bringing apex institute surgical rigour and patient-centred clinical empathy to Bhopal.

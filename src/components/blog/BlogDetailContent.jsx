@@ -96,8 +96,12 @@ export default function BlogDetailContent({ blog }) {
 
             <div className="flex items-center justify-between pt-4 border-t border-slate-800/80">
               <div className="flex items-center gap-2 text-xs text-slate-300">
-                <div className="w-8 h-8 rounded-full bg-[#C59B27]/20 border border-[#C59B27] flex items-center justify-center text-[#DFBF64] font-bold">
-                  SG
+                <div className="w-9 h-9 rounded-full overflow-hidden border border-[#C59B27] shrink-0 shadow-xs">
+                  <img
+                    src="/assets/dr-sandhya-gaur-portrait.jpg"
+                    alt={blog.author || 'Dr. Sandhya Gaur'}
+                    className="w-full h-full object-cover object-top"
+                  />
                 </div>
                 <div>
                   <div className="font-bold text-white">{blog.author || 'Dr. Sandhya Gaur'}</div>

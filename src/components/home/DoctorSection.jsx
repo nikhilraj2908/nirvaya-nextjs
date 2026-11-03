@@ -134,9 +134,11 @@ export default function DoctorSection() {
                 <div className="relative mb-5">
                   <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl bg-gradient-to-tr from-[#C59B27] to-[#DFBF64] p-1 shadow-lg">
                     <div className="w-full h-full rounded-xl bg-[#0A1E3F] flex items-center justify-center text-white overflow-hidden">
-                      <span className="font-heading font-black text-3xl sm:text-4xl text-[#DFBF64]">
-                        SG
-                      </span>
+                      <img
+                        src="/assets/dr-sandhya-gaur-portrait.jpg"
+                        alt={DOCTOR_PROFILE.name}
+                        className="w-full h-full object-cover object-top"
+                      />
                     </div>
                   </div>
                   <div className="absolute -bottom-2 inset-x-0 flex justify-center">

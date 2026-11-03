@@ -170,6 +170,7 @@ export const CONDITIONS_TREATED = [
 
 export const DOCTOR_PROFILE = {
   name: "Dr Sandhya Gaur",
+  image: "/assets/dr-sandhya-gaur-portrait.jpg",
   designation: "Medical Director & Chief Vitreoretinal Surgeon",
   degrees: "MD Ophthalmology (AIIMS, New Delhi) · DNB · FVRS (Vitreoretina & Uvea) · FAICO (Retina & Vitreous) – Gold Medalist",
   qualifications: [

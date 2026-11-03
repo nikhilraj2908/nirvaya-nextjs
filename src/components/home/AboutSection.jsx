@@ -133,7 +133,14 @@ export default function AboutSection() {
                 <div className="space-y-2.5 pt-2 border-t border-slate-700/80 text-xs">
                   <div className="flex items-center justify-between text-slate-300">
                     <span>{en.about.card.clinicalDirectorLabel}</span>
-                    <strong className="text-white">{en.clinic.medicalDirector}</strong>
+                    <span className="inline-flex items-center gap-2 text-white font-bold">
+                      <img
+                        src="/assets/dr-sandhya-gaur-portrait.jpg"
+                        alt="Dr Sandhya Gaur"
+                        className="w-6 h-6 rounded-full object-cover object-top border border-[#C59B27]"
+                      />
+                      {en.clinic.medicalDirector}
+                    </span>
                   </div>
                   <div className="flex items-center justify-between text-slate-300">
                     <span>{en.about.card.surgicalFocusLabel}</span>

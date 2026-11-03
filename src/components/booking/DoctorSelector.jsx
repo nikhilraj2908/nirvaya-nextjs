@@ -86,13 +86,21 @@ export default function DoctorSelector({
               <div className="flex items-start space-x-3">
                 <div className="relative shrink-0">
                   <div
-                    className={`w-11 h-11 rounded-full flex items-center justify-center font-bold text-xs transition-colors ${
+                    className={`w-11 h-11 rounded-full flex items-center justify-center font-bold text-xs transition-colors overflow-hidden ${
                       isSelected
                         ? 'bg-[#0A1E3F] text-[#DFBF64] ring-2 ring-[#DFBF64]/50'
                         : 'bg-slate-100 text-slate-700 border border-slate-200'
                     }`}
                   >
-                    {initials}
+                    {doctor.image ? (
+                      <img
+                        src={doctor.image}
+                        alt={doctor.name}
+                        className="w-full h-full object-cover object-top"
+                      />
+                    ) : (
+                      initials
+                    )}
                   </div>
                   {doctor.isDirector && (
                     <div className="absolute -bottom-1 -right-1 bg-[#DFBF64] text-[#0A1E3F] rounded-full p-0.5">

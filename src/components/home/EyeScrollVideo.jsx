@@ -752,9 +752,16 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
                           </SafeLink>
                         </div>
 
-                        <span className="text-sm sm:text-base font-bold text-[#DFBF64] tracking-wide hidden sm:inline">
-                          Dr. Sandhya Gaur
-                        </span>
+                        <div className="hidden sm:inline-flex items-center gap-2">
+                          <img
+                            src="/assets/dr-sandhya-gaur-portrait.jpg"
+                            alt="Dr. Sandhya Gaur"
+                            className="w-7 h-7 rounded-full object-cover object-top border-2 border-[#DFBF64] shadow-xs"
+                          />
+                          <span className="text-sm sm:text-base font-bold text-[#DFBF64] tracking-wide">
+                            Dr. Sandhya Gaur
+                          </span>
+                        </div>
                       </div>
                     </article>
                   );
