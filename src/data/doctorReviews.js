@@ -12,8 +12,10 @@
  * @property {boolean} approved - Only render items where approved === true
  */
 
-// TODO: replace with client-approved reviews
-export const DOCTOR_REVIEWS = [
+// Testimonials removed per client request
+export const DOCTOR_REVIEWS = [];
+
+export const ARCHIVED_DOCTOR_REVIEWS = [
   {
     id: "dr-rev-01",
     doctorName: "Dr Sudhanshu Varma",

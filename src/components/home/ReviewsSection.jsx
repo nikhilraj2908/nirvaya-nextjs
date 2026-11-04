@@ -42,9 +42,10 @@ function getDoctorInitials(name) {
 }
 
 export default function ReviewsSection() {
-  // Only render client-approved reviews
-  const approvedReviews = DOCTOR_REVIEWS.filter((item) => item.approved);
+  return null;
+}
 
+function DisabledReviewsSection() {
   return (
     <section id="reviews" className="relative py-20 lg:py-28 bg-gradient-to-b from-[#EEF3F8] via-[#E5EDF6] to-[#EEF3F8] border-t border-slate-200/80 scroll-mt-24 overflow-hidden">
       {/* Decorative Optical Vector Background (Tone B: Architectural Clinical Grid) */}

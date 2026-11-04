@@ -5,7 +5,6 @@ import SpecialtiesSection from '@/components/home/SpecialtiesSection';
 import DoctorSection from '@/components/home/DoctorSection';
 import TechnologySection from '@/components/home/TechnologySection';
 import KnowledgeHubSection from '@/components/home/KnowledgeHubSection';
-import ReviewsSection from '@/components/home/ReviewsSection';
 import LocationSection from '@/components/home/LocationSection';
 import FAQSection from '@/components/home/FAQSection';
 import FinalCTA from '@/components/home/FinalCTA';
@@ -38,8 +37,6 @@ export default function HomePage() {
       {/* 7. Clinical Knowledge Hub: Articles & Research Publications */}
       <KnowledgeHubSection />
 
-      {/* 8. Doctors' Point of View (Referring Doctors) */}
-      <ReviewsSection />
 
       {/* 9. Clinic Location, Hours & Map Directions */}
       <LocationSection />
