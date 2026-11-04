@@ -2,6 +2,34 @@ export const IS_PREVIEW =
   process.env.PREVIEW_MODE === 'true' || process.env.NEXT_PUBLIC_PREVIEW_MODE === 'true';
 
 /**
+ * Informational routes that clients ARE allowed to visit even in Preview Mode.
+ */
+export const ALLOWED_PREVIEW_ROUTES = [
+  '/',
+  '/about',
+  '/doctors',
+  '/technology',
+  '/contact',
+  '/services',
+];
+
+/**
+ * Checks if a given destination URL/path is in the allowed preview list.
+ */
+export function isAllowedPreviewRoute(url) {
+  if (!url) return false;
+  if (url === '#' || url === '') return false;
+  // Clean off origin if absolute URL
+  const cleanUrl = url.replace(/^(?:https?:\/\/[^\/]+)/i, '');
+  // Clean off query parameters and hash fragments
+  const path = cleanUrl.split('?')[0].split('#')[0];
+
+  return ALLOWED_PREVIEW_ROUTES.some(
+    (allowed) => path === allowed || path.startsWith(`${allowed}/`)
+  );
+}
+
+/**
  * Displays a lightweight, non-blocking toast when actions are attempted in preview mode.
  */
 export function showPreviewToast(message = 'Preview mode – submissions disabled') {

@@ -2,7 +2,7 @@
 
 import React, { forwardRef } from 'react';
 import Link from 'next/link';
-import { IS_PREVIEW } from '@/lib/preview';
+import { IS_PREVIEW, isAllowedPreviewRoute } from '@/lib/preview';
 
 /**
  * SafeLink: Reusable wrapper around Next.js <Link> and <a>.
@@ -34,7 +34,9 @@ const SafeLink = forwardRef(function SafeLink(
 ) {
   const destination = to || href || '#';
 
-  if (IS_PREVIEW) {
+  const isAllowedInPreview = isAllowedPreviewRoute(destination);
+
+  if (IS_PREVIEW && !isAllowedInPreview) {
     const handleDisabledClick = (e) => {
       e.preventDefault();
       e.stopPropagation();

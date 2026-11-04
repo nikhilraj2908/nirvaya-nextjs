@@ -11,8 +11,23 @@ export function middleware(request) {
 
   const { pathname } = request.nextUrl;
 
-  // 1. Home page is always allowed
-  if (pathname === '/' || pathname === '') {
+  // 1. Allowed informational page routes in Client Preview Mode
+  const ALLOWED_PREVIEW_PAGES = [
+    '/',
+    '/about',
+    '/doctors',
+    '/technology',
+    '/contact',
+    // '/services',
+  ];
+
+  const isAllowedPage =
+    pathname === '' ||
+    ALLOWED_PREVIEW_PAGES.some(
+      (allowed) => pathname === allowed || pathname.startsWith(`${allowed}/`)
+    );
+
+  if (isAllowedPage) {
     return NextResponse.next();
   }
 

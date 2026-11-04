@@ -1,6 +1,26 @@
 export const IS_PREVIEW: boolean =
   process.env.PREVIEW_MODE === 'true' || process.env.NEXT_PUBLIC_PREVIEW_MODE === 'true';
 
+export const ALLOWED_PREVIEW_ROUTES: string[] = [
+  '/',
+  '/about',
+  '/doctors',
+  '/technology',
+  '/contact',
+  '/services',
+];
+
+export function isAllowedPreviewRoute(url?: string): boolean {
+  if (!url) return false;
+  if (url === '#' || url === '') return false;
+  const cleanUrl = url.replace(/^(?:https?:\/\/[^\/]+)/i, '');
+  const path = cleanUrl.split('?')[0].split('#')[0];
+
+  return ALLOWED_PREVIEW_ROUTES.some(
+    (allowed) => path === allowed || path.startsWith(`${allowed}/`)
+  );
+}
+
 export function showPreviewToast(message: string = 'Preview mode – submissions disabled'): void {
   if (typeof document === 'undefined') return;
 
