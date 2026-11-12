@@ -18,7 +18,7 @@ export function middleware(request) {
     '/doctors',
     '/technology',
     '/contact',
-    // '/services',
+    '/services',
   ];
 
   const isAllowedPage =

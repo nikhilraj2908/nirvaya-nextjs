@@ -56,12 +56,13 @@ export default function Logo({
       >
         
         <img
-          src={isRound ? '/images/logo-round.png' : '/images/nirvaya-logo.png'}
+          src={isRound ? '/images/footer-logo.png' : '/images/nirvaya-logo.png'}
           alt="Nirvaya Eyecare Centre Logo"
           width={isRound ? 3468 : 6271}
           height={isRound ? 3200 : 1271}
           className={`w-auto ${heightClasses} object-contain transition-transform group-hover:scale-[1.02]`}
           loading="eager"
+          suppressHydrationWarning
         />
       </div>
     </SafeLink>

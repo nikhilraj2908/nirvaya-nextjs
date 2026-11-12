@@ -180,6 +180,7 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
+      data-scroll-behavior="smooth"
       suppressHydrationWarning
       className={`${plusJakartaSans.variable} ${notoSans.variable} ${notoDevanagari.variable} ${playfairDisplay.variable} font-scale-md h-full antialiased`}
     >

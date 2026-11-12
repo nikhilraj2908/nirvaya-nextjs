@@ -131,32 +131,39 @@ export default function SpecialtiesSection({ currentLang = 'en' }) {
           ))}
         </div>
 
-        {/* Reassurance Strip */}
-        <div className="mt-8 bg-white rounded-2xl p-5 sm:p-6 border border-slate-200/90 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-xs">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-[#DFBF64]/20 flex items-center justify-center shrink-0 text-[#8C6D1F]">
-              <Layers className="w-4 h-4" />
+        {/* Reassurance Strip (Colored Brand Bar) */}
+        <div className="mt-8 relative rounded-2xl p-4 sm:p-5 sm:px-6 bg-gradient-to-r from-[#061226] via-[#0A1E3F] to-[#122B55] text-white border border-[#DFBF64]/40 shadow-md flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 overflow-hidden group">
+          {/* Subtle Ambient Gold Radial Glow */}
+          <div className="absolute top-0 right-0 w-64 h-24 bg-[#DFBF64]/10 rounded-full blur-2xl pointer-events-none" />
+          <div className="absolute top-0 inset-x-0 h-0.5 bg-gradient-to-r from-transparent via-[#DFBF64]/70 to-transparent" />
+
+          <div className="relative z-10 flex items-center gap-3.5">
+            <div className="w-10 h-10 rounded-xl bg-[#DFBF64]/20 border border-[#DFBF64]/40 flex items-center justify-center shrink-0 text-[#DFBF64] shadow-xs">
+              <Layers className="w-5 h-5" />
             </div>
             <div>
-              <p className="text-xs sm:text-sm font-bold text-[#0A1E3F]">
+              <p className="text-xs sm:text-sm font-bold text-white tracking-tight">
                 {en.specialties.reassuranceTitle}
               </p>
-              <p className="text-xs text-slate-500">
+              <p className="text-xs text-slate-300 mt-0.5">
                 {en.specialties.reassuranceDesc}
               </p>
             </div>
           </div>
-          <Button
-            href="/services"
-            to="/services"
-            variant="outline"
-            size="sm"
-            icon={ArrowRight}
-            iconPosition="right"
-            className="shrink-0 text-xs font-bold"
-          >
-            {en.specialties.directoryCTA}
-          </Button>
+
+          <div className="relative z-10 shrink-0 w-full sm:w-auto">
+            <Button
+              href="/services"
+              to="/services"
+              variant="gold"
+              size="sm"
+              icon={ArrowRight}
+              iconPosition="right"
+              className="w-full sm:w-auto text-xs font-bold px-5 py-2.5 shadow-sm hover:shadow cursor-pointer"
+            >
+              {en.specialties.directoryCTA}
+            </Button>
+          </div>
         </div>
       </Container>
     </section>

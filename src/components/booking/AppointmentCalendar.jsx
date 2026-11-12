@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { DayPicker } from 'react-day-picker';
-import 'react-day-picker/style.css';
+import '@/styles/day-picker.css';
 import {
   Calendar as CalendarIcon,
   Loader2,
