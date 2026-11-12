@@ -7,16 +7,16 @@ const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || 'G-KY995S
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700', '800'],
   variable: '--font-heading',
   display: 'swap',
+  fallback: ['system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
 });
 
 const notoSans = Noto_Sans({
   subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700'],
   variable: '--font-sans',
   display: 'swap',
+  fallback: ['system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
 });
 
 const notoDevanagari = Noto_Sans_Devanagari({
@@ -24,13 +24,14 @@ const notoDevanagari = Noto_Sans_Devanagari({
   weight: ['400', '500', '600', '700'],
   variable: '--font-hindi',
   display: 'swap',
+  fallback: ['sans-serif'],
 });
 
 const playfairDisplay = Playfair_Display({
   subsets: ['latin'],
-  weight: ['400', '600', '700', '800'],
   variable: '--font-serif-luxury',
   display: 'swap',
+  fallback: ['Georgia', 'serif'],
 });
 
 export const metadata = {

@@ -163,22 +163,37 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
       video.pause();
 
       let targetVideoTime = 0;
+      let isSeeking = false;
       let rafId = null;
 
-      // Safely apply target time on animation frames
+      // Safely apply target time on animation frames with zero lag
       const syncVideo = () => {
         rafId = null;
-        if (!video) return;
-        if (!video.seeking && Math.abs(video.currentTime - targetVideoTime) > 0.015) {
-          video.currentTime = targetVideoTime;
+        if (!video || !video.duration) return;
+
+        const diff = Math.abs(video.currentTime - targetVideoTime);
+        if (diff > 0.012 && !isSeeking) {
+          isSeeking = true;
+          if ('fastSeek' in video) {
+            try {
+              video.fastSeek(targetVideoTime);
+            } catch (_) {
+              video.currentTime = targetVideoTime;
+            }
+          } else {
+            video.currentTime = targetVideoTime;
+          }
         }
       };
 
-      // When browser finishes decoding/seeking frame, catch up if target changed
+      // When browser finishes decoding/seeking frame, reset flag and sync if position moved
       const handleSeeked = () => {
+        isSeeking = false;
         if (!video) return;
         if (Math.abs(video.currentTime - targetVideoTime) > 0.015) {
-          video.currentTime = targetVideoTime;
+          if (!rafId) {
+            rafId = requestAnimationFrame(syncVideo);
+          }
         }
       };
 
@@ -191,7 +206,7 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
           trigger: container,
           start: 'top top',
           end: 'bottom bottom',
-          scrub: 1.2, // Luxurious momentum smoothing for desktop wheel and trackpad scroll
+          scrub: 0.35, // Luxurious momentum smoothing for desktop wheel and trackpad scroll
           fastScrollEnd: true,
           preventOverlaps: true,
         },
@@ -395,7 +410,7 @@ export default function EyeScrollVideo({ onOpenPreBook, currentLang = 'en' }) {
                 controls={false}
                 tabIndex={-1}
                 aria-hidden="true"
-                className="w-full h-full object-cover object-center lg:object-right select-none opacity-100 pointer-events-none transition-transform duration-300"
+                className="w-full h-full object-cover object-center lg:object-right select-none opacity-100 pointer-events-none "
                 style={{
                   filter: 'brightness(1.04) contrast(1.08)',
                   transform: videoShiftX ? `translateX(${videoShiftX}px)` : 'none',
